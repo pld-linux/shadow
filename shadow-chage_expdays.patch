@@ -1,32 +1,33 @@
-diff -Nur shadow-4.0.0.orig/src/chage.c shadow-4.0.0/src/chage.c
---- shadow-4.0.0.orig/src/chage.c	Mon Oct  9 20:39:50 2000
-+++ shadow-4.0.0/src/chage.c	Sat Jun  1 09:27:14 2002
-@@ -121,6 +121,7 @@
- #define	CLOSE_FAIL	"failed rewriting %s\n"
+diff -Nur shadow-4.0.3/src/chage.c shadow-4.0.3.new/src/chage.c
+--- shadow-4.0.3/src/chage.c	2002-01-05 16:41:43.000000000 +0100
++++ shadow-4.0.3.new/src/chage.c	2003-05-27 20:42:50.000000000 +0200
+@@ -83,6 +83,7 @@
+ #endif
  
  #define	EPOCH		"1969-12-31"
-+#define	EPOCH_SHORT	"12/31/69"
++#define EPOCH_SHORT     "12/31/69"
  
- #ifdef	SHADOWPWD
- #define	DBMERROR2	"error updating DBM shadow entry.\n"
-@@ -342,7 +343,7 @@
+ /* local function prototypes */
+ static void usage (void);
+@@ -302,7 +303,7 @@
  	 */
  
- 	printf(_("Account Expires:\t"));
+ 	printf (_("Account Expires:\t"));
 -	if (expdays <= 0) {
 +	if (expdays == -1) {
  		printf (_("Never\n"));
  	} else {
  		expires = expdays * SCALE;
-@@ -509,7 +510,10 @@
- 			case 'E':
- 				Eflg++;
- 				if (!isnum(optarg))
--					expdays = strtoday (optarg);
-+					if (strcmp (optarg, EPOCH_SHORT) == 0)
-+						expdays = -1;
-+					else
-+						expdays = strtoday (optarg);
- 				else
- 					expdays = strtol (optarg, 0, 10);
- 				break;
+@@ -440,7 +441,11 @@
+ 		case 'E':
+ 			Eflg++;
+ 			if (!isnum (optarg))
+-				expdays = strtoday (optarg);
++				if (strcmp (optarg, EPOCH_SHORT) == 0)
++					expdays = -1;
++			        else
++					expdays = strtoday (optarg);
++			
+ 			else
+ 				expdays = strtol (optarg, 0, 10);
+ 			break;
