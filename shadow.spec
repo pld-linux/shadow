@@ -263,7 +263,7 @@ fi
 %lang(fr) %{_mandir}/fr/man8/userdel.8*
 %lang(fr) %{_mandir}/fr/man8/usermod.8*
 
-%lang(hu) %{_mandir}/man1/passwd.1*
+%lang(hu) %{_mandir}/hu/man1/passwd.1*
 
 %lang(id) %{_mandir}/id/man8/useradd.8*
 
@@ -372,7 +372,7 @@ fi
 %lang(fr) %{_mandir}/fr/man1/chage.1*
 %lang(fr) %{_mandir}/fr/man1/chsh.1*
 %lang(fr) %{_mandir}/fr/man1/gpasswd.1*
-%lang(fr) %{_mandir}/fr/man1/sg.1*
+#%lang(fr) %{_mandir}/fr/man1/sg.1*
 
 %lang(hu) %{_mandir}/hu/man1/chsh.1*
 %lang(hu) %{_mandir}/hu/man1/gpasswd.1*
@@ -383,7 +383,7 @@ fi
 %lang(it) %{_mandir}/it/man1/chfn.1*
 %lang(it) %{_mandir}/it/man1/chsh.1*
 %lang(it) %{_mandir}/it/man1/gpasswd.1*
-%lang(it) %{_mandir}/it/man1/sg.1*
+#%lang(it) %{_mandir}/it/man1/sg.1*
 
 %lang(ja) %{_mandir}/ja/man1/chage.1*
 %lang(ja) %{_mandir}/ja/man1/chfn.1*
@@ -397,7 +397,7 @@ fi
 
 %lang(ko) %{_mandir}/ko/man1/chfn.1*
 %lang(ko) %{_mandir}/ko/man1/chsh.1*
-%lang(ko) %{_mandir}/ko/man1/sg.1*
+#%lang(ko) %{_mandir}/ko/man1/sg.1*
 
 %lang(pl) %{_mandir}/pl/man1/chage.1*
 %lang(pl) %{_mandir}/pl/man1/chfn.1*
