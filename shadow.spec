@@ -170,24 +170,13 @@ install %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/useradd
 > $RPM_BUILD_ROOT%{_sysconfdir}/d_passwd
 > $RPM_BUILD_ROOT%{_sysconfdir}/dialups
 install man/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/man8
-install man/groups.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install man/ja/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/ja/man8
 install man/pl/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install man/pl/dialups.5 $RPM_BUILD_ROOT%{_mandir}/pl/man5
-install man/pl/groups.1 $RPM_BUILD_ROOT%{_mandir}/pl/man1
 
 ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
 
-#echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
 #echo '.so vipw.8'   > $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8
-
-echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/fr/man1/sg.1
-echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
-echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ko/man1/sg.1
-
-#echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ja/man1/sg.1
-
-#echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/pl/man1/sg.1
 #echo '.so vipw.8'   > $RPM_BUILD_ROOT%{_mandir}/pl/man8/vigr.8
 
 %find_lang %{name}
@@ -232,10 +221,8 @@ fi
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
 %attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(4755,root,root) %{_bindir}/passwd
-%{_mandir}/man1/groups.1*
 %{_mandir}/man1/passwd.1*
 %{_mandir}/man5/faillog.5*
 %{_mandir}/man5/login.access.5*
@@ -280,7 +267,6 @@ fi
 
 %lang(id) %{_mandir}/id/man8/useradd.8*
 
-%lang(it) %{_mandir}/it/man1/groups.1*
 %lang(it) %{_mandir}/it/man1/passwd.1*
 %lang(it) %{_mandir}/it/man5/passwd.5*
 %lang(it) %{_mandir}/it/man5/shadow.5*
@@ -325,7 +311,6 @@ fi
 
 %lang(ko) %{_mandir}/ko/man5/passwd.5*
 
-%lang(pl) %{_mandir}/pl/man1/groups.1*
 %lang(pl) %{_mandir}/pl/man1/passwd.1*
 %lang(pl) %{_mandir}/pl/man5/faillog.5*
 %lang(pl) %{_mandir}/pl/man5/login.access.5*
@@ -367,7 +352,6 @@ fi
 %attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
-%attr(4755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_sbindir}/dpasswd
 %attr(755,root,root) %{_sbindir}/mkpasswd
@@ -378,7 +362,6 @@ fi
 %{_mandir}/man1/chsh.1*
 %{_mandir}/man1/expiry.1*
 %{_mandir}/man1/gpasswd.1*
-%{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/sg.1*
 %{_mandir}/man8/dpasswd.8*
 %{_mandir}/man8/mkpasswd.8*
@@ -389,12 +372,10 @@ fi
 %lang(fr) %{_mandir}/fr/man1/chage.1*
 %lang(fr) %{_mandir}/fr/man1/chsh.1*
 %lang(fr) %{_mandir}/fr/man1/gpasswd.1*
-%lang(fr) %{_mandir}/fr/man1/newgrp.1*
 %lang(fr) %{_mandir}/fr/man1/sg.1*
 
 %lang(hu) %{_mandir}/hu/man1/chsh.1*
 %lang(hu) %{_mandir}/hu/man1/gpasswd.1*
-%lang(hu) %{_mandir}/hu/man1/newgrp.1*
 %lang(hu) %{_mandir}/hu/man1/sg.1*
 
 %lang(id) %{_mandir}/id/man1/chsh.1*
@@ -402,14 +383,12 @@ fi
 %lang(it) %{_mandir}/it/man1/chfn.1*
 %lang(it) %{_mandir}/it/man1/chsh.1*
 %lang(it) %{_mandir}/it/man1/gpasswd.1*
-%lang(it) %{_mandir}/it/man1/newgrp.1*
 %lang(it) %{_mandir}/it/man1/sg.1*
 
 %lang(ja) %{_mandir}/ja/man1/chage.1*
 %lang(ja) %{_mandir}/ja/man1/chfn.1*
 %lang(ja) %{_mandir}/ja/man1/chsh.1*
 %lang(ja) %{_mandir}/ja/man1/gpasswd.1*
-%lang(ja) %{_mandir}/ja/man1/newgrp.1*
 %lang(ja) %{_mandir}/ja/man1/sg.1*
 %lang(ja) %{_mandir}/ja/man8/chpasswd.8*
 %lang(ja) %{_mandir}/ja/man8/dpasswd.8*
@@ -418,7 +397,6 @@ fi
 
 %lang(ko) %{_mandir}/ko/man1/chfn.1*
 %lang(ko) %{_mandir}/ko/man1/chsh.1*
-%lang(ko) %{_mandir}/ko/man1/newgrp.1*
 %lang(ko) %{_mandir}/ko/man1/sg.1*
 
 %lang(pl) %{_mandir}/pl/man1/chage.1*
@@ -426,7 +404,6 @@ fi
 %lang(pl) %{_mandir}/pl/man1/chsh.1*
 %lang(pl) %{_mandir}/pl/man1/expiry.1*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.1*
-%lang(pl) %{_mandir}/pl/man1/newgrp.1*
 %lang(pl) %{_mandir}/pl/man1/sg.1*
 %lang(pl) %{_mandir}/pl/man5/d_passwd.5*
 %lang(pl) %{_mandir}/pl/man5/dialups.5*
