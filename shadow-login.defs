@@ -4,7 +4,7 @@
 #   QMAIL_DIR is for Qmail
 #
 #QMAIL_DIR	Maildir
-MAIL_DIR	/var/spool/mail
+MAIL_DIR	/var/mail
 #MAIL_FILE	.mail
 
 # Password aging controls:
