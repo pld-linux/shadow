@@ -1,6 +1,153 @@
-diff -Nur shadow-4.0.0.orig/src/groupadd.c shadow-4.0.0/src/groupadd.c
---- shadow-4.0.0.orig/src/groupadd.c	Mon Oct  9 21:02:20 2000
-+++ shadow-4.0.0/src/groupadd.c	Thu Oct 18 10:41:15 2001
+diff -ur shadow-4.0.0.orig/man/pl/useradd.8 shadow-4.0.0/man/pl/useradd.8
+--- shadow-4.0.0.orig/man/pl/useradd.8	Fri Feb 22 23:35:12 2002
++++ shadow-4.0.0/man/pl/useradd.8	Fri Feb 22 23:47:00 2002
+@@ -38,7 +38,7 @@
+ .br
+ [\fB-m\fR [\fB-k\fR \fIkatalog_wzorców\fR]] [\fB-p\fR \fIhas³o\fR]
+ .br
+-[\fB-s\fR \fIpow³oka\fR] [\fB-u\fR \fIuid\fR [\fB-o\fR]] \fIlogin\fR
++[\fB-s\fR \fIpow³oka\fR] [\fB-u\fR \fIuid\fR [\fB-o\fR]] [\fB-r\fR] \fIlogin\fR
+ .TP 8
+ \fBuseradd\fR \fB-D\fR [\fB-g\fI domy¶lna_grupa\fR] [\fB-b\fI katalog_bazowy\fR]
+ .br
+@@ -105,6 +105,12 @@
+ .IP "\fB-p \fIpasswd\fR"
+ Zakodowane has³o w postaci zwracanej przez \fBcrypt\fR(3).
+ Domy¶lnym dzia³aniem jest blokowanie konta.
++.IP \fB-r\fR
++Tworzenie konta systemowego. Ta opcja pozwala na utworzenie konta o UID
++ni¿szym ni¿ UID_MIN zdefiniowane w fI/etc/login.defs\fR. O ile nie poda siê
++dodatkowo opcji \fB-m\fR nie jest tworzony katalog domowy dla tak tworzoneg
++u¿ytkownika niezale¿nie od tego czy tworzenie katalogu jest ustawione czy
++nie w \fI/etc/login.defs\fR.
+ .IP "\fB-s \fIpow³oka\fR"
+ Nazwa pow³oki (shell) u¿ytkownika. Ustawienie tego pola na puste
+ powoduje, ¿e system wybierze domy¶ln± pow³okê logowania.
+diff -ur shadow-4.0.0.orig/man/useradd.8 shadow-4.0.0/man/useradd.8
+--- shadow-4.0.0.orig/man/useradd.8	Sat Jan 27 03:55:52 2001
++++ shadow-4.0.0/man/useradd.8	Fri Feb 22 23:47:00 2002
+@@ -38,7 +38,7 @@
+ .br
+ [\fB-m\fR [\fB-k\fR \fIskeleton_dir\fR]] [\fB-p\fR \fIpasswd\fR]
+ .br
+-[\fB-s\fR \fIshell\fR] [\fB-u\fR \fIuid\fR [\fB-o\fR]] \fIlogin\fR
++[\fB-s\fR \fIshell\fR] [\fB-u\fR \fIuid\fR [\fB-o\fR]] [\fB-r\fR] \fIlogin\fR
+ .TP 8
+ \fBuseradd\fR \fB-D\fR [\fB-g\fI default_group\fR] [\fB-b\fI default_home\fR]
+ .br
+@@ -94,6 +94,13 @@
+ option.
+ The default is to not create the directory and to not copy any
+ files.
++.IP \fB-r\fR
++This flag is used to create a system account. That is, an user with an
++UID lower than value of UID_MIN defined in \fI/etc/login.defs\fR. Note
++that \fBuseradd\fR will not create a home directory for such an user,
++regardless of the default setting in \fI/etc/login.defs\fR.
++You have to specify \fB-m\fR option if you want a home directory
++for a system account to be created.
+ .IP "\fB-p \fIpasswd\fR"
+ The encrypted password, as returned by \fBcrypt\fR(3).
+ The default is to disable the account.
+diff -ur shadow-4.0.0.orig/po/cs.po shadow-4.0.0/po/cs.po
+--- shadow-4.0.0.orig/po/cs.po	Fri Feb 22 23:35:12 2002
++++ shadow-4.0.0/po/cs.po	Fri Feb 22 23:47:00 2002
+@@ -2062,8 +2062,8 @@
+ msgstr "[-A program] "
+ 
+ #: src/useradd.c:731
+-msgid "[-p passwd] name\n"
+-msgstr "[-p heslo]  jméno\n"
++msgid "[-p passwd] [-r] name\n"
++msgstr "[-p heslo] [-r] jméno\n"
+ 
+ #: src/useradd.c:733
+ #, c-format
+diff -ur shadow-4.0.0.orig/po/el.po shadow-4.0.0/po/el.po
+--- shadow-4.0.0.orig/po/el.po	Sat Oct  6 22:04:57 2001
++++ shadow-4.0.0/po/el.po	Fri Feb 22 23:47:00 2002
+@@ -2089,8 +2089,8 @@
+ msgstr "[-A ðñüãñáììá] "
+ 
+ #: src/useradd.c:731
+-msgid "[-p passwd] name\n"
+-msgstr "[-p óõíèçìáôéêü] üíïìá\n"
++msgid "[-p passwd] [-r] name\n"
++msgstr "[-p óõíèçìáôéêü] [-r] üíïìá\n"
+ 
+ #: src/useradd.c:733
+ #, c-format
+diff -ur shadow-4.0.0.orig/po/fr.po shadow-4.0.0/po/fr.po
+--- shadow-4.0.0.orig/po/fr.po	Fri Feb 22 23:35:12 2002
++++ shadow-4.0.0/po/fr.po	Fri Feb 22 23:47:00 2002
+@@ -2069,8 +2069,8 @@
+ msgstr "[-A program] "
+ 
+ #: src/useradd.c:731
+-msgid "[-p passwd] name\n"
+-msgstr "[-p mot-de-passe] nom\n"
++msgid "[-p passwd] [-r] name\n"
++msgstr "[-p mot-de-passe] [-r] nom\n"
+ 
+ #: src/useradd.c:733
+ #, c-format
+diff -ur shadow-4.0.0.orig/po/pl.po shadow-4.0.0/po/pl.po
+--- shadow-4.0.0.orig/po/pl.po	Fri Feb 22 23:35:12 2002
++++ shadow-4.0.0/po/pl.po	Fri Feb 22 23:47:00 2002
+@@ -2062,8 +2062,8 @@
+ msgstr "[-A program] "
+ 
+ #: src/useradd.c:731
+-msgid "[-p passwd] name\n"
+-msgstr "[-p has³o] nazwa\n"
++msgid "[-p passwd] [-r] name\n"
++msgstr "[-p has³o] [-r] nazwa\n"
+ 
+ #: src/useradd.c:733
+ #, c-format
+diff -ur shadow-4.0.0.orig/po/shadow.pot shadow-4.0.0/po/shadow.pot
+--- shadow-4.0.0.orig/po/shadow.pot	Sat Sep  8 07:36:33 2001
++++ shadow-4.0.0/po/shadow.pot	Fri Feb 22 23:47:00 2002
+@@ -2025,7 +2025,7 @@
+ msgstr ""
+ 
+ #: src/useradd.c:731
+-msgid "[-p passwd] name\n"
++msgid "[-p passwd] [-r] name\n"
+ msgstr ""
+ 
+ #: src/useradd.c:733
+diff -ur shadow-4.0.0.orig/po/sv.po shadow-4.0.0/po/sv.po
+--- shadow-4.0.0.orig/po/sv.po	Fri Feb 22 23:35:12 2002
++++ shadow-4.0.0/po/sv.po	Fri Feb 22 23:47:00 2002
+@@ -2061,8 +2061,8 @@
+ msgstr "[-A program] "
+ 
+ #: src/useradd.c:731
+-msgid "[-p passwd] name\n"
+-msgstr "[-p passwd] namn\n"
++msgid "[-p passwd] [-r] name\n"
++msgstr "[-p passwd] [-r] namn\n"
+ 
+ #: src/useradd.c:733
+ #, c-format
+diff -ur shadow-4.0.0.orig/po/uk.po shadow-4.0.0/po/uk.po
+--- shadow-4.0.0.orig/po/uk.po	Fri Feb 22 23:35:12 2002
++++ shadow-4.0.0/po/uk.po	Fri Feb 22 23:47:00 2002
+@@ -2067,8 +2067,8 @@
+ msgstr "[-A ÐÒÏÇÒÁÍÁ] "
+ 
+ #: src/useradd.c:731
+-msgid "[-p passwd] name\n"
+-msgstr "[-p ÐÁÒÏÌØ] ¦Í'Ñ\n"
++msgid "[-p passwd] [-r] name\n"
++msgstr "[-p ÐÁÒÏÌØ] [-r] ¦Í'Ñ\n"
+ 
+ #: src/useradd.c:733
+ #, c-format
+diff -ur shadow-4.0.0.orig/src/groupadd.c shadow-4.0.0/src/groupadd.c
+--- shadow-4.0.0.orig/src/groupadd.c	Fri Feb 22 23:47:48 2002
++++ shadow-4.0.0/src/groupadd.c	Fri Feb 22 23:35:12 2002
 @@ -78,6 +78,8 @@
  static int oflg = 0; /* permit non-unique group ID to be specified with -g */
  static int gflg = 0; /* ID value for the new group */
@@ -56,9 +203,9 @@ diff -Nur shadow-4.0.0.orig/src/groupadd.c shadow-4.0.0/src/groupadd.c
  		default:
  			usage();
  		}
-diff -Nur shadow-4.0.0.orig/src/useradd.c shadow-4.0.0/src/useradd.c
---- shadow-4.0.0.orig/src/useradd.c	Fri Sep  7 17:12:54 2001
-+++ shadow-4.0.0/src/useradd.c	Thu Oct 18 10:51:10 2001
+diff -ur shadow-4.0.0.orig/src/useradd.c shadow-4.0.0/src/useradd.c
+--- shadow-4.0.0.orig/src/useradd.c	Fri Feb 22 23:47:48 2002
++++ shadow-4.0.0/src/useradd.c	Fri Feb 22 23:47:00 2002
 @@ -78,10 +78,10 @@
  /*
   * These defaults are used if there is no defaults file.
@@ -108,7 +255,7 @@ diff -Nur shadow-4.0.0.orig/src/useradd.c shadow-4.0.0/src/useradd.c
  	fprintf(stderr, _("[-A program] "));
  #endif
 -	fprintf(stderr, _("[-p passwd] name\n"));
-+	fprintf(stderr, _("[-p passwd] [-n] [-r] name\n"));
++	fprintf(stderr, _("[-p passwd] [-r] name\n"));
  
  	fprintf(stderr, _("       %s\t-D [-g group] [-b base] [-s shell]\n"),
  		Prog);
@@ -141,17 +288,7 @@ diff -Nur shadow-4.0.0.orig/src/useradd.c shadow-4.0.0/src/useradd.c
  #endif
  	while ((arg = getopt(argc, argv, FLAGS)) != EOF) {
  #undef FLAGS
-@@ -1278,6 +1286,9 @@
- 		case 'o':
- 			oflg++;
- 			break;
-+		case 'n':
-+			nflg++;
-+			break;
- 		case 'O':
- 			/*
- 			 * override login.defs defaults (-O name=value)
-@@ -1304,6 +1315,9 @@
+@@ -1304,6 +1312,9 @@
  			}
  			user_pass = optarg;
  			break;
@@ -161,7 +298,7 @@ diff -Nur shadow-4.0.0.orig/src/useradd.c shadow-4.0.0/src/useradd.c
  		case 's':
  			if (!VALID(optarg) || (optarg[0] &&
  			    (optarg[0] != '/' && optarg[0] != '*'))) {
-@@ -1329,7 +1343,9 @@
+@@ -1329,7 +1340,9 @@
  	 * Certain options are only valid in combination with others.
  	 * Check it here so that they can be specified in any order.
  	 */
