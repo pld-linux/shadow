@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	19990827
-Release:	2
+Release:	3
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
