@@ -125,10 +125,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/sbin/chpasswd
 %attr(755,root,root) /usr/sbin/newusers
 %attr(755,root,root) /usr/sbin/mkpasswd
-%attr(755,root,root) /usr/bin/chage
-%attr(755,root,root) /usr/bin/gpasswd
-%attr(755,root,root) /usr/bin/lastlog
-%attr(755,root,root) /usr/bin/faillog
+%attr(755,root,root) %{_bindir}/chage
+%attr(755,root,root) %{_bindir}/gpasswd
+%attr(755,root,root) %{_bindir}/lastlog
+%attr(755,root,root) %{_bindir}/faillog
 
 %{_mandir}/man1/chage.1.gz
 %{_mandir}/man1/gpasswd.1.gz
@@ -173,7 +173,7 @@ rm -rf $RPM_BUILD_ROOT
 - update source URL
 
 * Fri Aug 21 1998 Jeff Johnson <jbj@redhat.com>
-- Note that /usr/sbin/mkpasswd conflicts with /usr/bin/mkpasswd;
+- Note that /usr/sbin/mkpasswd conflicts with %{_bindir}/mkpasswd;
   one of these (I think /usr/sbin/mkpasswd but other opinions are valid)
   should probably be renamed.  In any case, mkpasswd.8 from this package
   needs to be installed. (problem #823)
