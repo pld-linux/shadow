@@ -137,10 +137,10 @@ diff -Naur shadow-19990827/src/useradd.c shadow-19990827-patched/src/useradd.c
  
  #ifdef SHADOWPWD
 -#define FLAGS "A:Du:og:G:d:s:c:mk:p:f:e:b:O:M"
-+#define FLAGS "A:Du:og:G:d:s:c:mk:p:f:e:b:O:M:nr"
++#define FLAGS "A:Du:og:G:d:s:c:mk:p:f:e:b:O:Mnr"
  #else
 -#define FLAGS "A:Du:og:G:d:s:c:mk:p:b:O:M"
-+#define FLAGS "A:Du:og:G:d:s:c:mk:p:b:O:M:nr"
++#define FLAGS "A:Du:og:G:d:s:c:mk:p:b:O:Mnr"
  #endif
  	while ((arg = getopt(argc, argv, FLAGS)) != EOF) {
  #undef FLAGS

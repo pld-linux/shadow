@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	20001016
-Release:	3
+Release:	4
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
