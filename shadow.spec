@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	20000902
-Release:	0.1
+Release:	1
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
@@ -17,7 +17,7 @@ Source4:	userdb.pamd
 Patch1:		shadow-pld.patch
 Patch2:		shadow-utmpx.patch
 Patch3:		shadow-pam-userdb.patch
-Patch4:		shadow-DESTDIR.patch
+Patch4:		shadow-manpl.patch
 BuildRequires:	pam-devel
 BuildRequires:	gettext-devel
 Requires:	pam
@@ -173,7 +173,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/grpunconv.*
 %{_mandir}/man8/shadowconfig.*
 
-%lang(pl) %{_mandir}/pl/man1/change.*
+%lang(pl) %{_mandir}/pl/man1/chage.*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.*
 %lang(pl) %{_mandir}/pl/man3/pw_auth.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
@@ -194,7 +194,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pl) %{_mandir}/pl/man8/newusers.*
 %lang(pl) %{_mandir}/pl/man8/pwck.*
 %lang(pl) %{_mandir}/pl/man8/pwconv.*
-%lang(pl) %{_mandir}/pl/man8/pwuath.*
+%lang(pl) %{_mandir}/pl/man8/pwauth.*
 %lang(pl) %{_mandir}/pl/man8/shadowconfig.*
 %lang(pl) %{_mandir}/pl/man8/useradd.*
 %lang(pl) %{_mandir}/pl/man8/userdel.*
