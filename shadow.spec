@@ -89,6 +89,20 @@ contraseña y de los archivos shadow.  - 'lastlog' enseña el último momento de
 login de todos los usuarios.  Están también incluidas, en general, varias
 páginas de manual sobre estos utilitarios y contraseñas shadow.
 
+%package extras
+Summary:	shadow - not often used files
+Summary(pl):	shadow - pliki nie u¿ywane czêsto
+Group:		Applications/System
+Requires:	shadow
+
+%description extras
+Programs for shadow often not used.
+If you have small system you may skip them.
+
+%description -l pl extras
+Programy nie u¿ywane czêsto.
+W ma³ych systemach mo¿na je pomin±æ.
+
 %prep
 %setup -q 
 %patch1 -p1 
@@ -127,6 +141,7 @@ install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
 
 :> $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/{chfn,chsh}.allow
+touch $RPM_BUILD_ROOT%{_sysconfdir}/{porttime,utmp}
 
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
@@ -153,8 +168,10 @@ fi
 
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/default/*
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/security/*
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chage
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/shadow
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/passwd
+%attr(750,root,root) %dir /etc/security/
 
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
 %attr(400,root,root) %ghost %{_sysconfdir}/shadow
@@ -167,14 +184,8 @@ fi
 %attr(755,root,root) %{_sbindir}/grpck
 %attr(755,root,root) %{_sbindir}/pwck
 %attr(755,root,root) %{_sbindir}/*conv
-%attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/dpasswd
-%attr(755,root,root) %{_sbindir}/logoutd
-%attr(755,root,root) %{_sbindir}/newusers
-%attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/vipw
-%attr(4755,root,root) %{_bindir}/chfn
-%attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
 %attr(4755,root,root) %{_bindir}/passwd
@@ -186,55 +197,52 @@ fi
 %attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_bindir}/su
 
-%{_mandir}/man1/gpasswd.*
 %{_mandir}/man1/chage.*
-%{_mandir}/man1/chfn.*
-%{_mandir}/man1/chsh.*
+%{_mandir}/man1/expiry.*
+%{_mandir}/man1/gpasswd.*
+%{_mandir}/man1/login.*
+%{_mandir}/man1/newgrp.*
 %{_mandir}/man1/passwd.*
-%{_mandir}/man5/login.defs.*
-%{_mandir}/man5/passwd.*
-%{_mandir}/man5/shadow.*
-%{_mandir}/man5/porttime.*
+%{_mandir}/man1/su.*
 %{_mandir}/man5/faillog.*
+%{_mandir}/man5/limits.*
+%{_mandir}/man5/login.*
+%{_mandir}/man5/passwd.*
+%{_mandir}/man5/porttime.*
+%{_mandir}/man5/shadow.*
+%{_mandir}/man5/suauth.*
+%{_mandir}/man8/adduser.*
 %{_mandir}/man8/faillog.*
+%{_mandir}/man8/groupadd.*
 %{_mandir}/man8/groupdel.*
 %{_mandir}/man8/groupmod.*
 %{_mandir}/man8/grpck.*
 %{_mandir}/man8/grpconv.*
-%{_mandir}/man8/logoutd.*
-%{_mandir}/man8/mkpasswd.*
-%{_mandir}/man8/newusers.*
+%{_mandir}/man8/grpunconv.*
+%{_mandir}/man8/lastlog.*
 %{_mandir}/man8/pwck.*
+%{_mandir}/man8/pwconv.*
 %{_mandir}/man8/pwunconv.*
 %{_mandir}/man8/useradd.*
 %{_mandir}/man8/userdel.*
 %{_mandir}/man8/usermod.*
-%{_mandir}/man8/lastlog.*
-%{_mandir}/man8/pwconv.*
-%{_mandir}/man8/chpasswd.*
-%{_mandir}/man8/groupadd.*
-%{_mandir}/man8/grpunconv.*
+%{_mandir}/man8/vipw.*
 
 %lang(pl) %{_mandir}/pl/man1/chage.*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.*
-%lang(pl) %{_mandir}/pl/man1/chfn.*
-%lang(pl) %{_mandir}/pl/man1/chsh.*
 %lang(pl) %{_mandir}/pl/man1/passwd.*
+%lang(pl) %{_mandir}/pl/man3/shadow.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
 %lang(pl) %{_mandir}/pl/man5/login.defs.*
 %lang(pl) %{_mandir}/pl/man5/passwd.*
 %lang(pl) %{_mandir}/pl/man5/porttime.*
 %lang(pl) %{_mandir}/pl/man5/shadow.*
-%lang(pl) %{_mandir}/pl/man8/chpasswd.*
 %lang(pl) %{_mandir}/pl/man8/faillog.*
 %lang(pl) %{_mandir}/pl/man8/groupadd.*
 %lang(pl) %{_mandir}/pl/man8/groupdel.*
 %lang(pl) %{_mandir}/pl/man8/groupmod.*
 %lang(pl) %{_mandir}/pl/man8/grpck.*
 %lang(pl) %{_mandir}/pl/man8/lastlog.*
-%lang(pl) %{_mandir}/pl/man8/logoutd.*
-%lang(pl) %{_mandir}/pl/man8/mkpasswd.*
-%lang(pl) %{_mandir}/pl/man8/newusers.*
 %lang(pl) %{_mandir}/pl/man8/pwck.*
 %lang(pl) %{_mandir}/pl/man8/pwconv.*
 %lang(pl) %{_mandir}/pl/man8/useradd.*
@@ -243,23 +251,19 @@ fi
 
 %lang(ja) %{_mandir}/ja/man1/chage.*
 %lang(ja) %{_mandir}/ja/man1/gpasswd.*
-%lang(ja) %{_mandir}/ja/man1/chfn.*
-%lang(ja) %{_mandir}/ja/man1/chsh.*
 %lang(ja) %{_mandir}/ja/man1/passwd.*
+%lang(ja) %{_mandir}/ja/man3/shadow.*
 %lang(ja) %{_mandir}/ja/man5/faillog.*
 %lang(ja) %{_mandir}/ja/man5/login.defs.*
 %lang(ja) %{_mandir}/ja/man5/passwd.*
 %lang(ja) %{_mandir}/ja/man5/porttime.*
 %lang(ja) %{_mandir}/ja/man5/shadow.*
-%lang(ja) %{_mandir}/ja/man8/chpasswd.*
 %lang(ja) %{_mandir}/ja/man8/faillog.*
 %lang(ja) %{_mandir}/ja/man8/groupadd.*
 %lang(ja) %{_mandir}/ja/man8/groupdel.*
 %lang(ja) %{_mandir}/ja/man8/groupmod.*
 %lang(ja) %{_mandir}/ja/man8/grpck.*
 %lang(ja) %{_mandir}/ja/man8/lastlog.*
-%lang(ja) %{_mandir}/ja/man8/logoutd.*
-%lang(ja) %{_mandir}/ja/man8/mkpasswd.*
 %lang(ja) %{_mandir}/ja/man8/pwck.*
 %lang(ja) %{_mandir}/ja/man8/pwconv.*
 %lang(ja) %{_mandir}/ja/man8/userdel.*
@@ -270,3 +274,35 @@ fi
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupadd.*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupdel.*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupmod.*
+
+%files -f %{name}.lang extras
+%defattr(644,root,root,755)
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chsh
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chfn
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/security/*
+%attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/porttime
+%attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/utmp
+%attr(4755,root,root) %{_bindir}/chfn
+%attr(4755,root,root) %{_bindir}/chsh
+%attr(755,root,root) %{_sbindir}/chpasswd
+%attr(755,root,root) %{_sbindir}/logoutd
+%attr(755,root,root) %{_sbindir}/mkpasswd
+%attr(755,root,root) %{_sbindir}/newusers
+
+%{_mandir}/man1/chfn.*
+%{_mandir}/man1/chsh.*
+%{_mandir}/man8/chpasswd.*
+%{_mandir}/man8/logoutd.*
+%{_mandir}/man8/mkpasswd.*
+%{_mandir}/man8/newusers.*
+%lang(pl) %{_mandir}/pl/man1/chfn.*
+%lang(pl) %{_mandir}/pl/man1/chsh.*
+%lang(pl) %{_mandir}/pl/man8/chpasswd.*
+%lang(pl) %{_mandir}/pl/man8/logoutd.*
+%lang(pl) %{_mandir}/pl/man8/mkpasswd.*
+%lang(pl) %{_mandir}/pl/man8/newusers.*
+%lang(ja) %{_mandir}/ja/man1/chfn.*
+%lang(ja) %{_mandir}/ja/man1/chsh.*
+%lang(ja) %{_mandir}/ja/man8/chpasswd.*
+%lang(ja) %{_mandir}/ja/man8/logoutd.*
+%lang(ja) %{_mandir}/ja/man8/mkpasswd.*
