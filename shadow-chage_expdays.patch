@@ -1,6 +1,6 @@
 diff -Nur shadow-4.0.0.orig/src/chage.c shadow-4.0.0/src/chage.c
 --- shadow-4.0.0.orig/src/chage.c	Mon Oct  9 20:39:50 2000
-+++ shadow-4.0.0/src/chage.c	Fri May 31 18:39:12 2002
++++ shadow-4.0.0/src/chage.c	Sat Jun  1 09:27:14 2002
 @@ -121,6 +121,7 @@
  #define	CLOSE_FAIL	"failed rewriting %s\n"
  
@@ -9,6 +9,15 @@ diff -Nur shadow-4.0.0.orig/src/chage.c shadow-4.0.0/src/chage.c
  
  #ifdef	SHADOWPWD
  #define	DBMERROR2	"error updating DBM shadow entry.\n"
+@@ -342,7 +343,7 @@
+ 	 */
+ 
+ 	printf(_("Account Expires:\t"));
+-	if (expdays <= 0) {
++	if (expdays == -1) {
+ 		printf (_("Never\n"));
+ 	} else {
+ 		expires = expdays * SCALE;
 @@ -509,7 +510,10 @@
  			case 'E':
  				Eflg++;
