@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	19990827
-Release:	1
+Release:	2
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
@@ -22,6 +22,8 @@ Patch4:		shadow-DESTDIR.patch
 BuildRequires:	pam-devel
 BuildRequires:	gettext-devel
 Requires:	pam
+Obsoletes:	shadow-utils
+Provides:	shadow-utils
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
