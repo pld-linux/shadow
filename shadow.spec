@@ -1,6 +1,7 @@
 #
 # Conditional build:
-%bcond_without selinux # SE-Linux support
+%bcond_without	selinux		# build without SE-Linux support
+%bcond_with	shared		# build with shared libshadow
 #
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
@@ -135,22 +136,21 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %{__automake}
 %configure \
 	--disable-desrpc \
+	%{?with_shared:--enable-shared --disable-static} \
+	--without-libcrack \
 	--with-libcrypt \
-	%{!?_without_static:--enable-static} \
-	%{!?_without_static:--disable-shared} \
-	%{?_without_static:--disable-static} \
-	%{?_without_static:--enable-shared} \
-	%{?with_selinux:--with-selinux} \
 	--with-libpam \
 	--with-md5crypt \
 	--with-nls \
+	%{?with_selinux:--with-selinux} \
 	--without-included-gettext
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,security,skel}
 
@@ -178,13 +178,17 @@ install man/pl/groups.1 $RPM_BUILD_ROOT%{_mandir}/pl/man1
 
 ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
 
-echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
-echo .so vipw.8   > $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8
+#echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
+#echo '.so vipw.8'   > $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8
 
-echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/pl/man1/sg.1
-echo .so vipw.8   > $RPM_BUILD_ROOT%{_mandir}/pl/man8/vigr.8
+echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/fr/man1/sg.1
+echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
+echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ko/man1/sg.1
 
-echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/ja/man1/sg.1
+#echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ja/man1/sg.1
+
+#echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/pl/man1/sg.1
+#echo '.so vipw.8'   > $RPM_BUILD_ROOT%{_mandir}/pl/man8/vigr.8
 
 %find_lang %{name}
 
@@ -192,12 +196,12 @@ echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/ja/man1/sg.1
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{!?_without_static:#}/sbin/ldconfig
+%{?with_shared:/sbin/ldconfig}
 if [ ! -f /etc/shadow ]; then
 	%{_sbindir}/pwconv
 fi
 
-%{!?_without_static:#}%postun -p /sbin/ldconfig
+%{?with_shared:%postun -p /sbin/ldconfig}
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -211,90 +215,145 @@ fi
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/login.defs
 %attr(600,root,root) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel
-%{!?_without_static:#}%attr(755,root,root) %{_libdir}/lib*
+%{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
 %attr(755,root,root) %{_sbindir}/chpasswd
-%attr(755,root,root) %{_sbindir}/group*
+%attr(755,root,root) %{_sbindir}/groupadd
+%attr(755,root,root) %{_sbindir}/groupdel
+%attr(755,root,root) %{_sbindir}/groupmod
 %attr(755,root,root) %{_sbindir}/grpck
+%attr(755,root,root) %{_sbindir}/grpconv
+%attr(755,root,root) %{_sbindir}/grpunconv
 %attr(755,root,root) %{_sbindir}/pwck
-%attr(755,root,root) %{_sbindir}/*conv
-%attr(755,root,root) %{_sbindir}/user*
+%attr(755,root,root) %{_sbindir}/pwconv
+%attr(755,root,root) %{_sbindir}/pwunconv
+%attr(755,root,root) %{_sbindir}/useradd
+%attr(755,root,root) %{_sbindir}/userdel
+%attr(755,root,root) %{_sbindir}/usermod
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
 %attr(755,root,root) %{_bindir}/faillog
 %attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(4755,root,root) %{_bindir}/passwd
-%{_mandir}/man1/groups.*
-%{_mandir}/man1/passwd.*
-#%%{_mandir}/man1/su.*
-%{_mandir}/man5/faillog.*
-%{_mandir}/man5/login.*
-%{_mandir}/man5/passwd.*
-%{_mandir}/man5/shadow.*
-%{_mandir}/man5/suauth.*
-%{_mandir}/man8/faillog.*
-%{_mandir}/man8/groupadd.*
-%{_mandir}/man8/groupdel.*
-%{_mandir}/man8/groupmod.*
-%{_mandir}/man8/grpck.*
-%{_mandir}/man8/grpconv.*
-%{_mandir}/man8/grpunconv.*
-%{_mandir}/man8/lastlog.*
-%{_mandir}/man8/pwck.*
-%{_mandir}/man8/pwconv.*
-%{_mandir}/man8/pwunconv.*
-%{_mandir}/man8/useradd.*
-%{_mandir}/man8/userdel.*
-%{_mandir}/man8/usermod.*
-%{_mandir}/man8/vigr.*
-%{_mandir}/man8/vipw.*
-%{_mandir}/man8/chpasswd.*
+%{_mandir}/man1/groups.1*
+%{_mandir}/man1/passwd.1*
+%{_mandir}/man5/faillog.5*
+%{_mandir}/man5/login.access.5*
+%{_mandir}/man5/login.defs.5*
+%{_mandir}/man5/passwd.5*
+%{_mandir}/man5/shadow.5*
+%{_mandir}/man5/suauth.5*
+%{_mandir}/man8/faillog.8*
+%{_mandir}/man8/groupadd.8*
+%{_mandir}/man8/groupdel.8*
+%{_mandir}/man8/groupmod.8*
+%{_mandir}/man8/grpck.8*
+%{_mandir}/man8/grpconv.8*
+%{_mandir}/man8/grpunconv.8*
+%{_mandir}/man8/lastlog.8*
+%{_mandir}/man8/pwck.8*
+%{_mandir}/man8/pwconv.8*
+%{_mandir}/man8/pwunconv.8*
+%{_mandir}/man8/useradd.8*
+%{_mandir}/man8/userdel.8*
+%{_mandir}/man8/usermod.8*
+%{_mandir}/man8/vigr.8*
+%{_mandir}/man8/vipw.8*
+%{_mandir}/man8/chpasswd.8*
 
-%lang(ja) %{_mandir}/ja/man1/passwd.*
-%lang(ja) %{_mandir}/ja/man5/faillog.*
-%lang(ja) %{_mandir}/ja/man5/login.*
-%lang(ja) %{_mandir}/ja/man5/passwd.*
-%lang(ja) %{_mandir}/ja/man5/shadow.*
-%lang(ja) %{_mandir}/ja/man5/suauth.*
-%lang(ja) %{_mandir}/ja/man8/faillog.*
-%lang(ja) %{_mandir}/ja/man8/groupadd.*
-%lang(ja) %{_mandir}/ja/man8/groupdel.*
-%lang(ja) %{_mandir}/ja/man8/groupmod.*
-%lang(ja) %{_mandir}/ja/man8/grpck.*
-%lang(ja) %{_mandir}/ja/man8/lastlog.*
-%lang(ja) %{_mandir}/ja/man8/pwck.*
-%lang(ja) %{_mandir}/ja/man8/pwconv.*
-%lang(ja) %{_mandir}/ja/man8/userdel.*
-%lang(ja) %{_mandir}/ja/man8/usermod.*
+%lang(cs) %{_mandir}/cs/man5/passwd.5*
+%lang(cs) %{_mandir}/cs/man5/shadow.5*
 
-%lang(pl) %{_mandir}/pl/man1/groups.*
-%lang(pl) %{_mandir}/pl/man1/passwd.*
-%lang(pl) %{_mandir}/pl/man5/faillog.*
-%lang(pl) %{_mandir}/pl/man5/login.*
-%lang(pl) %{_mandir}/pl/man5/passwd.*
-%lang(pl) %{_mandir}/pl/man5/shadow.*
-%lang(pl) %{_mandir}/pl/man5/suauth.*
-%lang(pl) %{_mandir}/pl/man8/faillog.*
-%lang(pl) %{_mandir}/pl/man8/groupadd.*
-%lang(pl) %{_mandir}/pl/man8/groupdel.*
-%lang(pl) %{_mandir}/pl/man8/groupmod.*
-%lang(pl) %{_mandir}/pl/man8/grpck.*
-%lang(pl) %{_mandir}/pl/man8/grpconv.*
-%lang(pl) %{_mandir}/pl/man8/grpunconv.*
-%lang(pl) %{_mandir}/pl/man8/lastlog.*
-%lang(pl) %{_mandir}/pl/man8/pwck.*
-%lang(pl) %{_mandir}/pl/man8/pwconv.*
-%lang(pl) %{_mandir}/pl/man8/pwunconv.*
-%lang(pl) %{_mandir}/pl/man8/useradd.*
-%lang(pl) %{_mandir}/pl/man8/userdel.*
-%lang(pl) %{_mandir}/pl/man8/usermod.*
-%lang(pl) %{_mandir}/pl/man8/vigr.*
-%lang(pl) %{_mandir}/pl/man8/vipw.*
+%lang(de) %{_mandir}/de/man1/passwd.1*
 
-%lang(pt_BR) %{_mandir}/pt_BR/man5/shadow.*
-%lang(pt_BR) %{_mandir}/pt_BR/man8/groupadd.*
-%lang(pt_BR) %{_mandir}/pt_BR/man8/groupdel.*
-%lang(pt_BR) %{_mandir}/pt_BR/man8/groupmod.*
+%lang(fr) %{_mandir}/fr/man1/passwd.1*
+%lang(fr) %{_mandir}/fr/man5/faillog.5*
+%lang(fr) %{_mandir}/fr/man5/passwd.5*
+%lang(fr) %{_mandir}/fr/man5/shadow.5*
+%lang(fr) %{_mandir}/fr/man8/adduser.8*
+%lang(fr) %{_mandir}/fr/man8/chpasswd.8*
+%lang(fr) %{_mandir}/fr/man8/useradd.8*
+%lang(fr) %{_mandir}/fr/man8/userdel.8*
+%lang(fr) %{_mandir}/fr/man8/usermod.8*
+
+%lang(hu) %{_mandir}/man1/passwd.1*
+
+%lang(id) %{_mandir}/id/man8/useradd.8*
+
+%lang(it) %{_mandir}/it/man1/groups.1*
+%lang(it) %{_mandir}/it/man1/passwd.1*
+%lang(it) %{_mandir}/it/man5/passwd.5*
+%lang(it) %{_mandir}/it/man5/shadow.5*
+%lang(it) %{_mandir}/it/man8/groupadd.8*
+%lang(it) %{_mandir}/it/man8/groupdel.8*
+%lang(it) %{_mandir}/it/man8/groupmod.8*
+%lang(it) %{_mandir}/it/man8/grpck.8*
+%lang(it) %{_mandir}/it/man8/grpconv.8*
+%lang(it) %{_mandir}/it/man8/grpunconv.8*
+%lang(it) %{_mandir}/it/man8/lastlog.8*
+%lang(it) %{_mandir}/it/man8/pwconv.8*
+%lang(it) %{_mandir}/it/man8/pwunconv.8*
+%lang(it) %{_mandir}/it/man8/useradd.8*
+%lang(it) %{_mandir}/it/man8/userdel.8*
+%lang(it) %{_mandir}/it/man8/usermod.8*
+%lang(it) %{_mandir}/it/man8/vigr.8*
+%lang(it) %{_mandir}/it/man8/vipw.8*
+
+%lang(ja) %{_mandir}/ja/man1/passwd.1*
+%lang(ja) %{_mandir}/ja/man5/faillog.5*
+%lang(ja) %{_mandir}/ja/man5/login.access.5*
+%lang(ja) %{_mandir}/ja/man5/login.defs.5*
+%lang(ja) %{_mandir}/ja/man5/passwd.5*
+%lang(ja) %{_mandir}/ja/man5/shadow.5*
+%lang(ja) %{_mandir}/ja/man5/suauth.5*
+%lang(ja) %{_mandir}/ja/man8/faillog.8*
+%lang(ja) %{_mandir}/ja/man8/groupadd.8*
+%lang(ja) %{_mandir}/ja/man8/groupdel.8*
+%lang(ja) %{_mandir}/ja/man8/groupmod.8*
+%lang(ja) %{_mandir}/ja/man8/grpck.8*
+%lang(ja) %{_mandir}/ja/man8/grpconv.8*
+%lang(ja) %{_mandir}/ja/man8/grpunconv.8*
+%lang(ja) %{_mandir}/ja/man8/lastlog.8*
+%lang(ja) %{_mandir}/ja/man8/pwck.8*
+%lang(ja) %{_mandir}/ja/man8/pwconv.8*
+%lang(ja) %{_mandir}/ja/man8/pwunconv.8*
+%lang(ja) %{_mandir}/ja/man8/useradd.8*
+%lang(ja) %{_mandir}/ja/man8/userdel.8*
+%lang(ja) %{_mandir}/ja/man8/usermod.8*
+%lang(ja) %{_mandir}/ja/man8/vipw.8*
+%lang(ja) %{_mandir}/ja/man8/vigr.8*
+
+%lang(ko) %{_mandir}/ko/man5/passwd.5*
+
+%lang(pl) %{_mandir}/pl/man1/groups.1*
+%lang(pl) %{_mandir}/pl/man1/passwd.1*
+%lang(pl) %{_mandir}/pl/man5/faillog.5*
+%lang(pl) %{_mandir}/pl/man5/login.access.5*
+%lang(pl) %{_mandir}/pl/man5/login.defs.5*
+%lang(pl) %{_mandir}/pl/man5/passwd.5*
+%lang(pl) %{_mandir}/pl/man5/shadow.5*
+%lang(pl) %{_mandir}/pl/man5/suauth.5*
+%lang(pl) %{_mandir}/pl/man8/faillog.8*
+%lang(pl) %{_mandir}/pl/man8/groupadd.8*
+%lang(pl) %{_mandir}/pl/man8/groupdel.8*
+%lang(pl) %{_mandir}/pl/man8/groupmod.8*
+%lang(pl) %{_mandir}/pl/man8/grpck.8*
+%lang(pl) %{_mandir}/pl/man8/grpconv.8*
+%lang(pl) %{_mandir}/pl/man8/grpunconv.8*
+%lang(pl) %{_mandir}/pl/man8/lastlog.8*
+%lang(pl) %{_mandir}/pl/man8/pwck.8*
+%lang(pl) %{_mandir}/pl/man8/pwconv.8*
+%lang(pl) %{_mandir}/pl/man8/pwunconv.8*
+%lang(pl) %{_mandir}/pl/man8/useradd.8*
+%lang(pl) %{_mandir}/pl/man8/userdel.8*
+%lang(pl) %{_mandir}/pl/man8/usermod.8*
+%lang(pl) %{_mandir}/pl/man8/vigr.8*
+%lang(pl) %{_mandir}/pl/man8/vipw.8*
+
+%lang(pt_BR) %{_mandir}/pt_BR/man5/shadow.5*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/groupadd.8*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/groupdel.8*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/groupmod.8*
 
 %files extras
 %defattr(644,root,root,755)
@@ -310,43 +369,94 @@ fi
 %attr(4755,root,root) %{_bindir}/gpasswd
 %attr(4755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/sg
-#%attr(755,root,root) %{_bindir}/su
 %attr(755,root,root) %{_sbindir}/dpasswd
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
 
-%{_mandir}/man1/chage.*
-%{_mandir}/man1/chfn.*
-%{_mandir}/man1/chsh.*
-%{_mandir}/man1/expiry.*
-%{_mandir}/man1/gpasswd.*
-%{_mandir}/man1/newgrp.*
-%{_mandir}/man1/sg.*
-%{_mandir}/man8/dpasswd.*
-%{_mandir}/man8/mkpasswd.*
-%{_mandir}/man8/newusers.*
+%{_mandir}/man1/chage.1*
+%{_mandir}/man1/chfn.1*
+%{_mandir}/man1/chsh.1*
+%{_mandir}/man1/expiry.1*
+%{_mandir}/man1/gpasswd.1*
+%{_mandir}/man1/newgrp.1*
+%{_mandir}/man1/sg.1*
+%{_mandir}/man8/dpasswd.8*
+%{_mandir}/man8/mkpasswd.8*
+%{_mandir}/man8/newusers.8*
 
-%lang(ja) %{_mandir}/ja/man1/chage.*
-%lang(ja) %{_mandir}/ja/man1/chfn.*
-%lang(ja) %{_mandir}/ja/man1/chsh.*
-%lang(ja) %{_mandir}/ja/man1/gpasswd.*
-%lang(ja) %{_mandir}/ja/man1/newgrp.*
-%lang(ja) %{_mandir}/ja/man1/sg.*
-%lang(ja) %{_mandir}/ja/man8/chpasswd.*
-%lang(ja) %{_mandir}/ja/man8/dpasswd.*
-%lang(ja) %{_mandir}/ja/man8/mkpasswd.*
+%lang(de) %{_mandir}/de/man1/chsh.1*
 
-%lang(pl) %{_mandir}/pl/man1/chage.*
-%lang(pl) %{_mandir}/pl/man1/chfn.*
-%lang(pl) %{_mandir}/pl/man1/chsh.*
-%lang(pl) %{_mandir}/pl/man1/gpasswd.*
-%lang(pl) %{_mandir}/pl/man1/newgrp.*
-%lang(pl) %{_mandir}/pl/man1/sg.*
-%lang(pl) %{_mandir}/pl/man5/d_passwd.*
-%lang(pl) %{_mandir}/pl/man5/dialups.*
-%lang(pl) %{_mandir}/pl/man8/chpasswd.*
-%lang(pl) %{_mandir}/pl/man8/dpasswd.*
-%lang(pl) %{_mandir}/pl/man8/mkpasswd.*
-%lang(pl) %{_mandir}/pl/man8/newusers.*
+%lang(fr) %{_mandir}/fr/man1/chage.1*
+%lang(fr) %{_mandir}/fr/man1/chsh.1*
+%lang(fr) %{_mandir}/fr/man1/gpasswd.1*
+%lang(fr) %{_mandir}/fr/man1/newgrp.1*
+%lang(fr) %{_mandir}/fr/man1/sg.1*
 
-%lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.*
+%lang(hu) %{_mandir}/hu/man1/chsh.1*
+%lang(hu) %{_mandir}/hu/man1/gpasswd.1*
+%lang(hu) %{_mandir}/hu/man1/newgrp.1*
+%lang(hu) %{_mandir}/hu/man1/sg.1*
+
+%lang(id) %{_mandir}/id/man1/chsh.1*
+
+%lang(it) %{_mandir}/it/man1/chfn.1*
+%lang(it) %{_mandir}/it/man1/chsh.1*
+%lang(it) %{_mandir}/it/man1/gpasswd.1*
+%lang(it) %{_mandir}/it/man1/newgrp.1*
+%lang(it) %{_mandir}/it/man1/sg.1*
+
+%lang(ja) %{_mandir}/ja/man1/chage.1*
+%lang(ja) %{_mandir}/ja/man1/chfn.1*
+%lang(ja) %{_mandir}/ja/man1/chsh.1*
+%lang(ja) %{_mandir}/ja/man1/gpasswd.1*
+%lang(ja) %{_mandir}/ja/man1/newgrp.1*
+%lang(ja) %{_mandir}/ja/man1/sg.1*
+%lang(ja) %{_mandir}/ja/man8/chpasswd.8*
+%lang(ja) %{_mandir}/ja/man8/dpasswd.8*
+%lang(ja) %{_mandir}/ja/man8/mkpasswd.8*
+%lang(ja) %{_mandir}/ja/man8/newusers.8*
+
+%lang(ko) %{_mandir}/ko/man1/chfn.1*
+%lang(ko) %{_mandir}/ko/man1/chsh.1*
+%lang(ko) %{_mandir}/ko/man1/newgrp.1*
+%lang(ko) %{_mandir}/ko/man1/sg.1*
+
+%lang(pl) %{_mandir}/pl/man1/chage.1*
+%lang(pl) %{_mandir}/pl/man1/chfn.1*
+%lang(pl) %{_mandir}/pl/man1/chsh.1*
+%lang(pl) %{_mandir}/pl/man1/expiry.1*
+%lang(pl) %{_mandir}/pl/man1/gpasswd.1*
+%lang(pl) %{_mandir}/pl/man1/newgrp.1*
+%lang(pl) %{_mandir}/pl/man1/sg.1*
+%lang(pl) %{_mandir}/pl/man5/d_passwd.5*
+%lang(pl) %{_mandir}/pl/man5/dialups.5*
+%lang(pl) %{_mandir}/pl/man8/chpasswd.8*
+%lang(pl) %{_mandir}/pl/man8/dpasswd.8*
+%lang(pl) %{_mandir}/pl/man8/mkpasswd.8*
+%lang(pl) %{_mandir}/pl/man8/newusers.8*
+
+%lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.1*
+
+# unpackaged:
+# - /bin/login already in login (from util-linux.spec)
+#%attr(755,root,root) %{_bindir}/login
+#%{_mandir}/man1/login.1*
+#%{_mandir}/man5/porttime.5*
+#%lang(hu) %{_mandir}/hu/man1/login.1*
+#%lang(id) %{_mandir}/id/man1/login.1*
+#%lang(it) %{_mandir}/it/man1/login.1*
+#%lang(ja) %{_mandir}/ja/man1/login.1*
+#%lang(ja) %{_mandir}/ja/man5/porttime.5*
+#%lang(ko) %{_mandir}/ko/man1/login.1*
+#%lang(pl) %{_mandir}/pl/man1/login.1*
+#%lang(pl) %{_mandir}/pl/man5/porttime.5*
+# - /bin/su already in coreutils
+#%attr(4755,root,root) %{_bindir}/su
+#%{_mandir}/man1/su.1*
+#%lang(ja) %{_mandir}/ja/man1/su.1*
+#%lang(pl) %{_mandir}/pl/man1/su.1*
+# - unknown reason (removed w/o comment in rev 1.27)
+#%attr(755,root,root) %{_sbindir}/logoutd
+#%{_mandir}/man8/logoutd.8*
+#%lang(ja) %{_mandir}/ja/man8/logoutd.8*
+#%lang(pl) %{_mandir}/pl/man8/logoutd.8*
