@@ -28,10 +28,9 @@ Source7:	passwd.pamd
 Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-man_and_po.patch
-Patch5:		%{name}-pld.patch
-Patch6:		%{name}-chage_expdays.patch
-Patch7:		%{name}-selinux.patch
-Patch8:		%{name}-setlocale_hack.patch
+Patch2:		%{name}-pld.patch
+Patch3:		%{name}-chage_expdays.patch
+Patch4:		%{name}-typo.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -126,12 +125,11 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 
 %prep
 %setup -q
-#%patch0 -p1 -I need help with this one ;-)
+%patch0 -p1
 %patch1 -p1
-%patch5 -p1
-%patch6 -p1
-%{?with_selinux:%patch7 -p1}
-%patch8 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %{__autoheader}
@@ -178,6 +176,20 @@ echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/fr/man1/sg.1
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ko/man1/sg.1
 
+%if !%{with shared}
+# invalid static library
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
+%endif
+
+# /bin/login already in login (from util-linux.spec)
+rm -f $RPM_BUILD_ROOT{%{_bindir}/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1*,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
+# /bin/su already in coreutils
+rm -f $RPM_BUILD_ROOT{%{_bindir}/su,%{_mandir}/{,*/}man1/su.1}
+# /usr/bin/groups already in coreutils
+rm -f $RPM_BUILD_ROOT{%{_bindir}/groups,%{_mandir}/{,*/}man1/groups.1}
+# /etc/limits not used with pam
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man5/limits.5
+
 %find_lang %{name}
 
 %clean
@@ -205,7 +217,6 @@ fi
 %dir /etc/skel
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
-#%attr(644,root,root) %{_libdir}/lib*.a
 %attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/groupadd
 %attr(755,root,root) %{_sbindir}/groupdel
@@ -440,29 +451,3 @@ fi
 
 %lang(zh_TW) %{_mandir}/zh_TW/man1/chfn.1*
 %lang(zh_TW) %{_mandir}/zh_TW/man1/chsh.1*
-
-# unpackaged:
-# - /bin/login already in login (from util-linux.spec)
-#%attr(755,root,root) %{_bindir}/login
-#%{_mandir}/man1/login.1*
-#%{_mandir}/man5/porttime.5*
-#%lang(hu) %{_mandir}/hu/man1/login.1*
-#%lang(id) %{_mandir}/id/man1/login.1*
-#%lang(it) %{_mandir}/it/man1/login.1*
-#%lang(ja) %{_mandir}/ja/man1/login.1*
-#%lang(ja) %{_mandir}/ja/man5/porttime.5*
-#%lang(ko) %{_mandir}/ko/man1/login.1*
-#%lang(pl) %{_mandir}/pl/man1/login.1*
-#%lang(pl) %{_mandir}/pl/man5/porttime.5*
-
-# - /bin/su already in coreutils
-#%attr(4755,root,root) %{_bindir}/su
-#%{_mandir}/man1/su.1*
-#%lang(ja) %{_mandir}/ja/man1/su.1*
-#%lang(pl) %{_mandir}/pl/man1/su.1*
-
-# - unknown reason (removed w/o comment in rev 1.27)
-#%attr(755,root,root) %{_sbindir}/logoutd
-#%{_mandir}/man8/logoutd.8*
-#%lang(ja) %{_mandir}/ja/man8/logoutd.8*
-#%lang(pl) %{_mandir}/pl/man8/logoutd.8*
