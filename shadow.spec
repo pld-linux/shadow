@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	20001016
-Release:	2
+Release:	3
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -94,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,skel}
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,security,skel}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
@@ -105,6 +105,7 @@ install %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
 
 :> $RPM_BUILD_ROOT%{_sysconfdir}/shadow
+touch $RPM_BUILD_ROOT%{_sysconfdir}/security/{chfn,chsh}.allow
 
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
@@ -132,6 +133,7 @@ fi
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/default/*
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/security/*
 
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
 %attr(400,root,root) %ghost %{_sysconfdir}/shadow
