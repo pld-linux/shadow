@@ -12,7 +12,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.4.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -46,8 +46,9 @@ Requires:	pam >= 0.77.3
 # to force proper coreutils version, so "groups" command exists
 Requires:	/usr/bin/groups
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Obsoletes:	shadow-utils
 Obsoletes:	passwd
+Obsoletes:	pwdutils
+Obsoletes:	shadow-utils
 
 %description
 This package includes the programs necessary to convert standard UNIX
