@@ -43,6 +43,8 @@ Provides:	passwd
 Requires:	pam >= 0.77.3
 # to force proper coreutils version, so "groups" command exists
 Requires:	/usr/bin/groups
+# to force proper util-linux version, so "newgrp" command exists
+Requires:	/usr/bin/newgrp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	shadow-utils
 Obsoletes:	passwd
