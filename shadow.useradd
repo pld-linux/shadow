@@ -1,5 +1,5 @@
 # useradd defaults file
-GROUP=100
+GROUP=1000
 HOME=/home/users
 INACTIVE=-1
 EXPIRE=
