@@ -3,14 +3,16 @@ Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
 Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux
 Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
+Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
+Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
-Version:	20001016
-Release:	4
+Version:	4.0.0
+Release:	1
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -65,6 +67,28 @@ Programy znajduj±ce siê w tym pakiecie s± niezbêdne do prawid³owej
 pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
 - glibc nigdy nie powinien zostaæ odinstalowany!
 
+%description -l pt_BR
+Este pacote inclui os programas necessários para converter
+arquivos-padrão UNIX de senha para o formato shadow.  - 'pwconv5'
+converte tudo para o formato de senhas do shadow.  - 'pwunconv'
+desconverte senhas shadow, gerando um arquivo no diretório corrente
+chamado npasswd que é o arquivo-padrão UNIX de senha.  - 'pwck'
+checa a integridade da senha e dos arquivos shadow.  - 'lastlog'
+mostra o último momento de login de todos os usuários.
+
+Várias páginas de manual estão também incluídas sobre estes utilitários e
+senhas shadow em geral.
+
+%description -l es
+Este paquete incluye los programas necesarios para convertir Archivos padrón
+UNIX de contraseña al formato shadow.  - 'pwconv5' convierte todo al formato de
+contraseñas del shadow.  - 'pwunconv' deshace la conversión de contraseñas
+shadow, creando un archivo en el directorio corriente llamado npasswd que es el
+archivo padrón UNIX de contraseña.  - 'pwck' chequea la integridad de la
+contraseña y de los archivos shadow.  - 'lastlog' enseña el último momento de
+login de todos los usuarios.  Están también incluidas, en general, varias
+páginas de manual sobre estos utilitarios y contraseñas shadow.
+
 %prep
 %setup -q 
 %patch1 -p1 
@@ -72,11 +96,7 @@ pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
 
 %build
 gettextize --copy --force
-libtoolize --copy --force
 aclocal
-autoheader
-autoconf
-automake -a -c --foreign
 %configure \
 	--disable-desrpc \
 	--with-libcrypt \
@@ -141,24 +161,30 @@ fi
 
 %dir /etc/skel
 
-%{!?_without_static:#}%attr(755,root,root) /lib/lib*.so.*.*.*
+%{!?_without_static:#}%attr(755,root,root) /usr/lib/lib*
 %attr(755,root,root) %{_sbindir}/user*
 %attr(755,root,root) %{_sbindir}/group*
 %attr(755,root,root) %{_sbindir}/grpck
 %attr(755,root,root) %{_sbindir}/pwck
 %attr(755,root,root) %{_sbindir}/*conv
 %attr(755,root,root) %{_sbindir}/chpasswd
+%attr(755,root,root) %{_sbindir}/dpasswd
+%attr(755,root,root) %{_sbindir}/logoutd
 %attr(755,root,root) %{_sbindir}/newusers
 %attr(755,root,root) %{_sbindir}/mkpasswd
-%attr(755,root,root) %{_bindir}/chage
+%attr(755,root,root) %{_sbindir}/vipw
 %attr(4755,root,root) %{_bindir}/chfn
 %attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
-%attr(4755,root,root) %{_bindir}/passwd
 %attr(4755,root,root) %{_bindir}/gpasswd
-%attr(755,root,root) %{_bindir}/lastlog
+%attr(4755,root,root) %{_bindir}/passwd
+%attr(755,root,root) %{_bindir}/chage
 %attr(755,root,root) %{_bindir}/faillog
+%attr(755,root,root) %{_bindir}/groups
+%attr(755,root,root) %{_bindir}/lastlog
+%attr(755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/sg
+%attr(755,root,root) %{_bindir}/su
 
 %{_mandir}/man1/gpasswd.*
 %{_mandir}/man1/chage.*
@@ -188,7 +214,6 @@ fi
 %{_mandir}/man8/chpasswd.*
 %{_mandir}/man8/groupadd.*
 %{_mandir}/man8/grpunconv.*
-%{_mandir}/man8/shadowconfig.*
 
 %lang(pl) %{_mandir}/pl/man1/chage.*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.*
@@ -212,7 +237,58 @@ fi
 %lang(pl) %{_mandir}/pl/man8/newusers.*
 %lang(pl) %{_mandir}/pl/man8/pwck.*
 %lang(pl) %{_mandir}/pl/man8/pwconv.*
-%lang(pl) %{_mandir}/pl/man8/shadowconfig.*
 %lang(pl) %{_mandir}/pl/man8/useradd.*
 %lang(pl) %{_mandir}/pl/man8/userdel.*
 %lang(pl) %{_mandir}/pl/man8/usermod.*
+
+%lang(ja) %{_mandir}/ja/man1/chage.*
+%lang(ja) %{_mandir}/ja/man1/gpasswd.*
+%lang(ja) %{_mandir}/ja/man1/chfn.*
+%lang(ja) %{_mandir}/ja/man1/chsh.*
+%lang(ja) %{_mandir}/ja/man1/passwd.*
+%lang(ja) %{_mandir}/ja/man5/faillog.*
+%lang(ja) %{_mandir}/ja/man5/login.defs.*
+%lang(ja) %{_mandir}/ja/man5/passwd.*
+%lang(ja) %{_mandir}/ja/man5/porttime.*
+%lang(ja) %{_mandir}/ja/man5/shadow.*
+%lang(ja) %{_mandir}/ja/man8/chpasswd.*
+%lang(ja) %{_mandir}/ja/man8/faillog.*
+%lang(ja) %{_mandir}/ja/man8/groupadd.*
+%lang(ja) %{_mandir}/ja/man8/groupdel.*
+%lang(ja) %{_mandir}/ja/man8/groupmod.*
+%lang(ja) %{_mandir}/ja/man8/grpck.*
+%lang(ja) %{_mandir}/ja/man8/lastlog.*
+%lang(ja) %{_mandir}/ja/man8/logoutd.*
+%lang(ja) %{_mandir}/ja/man8/mkpasswd.*
+%lang(ja) %{_mandir}/ja/man8/newusers.*
+%lang(ja) %{_mandir}/ja/man8/pwck.*
+%lang(ja) %{_mandir}/ja/man8/pwconv.*
+%lang(ja) %{_mandir}/ja/man8/useradd.*
+%lang(ja) %{_mandir}/ja/man8/userdel.*
+%lang(ja) %{_mandir}/ja/man8/usermod.*
+
+%lang(pt_BR) %{_mandir}/pt_BR/man1/chage.*
+%lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man1/chfn.*
+%lang(pt_BR) %{_mandir}/pt_BR/man1/chsh.*
+%lang(pt_BR) %{_mandir}/pt_BR/man1/passwd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man5/faillog.*
+%lang(pt_BR) %{_mandir}/pt_BR/man5/login.defs.*
+%lang(pt_BR) %{_mandir}/pt_BR/man5/passwd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man5/porttime.*
+%lang(pt_BR) %{_mandir}/pt_BR/man5/shadow.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/chpasswd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/faillog.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/groupadd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/groupdel.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/groupmod.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/grpck.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/lastlog.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/logoutd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/mkpasswd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/newusers.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/pwck.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/pwconv.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/useradd.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/userdel.*
+%lang(pt_BR) %{_mandir}/pt_BR/man8/usermod.*
