@@ -66,7 +66,7 @@ nigdy nie powinien zostaæ odinstalowany !
 %build
 autoconf
 CFLAGS=$RPM_OPT_FLAGS LDFLAGS=-s \
-    ./configure \
+    ./configure %{_target} \
 	--prefix=/usr \
 	--disable-desrpc \
 	--with-libcrypt \
