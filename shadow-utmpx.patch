@@ -1,31 +1,34 @@
 diff -Nur shadow-19990307/configure.in shadow-19990307.pld/configure.in
 --- shadow-19990307/configure.in	Sun Mar  7 19:04:34 1999
 +++ shadow-19990307.pld/configure.in	Mon Jun  7 17:58:09 1999
-@@ -162,21 +162,21 @@
- 	fi
- done
+@@ -146,24 +146,24 @@
+ done])
+ AC_DEFINE_UNQUOTED(MAIL_SPOOL_FILE, "$shadow_cv_mailfile")
  
--AC_MSG_CHECKING(location of utmp)
-+AC_MSG_CHECKING(location of utmpx)
- for utmpdir in /var/run /var/adm /usr/adm /etc NONE; do
- 	if test "$utmpdir" = "NONE"; then
--		AC_MSG_WARN(utmp file not found)
--	elif test -f $utmpdir/utmp; then
--		AC_DEFINE_UNQUOTED(_UTMP_FILE, "$utmpdir/utmp")
-+		AC_MSG_WARN(utmpx file not found)
-+	elif test -f $utmpdir/utmpx; then
-+		AC_DEFINE_UNQUOTED(_UTMP_FILE, "$utmpdir/utmpx")
- 		AC_MSG_RESULT($utmpdir)
+-AC_CACHE_CHECK([location of utmp], shadow_cv_utmpdir,
++AC_CACHE_CHECK([location of utmpx], shadow_cv_utmpdir,
+ [for utmpdir in /var/run /var/adm /usr/adm /etc none; do
+-	if test -f $shadow_cv_utmpdir/utmp; then
++	if test -f $shadow_cv_utmpdir/utmpx; then
  		break
  	fi
- done
+ done])
+ if test "$shadow_cv_utmpdir" = "none"; then
+-	AC_MSG_WARN(utmp file not found)
++	AC_MSG_WARN(utmpx file not found)
+ fi
+-AC_DEFINE_UNQUOTED(_UTMP_FILE, "$shadow_cv_utmpdir/utmp")
++AC_DEFINE_UNQUOTED(_UTMP_FILE, "$shadow_cv_utmpdir/utmpx")
  
--AC_MSG_CHECKING(location of faillog/lastlog/wtmp)
-+AC_MSG_CHECKING(location of faillog/lastlog/wtmpx)
- for logdir in /var/log /var/adm /usr/adm /etc; do
+-AC_CACHE_CHECK([location of faillog/lastlog/wtmp], shadow_cv_logdir,
++AC_CACHE_CHECK([location of faillog/lastlog/wtmpx], shadow_cv_logdir,
+ [for shadow_cv_logdir in /var/log /var/adm /usr/adm /etc; do
  	if test -d $logdir; then
--		AC_DEFINE_UNQUOTED(_WTMP_FILE, "$logdir/wtmp")
-+		AC_DEFINE_UNQUOTED(_WTMP_FILE, "$logdir/wtmpx")
- 		AC_DEFINE_UNQUOTED(LASTLOG_FILE, "$logdir/lastlog")
- 		AC_DEFINE_UNQUOTED(FAILLOG_FILE, "$logdir/faillog")
- 		AC_MSG_RESULT($logdir)
+ 		break
+ 	fi
+ done])
+-AC_DEFINE_UNQUOTED(_WTMP_FILE, "$shadow_cv_logdir/wtmp")
++AC_DEFINE_UNQUOTED(_WTMP_FILE, "$shadow_cv_logdir/wtmpx")
+ AC_DEFINE_UNQUOTED(LASTLOG_FILE, "$shadow_cv_logdir/lastlog")
+ AC_DEFINE_UNQUOTED(FAILLOG_FILE, "$shadow_cv_logdir/faillog")
+ 

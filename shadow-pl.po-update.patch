@@ -10,9 +10,9 @@
  msgid ""
  msgstr ""
 -"Project-Id-Version: shadow-981228\n"
-+"Project-Id-Version: shadow-4.0.4.1\n"
++"Project-Id-Version: shadow-4.0.5\n"
  "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2004-01-14 15:16+0100\n"
+ "POT-Creation-Date: 2004-10-11 15:21+0200\n"
  "PO-Revision-Date: 1999-03-02 22:29+01:00\n"
  "Last-Translator: Arkadiusz Miśkiewicz <misiek@misiek.eu.org>\n"
 -"Language-Team: PL <pl@li.org>\n"
@@ -47,29 +47,30 @@
  
  #: src/groupdel.c:255
  #, c-format
-@@ -897,11 +898,11 @@
- 
+@@ -897,12 +898,12 @@
  #: src/groupmems.c:95
+ #, c-format
  msgid "Member already exists\n"
 -msgstr "Nie znaleziono członka do usunięcia\n"
 +msgstr "Członek już istnieje\n"
  
  #: src/groupmems.c:125
+ #, c-format
  msgid "Member to remove could not be found\n"
 -msgstr ""
 +msgstr "Nie znaleziono członka do usunięcia\n"
  
  #: src/groupmems.c:158
- msgid "Usage: groupmems -a username | -d username | -D | -l [-g groupname]\n"
+ #, c-format
 @@ -917,7 +918,7 @@
- 
  #: src/groupmems.c:210
+ #, c-format
  msgid "Not primary owner of current group\n"
 -msgstr ""
 +msgstr "Trzeba być głównym właścicielem bieżącej grupy\n"
  
  #: src/groupmems.c:215
- msgid "Unable to lock group file\n"
+ #, c-format
 @@ -1068,7 +1069,7 @@
  #: src/grpck.c:651 src/pwck.c:616
  #, c-format
@@ -107,14 +108,14 @@
  #: src/login.c:652
  #, c-format
 @@ -1271,7 +1272,7 @@
- #: src/mkpasswd.c:315
+ #: src/mkpasswd.c:314
  #, c-format
  msgid "%s: error parsing line \"%s\"\n"
 -msgstr "%s: błąd podczas przetwarzania lini \"%s\"\n"
 +msgstr "%s: błąd podczas przetwarzania linii \"%s\"\n"
  
- #: src/mkpasswd.c:323 src/mkpasswd.c:328 src/mkpasswd.c:333 src/mkpasswd.c:338
- msgid "adding record for name "
+ #: src/mkpasswd.c:322 src/mkpasswd.c:327 src/mkpasswd.c:332 src/mkpasswd.c:337
+ #, c-format
 @@ -1371,7 +1372,7 @@
  #: src/newusers.c:509
  #, c-format
@@ -124,7 +125,7 @@
  
  #: src/newusers.c:518
  #, c-format
-@@ -1445,11 +1446,11 @@
+@@ -1445,12 +1446,12 @@
  "Warning: weak password (enter it again to use it anyway).\n"
  msgstr ""
  "\n"
@@ -132,6 +133,7 @@
 +"Ostrzeżenie: słabe hasło (wpisz je ponowie jeśli jednak chcesz go użyć).\n"
  
  #: src/passwd.c:287
+ #, c-format
  msgid "They don't match; try again.\n"
 -msgstr "Nie pasują; spróbuj ponownie.\n"
 +msgstr "Nie zgadzają się; spróbuj ponownie.\n"
@@ -200,13 +202,13 @@
  #: src/useradd.c:1540
  #, c-format
 @@ -1906,12 +1907,12 @@
- 
- #: src/useradd.c:1570
+ #: src/useradd.c:1566
+ #, c-format
  msgid "No group named \"mail\" exists, creating mail spool with mode 0600.\n"
 -msgstr ""
 +msgstr "Nie istnieje grupa \"mail\", tworzenie skrzynki z uprawnieniami 0600.\n"
  
- #: src/useradd.c:1593
+ #: src/useradd.c:1589
  #, c-format
  msgid "Can't create mail spool for user %s.\n"
 -msgstr "Nie można za założyć spolla pocztowego dla uzytkownika %s.\n"
@@ -241,119 +243,3 @@
  
  #: src/userdel.c:793
  #, c-format
-@@ -2157,115 +2158,3 @@
- "Użycie:\n"
- "`vipw' edytuje /etc/passwd      `vipw -s' edytuje /etc/shadow\n"
- "`vigr' edytuje /etc/group       `vigr -s' edytuje /etc/gshadow\n"
--
--#~ msgid "User %s has a TCFS key, his old password is required.\n"
--#~ msgstr "Użytkownik %s posiada klucz TCFS, jego stare hasło jest wymagane.\n"
--
--#~ msgid "You can use -t option to force the change.\n"
--#~ msgstr "Nie możesz używać opcji -t by wymusić zmianę.\n"
--
--#~ msgid "Warning: user %s has a TCFS key.\n"
--#~ msgstr "Ostrzeżenie: użytkownik %s posiada klucz TCFS.\n"
--
--#~ msgid "Cannot lock the TCFS key database; try again later\n"
--#~ msgstr "Nie można zablokować bazy kluczy TCFS; spróbuj ponownie\n"
--
--#~ msgid "Cannot open the TCFS key database.\n"
--#~ msgstr "Nie można otworzyć bazy kluczy TCFS.\n"
--
--#~ msgid "Error updating the TCFS key database.\n"
--#~ msgstr "Błąd podczas aktualizacji bazy kluczy TCFS.\n"
--
--#~ msgid "Cannot commit TCFS changes.\n"
--#~ msgstr "Nie można potwierdzić zmian TCFS.\n"
--
--#~ msgid "%s: cannot rewrite TCFS key file\n"
--#~ msgstr "%s: nie można przepisać pliku klucza TCFS\n"
--
--#~ msgid "%s: cannot lock TCFS key file\n"
--#~ msgstr "%s: nie można zablokować pliku klucza TCFS\n"
--
--#~ msgid "%s: cannot open TCFS key file\n"
--#~ msgstr "%s: nie można otworzyć pliku klucza TCFS\n"
--
--#~ msgid "%s: error deleting TCFS entry\n"
--#~ msgstr "%s: błąd podczas usuwania wpisu TCFS\n"
--
--#~ msgid "               [-f inactive] [-e expire]"
--#~ msgstr "                [-f nieaktywne] [-e utrata_ważności]"
--
--#~ msgid "%s: error deleting authentication\n"
--#~ msgstr "%s: błąd podczas usuwania informacji uwierzytelniającej\n"
--
--#~ msgid "[-A {DEFAULT|program},...] "
--#~ msgstr "[-A {DEFAULT|program},...] "
--
--#~ msgid "%s: error deleting authentication method\n"
--#~ msgstr "%s: błąd podczas usuwania metody uwierzytelniania\n"
--
--#~ msgid "%s: error adding authentication method\n"
--#~ msgstr "%s: błąd podczas dodawania metody uwierzytelniania\n"
--
--#~ msgid "%s: error changing authentication method\n"
--#~ msgstr "%s: błąd podczas zmiany metody uwierzytelniania\n"
--
--#~ msgid "[-A program] "
--#~ msgstr "[-A program] "
--
--#~ msgid "[-p passwd] name\n"
--#~ msgstr "[-p hasło] nazwa\n"
--
--#~ msgid "error - lookup '%s' failed\n"
--#~ msgstr "błąd - wyszukiwanie '%s' niepowiodło się\n"
--
--#~ msgid "%s not found\n"
--#~ msgstr "%s nie znaleziony\n"
--
--#~ msgid "%s: not configured for shadow group support.\n"
--#~ msgstr "%s: nie skonfigurowano wsparcia dla ukrytych haseł grup.\n"
--
--#~ msgid "%s: Shadow passwords are not configured.\n"
--#~ msgstr "%s: Przesłonięte hasła nie są skonfigurowane.\n"
--
--#~ msgid "Usage: %s [-l] user\n"
--#~ msgstr "Użycie: %s [-l] użytkownik\n"
--
--#~ msgid "Executing shell %s\n"
--#~ msgstr "Uruchamiam powłokę %s\n"
--
--#~ msgid "Dialup Password: "
--#~ msgstr "Hasło dostępu modemowego: "
--
--#~ msgid "Usage: %s [-l] [-m min_days] [-M max_days] [-d last_day] user\n"
--#~ msgstr ""
--#~ "Użycie: %s [-l] [-m min_dni] [-M maks_dni] [-d ostatni_dzień] użytkownik\n"
--
--#~ msgid "Usage: %s [-(a|d)] shell\n"
--#~ msgstr "Użycie: %s [-(a|d)] powłoka\n"
--
--#~ msgid "Shell password: "
--#~ msgstr "Hasło powłoki: "
--
--#~ msgid "re-enter Shell password: "
--#~ msgstr "Wpisz ponownie hasło powłoki: "
--
--#~ msgid "%s: Passwords do not match, try again.\n"
--#~ msgstr "%s: Hasła się nie zgadzają, spróbuj ponownie.\n"
--
--#~ msgid "%s: can't create %s"
--#~ msgstr "%s: nie można utworzyć %s"
--
--#~ msgid "%s: can't open %s"
--#~ msgstr "%s: nie można otworzyć %s"
--
--#~ msgid "%s: Shell %s not found.\n"
--#~ msgstr "%s: Powłoka %s nie znaleziona.\n"
--
--#~ msgid "group=%s,%u  basedir=%s  skel=%s\n"
--#~ msgstr "grupa=%s,%u  kat_baz=%s  skel=%s\n"
--
--#~ msgid "shell=%s  "
--#~ msgstr "powłoka=%s  "
--
--#~ msgid "inactive=%ld  expire=%s"
--#~ msgstr "nieaktywne=%ld  wygaśnięcie=%s"
