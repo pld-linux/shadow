@@ -11,13 +11,13 @@ Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
-Version:	4.0.6
+Version:	4.0.7
 Release:	0.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-# Source0-md5:	3ca79b02c0aaa82128f4c32cb68ffe4f
+# Source0-md5:	89ebec0d1c0d861a5bd5c4c63e5cb0cc
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -164,6 +164,12 @@ install %{SOURCE5} $RPM_BUILD_ROOT/etc/pam.d/chsh
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
 install %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/useradd
+install etc/pam.d/usermod $RPM_BUILD_ROOT/etc/pam.d/userdel
+install etc/pam.d/usermod $RPM_BUILD_ROOT/etc/pam.d/usermod
+install etc/pam.d/groupadd $RPM_BUILD_ROOT/etc/pam.d/groupadd
+install etc/pam.d/groupmod $RPM_BUILD_ROOT/etc/pam.d/groupmod
+install etc/pam.d/groupdel $RPM_BUILD_ROOT/etc/pam.d/groupdel
+
 
 > $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
@@ -212,6 +218,11 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/passwd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/shadow
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/useradd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/usermod
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/userdel
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupadd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupdel
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupmod
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/login.defs
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel
