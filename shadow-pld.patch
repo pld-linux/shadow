@@ -247,14 +247,14 @@ diff -Nur shadow-4.0.3.orig/man/pl/useradd.8 shadow-4.0.3/man/pl/useradd.8
 +msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
 +msgstr "Użycie: groupadd [-g gid [-o]] [-f] [-r] grupa\n"
  
- #: src/groupadd6c.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
- #: src/useradd.c6c:940 src/usermod.c:533 src/usermod.c:676
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
 @@ -1838,6 +1838,9 @@
  msgid "               [-f inactive] [-e expire]\n"
  msgstr "                [-f nieaktywne] [-e utrata_ważności]\n"
  
 +msgid "               [-p passwd] [-r] name\n"
-+msgstr "                [-p has�o] [-r] nazwa\n"
++msgstr "                [-p hasło] [-r] nazwa\n"
 +
  #: src/useradd.c:729
  #, c-format
