@@ -4,8 +4,8 @@ Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux.
 Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
-Version:	981228
-Release:	2
+Version:	19990307
+Release:	1
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
@@ -13,13 +13,8 @@ URL:		ftp://ftp.ists.pwr.wroc.pl/pub/linux/shadow
 Source0:	%{name}-%{version}.tar.gz
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
-Source3:	shells
-Patch0:		shadow-man.patch
-Patch1:		shadow-useradd.patch
-Patch2:		shadow-groupadd.patch
-Patch3:		shadow-getdef.patch
+Patch0:		%{name}-%{version}-pld.patch
 Buildroot:	/tmp/%{name}-%{version}-root
-Obsoletes:	shadow-utils
 
 %description
 This package includes the programs necessary to convert standard
@@ -58,37 +53,38 @@ nigdy nie powinien zostaæ odinstalowany !
 
 %prep
 %setup -q 
-%patch0 -p1 
-%patch1 -p1 
-%patch2 -p1 
-%patch3 -p1 
+%patch -p1 
 
 %build
 autoconf
 CFLAGS=$RPM_OPT_FLAGS LDFLAGS=-s \
-    ./configure %{_target} \
-	--prefix=/usr \
+    ./configure \
+	--prefix=%{_prefix} \
 	--disable-desrpc \
 	--with-libcrypt \
 	--disable-shared \
 	--with-libpam \
 	--with-md5crypt \
 	--with-nls \
-	--without-included-gettext
+	--without-included-gettext %{_target_platform}
 make  
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install prefix=$RPM_BUILD_ROOT/usr exec_prefix=$RPM_BUILD_ROOT
+make \
+    prefix=$RPM_BUILD_ROOT%{_prefix} \
+    exec_prefix=$RPM_BUILD_ROOT \
+    mandir=$RPM_BUILD_ROOT%{_mandir} \
+    infodir$RPM_BUILD_ROOT=%{_infodir} \
+    install
 
 install -d $RPM_BUILD_ROOT/etc/default
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/login.defs
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/default/useradd
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/shells
 
-touch $RPM_BUILD_ROOT/etc/shadow
+:> $RPM_BUILD_ROOT/etc/shadow
 
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
@@ -114,8 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/default/*
 
 %config(noreplace) %verify(not size mtime md5) /etc/login.defs
-%config(noreplace) %verify(not size mtime md5) /etc/shells
-%attr(400,root,root) %config(noreplace) %verify(not size mtime md5) /etc/shadow
+%attr(400,root,root) %ghost /etc/shadow
 
 %attr(755,root,root) %{_sbindir}/user*
 %attr(755,root,root) %{_sbindir}/group*
@@ -147,8 +142,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/faillog.8.gz
 
 %lang(el) %{_datadir}/locale/el/LC_MESSAGES/shadow.mo
+%lang(pl) %{_datadir}/locale/pl/LC_MESSAGES/shadow.mo
 
 %changelog
+* Tue May 18 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [19990307-1]
+- updated to latest version,
+- removed old patches,
+- %ghost /etc/shadow,
+- FHS 2.0 && Unix98 changes,
+- prepare for 1.0 PLD Linux ... 
+
 * Tue Feb 02 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [981228-1d]
 - updated to 981228,
@@ -166,54 +170,9 @@ rm -rf $RPM_BUILD_ROOT
 - minor changes.
 
 * Tue Sep 1 1998 Konrad Stêpieñ <konrad@interdata.com.pl>
-- modify to build non-root
-- change mkdir to install -d
-- %attr makros
-- translations for pl
-- update source URL
-
-* Fri Aug 21 1998 Jeff Johnson <jbj@redhat.com>
-- Note that %{_sbindir}/mkpasswd conflicts with %{_bindir}/mkpasswd;
-  one of these (I think %{_sbindir}/mkpasswd but other opinions are valid)
-  should probably be renamed.  In any case, mkpasswd.8 from this package
-  needs to be installed. (problem #823)
-
-* Fri May 08 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Tue Apr 21 1998 Cristian Gafton <gafton@redhat.com>
-- updated to 980403
-- redid the patches
-
-* Tue Dec 30 1997 Cristian Gafton <gafton@redhat.com>
-- updated the spec file
-- updated the patch so that new accounts created on shadowed system won't
-  confuse pam_pwdb anymore ('!!' default password instead on '!')
-- fixed a bug that made useradd -G segfault
-- the check for the ut_user is now patched into configure
-
-* Thu Nov 13 1997 Erik Troan <ewt@redhat.com>
-- added patch for XOPEN oddities in glibc headers
-- check for ut_user before checking for ut_name -- this works around some
-  confusion on glibc 2.1 due to the utmpx header not defining the ut_name
-  compatibility stuff. I used a gross sed hack here because I couldn't make
-  automake work properly on the sparc (this could be a glibc 2.0.99 problem
-  though). The utuser patch works fine, but I don't apply it.
-- sleep after running autoconf
-
-* Thu Nov 06 1997 Cristian Gafton <gafton@redhat.com>
-- added forgot lastlog command to the spec file
-
-* Mon Oct 26 1997 Cristian Gafton <gafton@redhat.com>
-- obsoletes adduser
-
-* Thu Oct 23 1997 Cristian Gafton <gafton@redhat.com>
-- modified groupadd; updated the patch
-
-* Fri Sep 12 1997 Cristian Gafton <gafton@redhat.com>
-- updated to 970616
-- changed useradd to meet RH specs
-- fixed some bugs
-
-* Tue Jun 17 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
+- modify to build non-root,
+- change mkdir to install -d,
+- %attr makros,
+- translations for pl,
+- update source URL,
+- start at RH  spec file.
