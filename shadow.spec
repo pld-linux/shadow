@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	7
+Release:	8
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -24,6 +24,7 @@ Source7:	passwd.pamd
 Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-pld.patch
+Patch2:		%{name}-sort-SEGV.patch
 BuildRequires:	pam-devel
 Provides:	shadow-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -110,6 +111,7 @@ Programy nie u¿ywane czêsto. W ma³ych systemach mo¿na je pomin±æ.
 %setup -q 
 %patch0 -p1 
 %patch1 -p1 
+%patch2 -p1 
 
 %build
 %configure \
