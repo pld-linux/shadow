@@ -29,12 +29,12 @@
 +DEFS = -DWITH_SELINUX
  INCLUDES = -I$(top_srcdir)
  
- noinst_LTLIBRARIES = libshadow.la
+ lib_LTLIBRARIES = libshadow.la
  
  libshadow_la_LDFLAGS = -version-info 0:0:0
  libshadow_la_LIBADD = $(INTLLIBS) $(LIBCRYPT) $(LIBTCFS) $(LIBSKEY) $(LIBMD) \
 -	$(top_builddir)/libmisc/libmisc.la
-+	$(top_builddir)/libmisc/libmisc.la 
++	$(top_builddir)/libmisc/libmisc.la -lselinux
  
  libshadow_la_SOURCES = \
  	commonio.c \
@@ -144,12 +144,3 @@
  
  INCLUDES = -I${top_srcdir} \
  	-I${top_srcdir}/lib \
-@@ -35,7 +35,7 @@ suidbins = su
- suidubins = chage chfn chsh expiry gpasswd newgrp passwd
- 
- LDADD = $(top_builddir)/libmisc/libmisc.la \
--	$(top_builddir)/lib/libshadow.la
-+	$(top_builddir)/lib/libshadow.la -lselinux 
- 
- chpasswd_LDADD = $(LDADD) $(LIBPAM)
- chage_LDADD    = $(LDADD) $(LIBPAM)
