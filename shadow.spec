@@ -4,21 +4,22 @@ Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux.
 Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
-Version:	19990307
-Release:	3
+Version:	19990827
+Release:	1
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
-URL:		ftp://ftp.ists.pwr.wroc.pl/pub/linux/shadow
-Source0:	%{name}-%{version}.tar.gz
+Source0:	ftp://piast.t19.ds.pwr.wroc.pl/pub/linux/shadow/%{name}-%{version}.tar.gz
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
 Source4:	userdb.pamd
-Patch0:		%{name}-%{version}-pld.patch
-Patch1:		%{name}-utmpx.patch
-Patch2:		%{name}-pam-userdb.patch
+Patch0:		shadow-cvs.patch
+Patch1:		shadow-pld.patch
+Patch2:		shadow-utmpx.patch
+Patch3:		shadow-pam-userdb.patch
 BuildRequires:	pam-devel
+BuildRequires:	cracklib-devel
 Requires:	pam
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -59,12 +60,17 @@ nigdy nie powinien zostaæ odinstalowany !
 
 %prep
 %setup -q 
-%patch0 -p1 
+%patch0 -p1 -b .cvs
 %patch1 -p1 
 %patch2 -p1 
+%patch3 -p1
 
 %build
-libtoolize --copy --force && aclocal && autoheader && automake && autoconf
+libtoolize --copy --force 
+aclocal 
+autoheader 
+automake 
+autoconf
 %configure \
     --disable-desrpc \
     --with-libcrypt \
@@ -98,7 +104,8 @@ echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpunconv.8
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[1358]/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
+	$RPM_BUILD_ROOT%{_mandir}/pl/man*/* \
 	doc/ANNOUNCE doc/CHANGES doc/README doc/README.linux doc/HOWTO
 
 %find_lang %{name}
@@ -131,23 +138,69 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/newusers
 %attr(755,root,root) %{_sbindir}/mkpasswd
+%attr(755,root,root) %{_sbindir}/logoutd
 %attr(755,root,root) %{_bindir}/chage
 %attr(755,root,root) %{_bindir}/gpasswd
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(755,root,root) %{_bindir}/faillog
+%attr(755,root,root) %{_bindir}/newgrp
+%attr(755,root,root) %{_bindir}/sg
+%attr(755,root,root) %{_bindir}/expiry
 
-%{_mandir}/man1/chage.1.gz
-%{_mandir}/man1/gpasswd.1.gz
-%{_mandir}/man3/shadow.3.gz
-%{_mandir}/man5/shadow.5.gz
-%{_mandir}/man5/faillog.5.gz
-%{_mandir}/man8/group*.8.gz
-%{_mandir}/man8/user*.8.gz
-%{_mandir}/man8/pwck.8.gz
-%{_mandir}/man8/grpck.8.gz
-%{_mandir}/man8/chpasswd.8.gz 
-%{_mandir}/man8/newusers.8.gz
-%{_mandir}/man8/mkpasswd.8.gz
-%{_mandir}/man8/*conv.8.gz
-%{_mandir}/man8/lastlog.8.gz
-%{_mandir}/man8/faillog.8.gz
+%{_mandir}/man1/gpasswd.*
+%{_mandir}/man1/newgrp.*
+%{_mandir}/man1/chage.*
+%{_mandir}/man3/shadow.*
+%{_mandir}/man5/login.defs.*
+%{_mandir}/man5/passwd.*
+%{_mandir}/man5/shadow.*
+%{_mandir}/man5/porttime.*
+%{_mandir}/man5/faillog.*
+%{_mandir}/man8/dpasswd.*
+%{_mandir}/man8/faillog.*
+%{_mandir}/man8/groupdel.*
+%{_mandir}/man8/groupmod.*
+%{_mandir}/man8/grpck.*
+%{_mandir}/man8/grpconv.*
+%{_mandir}/man8/logoutd.*
+%{_mandir}/man8/mkpasswd.*
+%{_mandir}/man8/newusers.*
+%{_mandir}/man8/pwck.*
+%{_mandir}/man8/pwunconv.*
+%{_mandir}/man8/useradd.*
+%{_mandir}/man8/userdel.*
+%{_mandir}/man8/usermod.*
+%{_mandir}/man8/lastlog.*
+%{_mandir}/man8/pwconv.*
+%{_mandir}/man8/chpasswd.*
+%{_mandir}/man8/groupadd.*
+%{_mandir}/man8/grpunconv.*
+%{_mandir}/man8/shadowconfig.*
+
+%lang(pl) %{_mandir}/pl/man1/change.*
+%lang(pl) %{_mandir}/pl/man1/gpasswd.*
+%lang(pl) %{_mandir}/pl/man1/newgrp.*
+%lang(pl) %{_mandir}/pl/man3/pw_auth.*
+%lang(pl) %{_mandir}/pl/man5/faillog.*
+%lang(pl) %{_mandir}/pl/man5/login.defs.*
+%lang(pl) %{_mandir}/pl/man5/passwd.*
+%lang(pl) %{_mandir}/pl/man5/porttime.*
+%lang(pl) %{_mandir}/pl/man5/shadow.*
+%lang(pl) %{_mandir}/pl/man8/chpasswd.*
+%lang(pl) %{_mandir}/pl/man8/dpasswd.*
+%lang(pl) %{_mandir}/pl/man8/faillog.*
+%lang(pl) %{_mandir}/pl/man8/groupadd.*
+%lang(pl) %{_mandir}/pl/man8/groupdel.*
+%lang(pl) %{_mandir}/pl/man8/groupmod.*
+%lang(pl) %{_mandir}/pl/man8/grpck.*
+%lang(pl) %{_mandir}/pl/man8/lastlog.*
+%lang(pl) %{_mandir}/pl/man8/logoutd.*
+%lang(pl) %{_mandir}/pl/man8/mkpasswd.*
+%lang(pl) %{_mandir}/pl/man8/newusers.*
+%lang(pl) %{_mandir}/pl/man8/pwck.*
+%lang(pl) %{_mandir}/pl/man8/pwconv.*
+%lang(pl) %{_mandir}/pl/man8/pwuath.*
+%lang(pl) %{_mandir}/pl/man8/shadowconfig.*
+%lang(pl) %{_mandir}/pl/man8/useradd.*
+%lang(pl) %{_mandir}/pl/man8/userdel.*
+%lang(pl) %{_mandir}/pl/man8/usermod.*
