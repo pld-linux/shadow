@@ -3,7 +3,7 @@
 %bcond_without	selinux		# build without SE-Linux support
 %bcond_with	shared		# build with shared libshadow
 #
-%define		_snap	20041023
+%define		_snap	20041024
 #
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
@@ -31,11 +31,9 @@ Source6:	chfn.pamd
 Source7:	passwd.pamd
 Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
-Patch1:		%{name}-man_and_po.patch
-Patch2:		%{name}-pl.po-update.patch
-Patch3:		%{name}-pld.patch
-Patch4:		%{name}-chage_expdays.patch
-Patch5:		%{name}-revert-broken.patch
+Patch1:		%{name}-no_CREATE_HOME.patch
+Patch2:		%{name}-pld.patch
+Patch3:		%{name}-chage_expdays.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -134,8 +132,6 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %{__autoheader}
