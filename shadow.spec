@@ -23,6 +23,7 @@ Patch2:		%{name}-utmpx.patch
 BuildRequires:	pam-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libtool
 BuildRequires:	gettext-devel
 Provides:	shadow-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -62,7 +63,7 @@ Ostrze¿enie:
 
 Programy znajduj±ce siê w tym pakiecie s± niezbêdne do prawid³owej
 pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
-- glibc nigdy nie powinien zostaæ odinstalowany !
+- glibc nigdy nie powinien zostaæ odinstalowany!
 
 %prep
 %setup -q 
