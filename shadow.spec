@@ -4,8 +4,8 @@ Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux.
 Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
-Version:	19990827
-Release:	3
+Version:	20000902
+Release:	0.1
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
@@ -14,7 +14,6 @@ Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
 Source4:	userdb.pamd
-Patch0:		shadow-cvs.patch
 Patch1:		shadow-pld.patch
 Patch2:		shadow-utmpx.patch
 Patch3:		shadow-pam-userdb.patch
@@ -63,7 +62,6 @@ nigdy nie powinien zostaæ odinstalowany !
 
 %prep
 %setup -q 
-%patch0 -p1
 %patch1 -p1 
 %patch2 -p1 
 %patch3 -p1
