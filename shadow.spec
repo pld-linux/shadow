@@ -1,6 +1,6 @@
 #
 # Conditional build:
-# _with_selinux		- with SE-Linux support
+%bcond_without selinux # SE-Linux support
 #
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
@@ -11,7 +11,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.3
-Release:	3
+Release:	4
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -36,7 +36,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	pam-devel
-%{?_with_selinux:BuildRequires:	selinux-libs-devel}
+%{?with_selinux:BuildRequires:	libselinux-devel}
 Provides:	shadow-utils
 Provides:	passwd
 Requires:	pam >= 0.77.3
@@ -126,7 +126,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%{?_with_selinux:%patch6 -p1}
+%{?with_selinux:%patch6 -p1}
 
 %build
 %{__gettextize}
@@ -140,7 +140,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 	%{!?_without_static:--disable-shared} \
 	%{?_without_static:--disable-static} \
 	%{?_without_static:--enable-shared} \
-	%{?_with_selinux:--with-selinux} \
+	%{?with_selinux:--with-selinux} \
 	--with-libpam \
 	--with-md5crypt \
 	--with-nls \
