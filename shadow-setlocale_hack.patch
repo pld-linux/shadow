@@ -1,0 +1,10 @@
+--- shadow-4.0.4.1/configure.in.orig	2004-10-23 09:58:15.000000000 +0000
++++ shadow-4.0.4.1/configure.in	2004-10-23 09:57:32.000000000 +0000
+@@ -271,6 +271,7 @@
+ 
+ AM_GNU_GETTEXT_VERSION(0.14.1)
+ AM_GNU_GETTEXT([external])
++AC_CHECK_FUNCS([setlocale])
+ 
+ AC_CONFIG_FILES([ m4/Makefile 
+ 	Makefile
