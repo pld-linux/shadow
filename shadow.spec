@@ -267,7 +267,6 @@ fi
 %lang(fr) %{_mandir}/fr/man5/faillog.5*
 %lang(fr) %{_mandir}/fr/man5/passwd.5*
 %lang(fr) %{_mandir}/fr/man5/shadow.5*
-%lang(fr) %{_mandir}/fr/man8/adduser.8*
 %lang(fr) %{_mandir}/fr/man8/chpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/useradd.8*
 %lang(fr) %{_mandir}/fr/man8/userdel.8*
