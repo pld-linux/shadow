@@ -67,6 +67,10 @@ pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
 %patch2 -p1 
 
 %build
+automake -a -c --foreign
+aclocal
+autoheader
+autoconf
 %configure \
 	--disable-desrpc \
 	--with-libcrypt \
