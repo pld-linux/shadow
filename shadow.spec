@@ -146,7 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/lastlog.8.gz
 %{_mandir}/man8/faillog.8.gz
 
-%lang(el) /usr/share/locale/el/LC_MESSAGES/shadow.mo
+%lang(el) %{_datadir}/locale/el/LC_MESSAGES/shadow.mo
 
 %changelog
 * Tue Feb 02 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
