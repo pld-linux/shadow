@@ -116,8 +116,6 @@ Summary(pl):	shadow - programy nieczêsto u¿ywane
 Group:		Applications/System
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Conflicts:	util-linux < 2.12-10
-# to force proper util-linux version, so "newgrp" command exists
-Requires:	/usr/bin/newgrp
 
 %description extras
 Programs for shadow not often used. If you have small system you may
