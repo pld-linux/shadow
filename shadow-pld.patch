@@ -12,19 +12,18 @@ diff -Nur shadow-4.0.3.orig/lib/getdef.c shadow-4.0.3/lib/getdef.c
  	{ "TTYGROUP",			NULL },
  	{ "TTYPERM",			NULL },
  	{ "TTYTYPE_FILE",		NULL },
-diff -Nur shadow-4.0.3.orig/man/groupadd.8 shadow-4.0.3/man/groupadd.8
---- shadow-4.0.3.orig/man/groupadd.8	2003-06-20 19:06:15.000000000 +0200
-+++ shadow-4.0.3/man/groupadd.8	2003-06-20 19:29:11.000000000 +0200
-@@ -29,7 +29,7 @@
- .SH NAME
+--- shadow-4.0.4.1/man/groupadd.8.orig	2004-01-05 02:08:23.000000000 +0100
++++ shadow-4.0.4.1/man/groupadd.8	2004-02-29 00:40:47.255149000 +0100
+@@ -30,7 +30,7 @@
  groupadd \- Create a new group
  .SH SYNOPSIS
+ .TP 6
 -\fBgroupadd\fR [\fB-g\fI gid \fR[\fB-o\fR]] [\fB-f\fR] \fIgroup\fR
 +\fBgroupadd\fR [\fB-g\fI gid \fR[\fB-o\fR]] [\fB-f\fR] [\fB-r\fR] \fIgroup\fR
  .SH DESCRIPTION
- The \fBgroupadd\fR command
- creates a new group account using the values specified on the
-@@ -47,6 +47,9 @@
+ The \fBgroupadd\fR command creates a new group account using the values
+ specified on the command line and the default values from the system. The
+@@ -45,6 +45,9 @@
  This option causes to just exit with success status if the specified
  group already exists. With \fB-g\fR, if specified gid already exists,
  other (unique) gid is chosen (i.e. \fB-g\fR is turned off).
@@ -32,7 +31,7 @@ diff -Nur shadow-4.0.3.orig/man/groupadd.8 shadow-4.0.3/man/groupadd.8
 +This flag is used to create a system group, with gid lower than usual
 +(chosen between SYS_GID_MIN and SYS_GID_MAX).
  .SH FILES
- /etc/group \- group account information
+ \fI/etc/group\fR	\- group account information
  .br
 diff -Nur shadow-4.0.3.orig/man/pl/groupadd.8 shadow-4.0.3/man/pl/groupadd.8
 --- shadow-4.0.3.orig/man/pl/groupadd.8	2003-06-20 19:06:15.000000000 +0200
@@ -76,257 +75,270 @@ diff -Nur shadow-4.0.3.orig/man/pl/useradd.8 shadow-4.0.3/man/pl/useradd.8
  .IP "\fB-s \fIpow³oka\fR"
  Nazwa pow³oki (shell) u¿ytkownika. Ustawienie tego pola na puste
  powoduje, ¿e system wybierze domy¶ln± pow³okê logowania.
-diff -Nur shadow-4.0.3.orig/man/useradd.8 shadow-4.0.3/man/useradd.8
---- shadow-4.0.3.orig/man/useradd.8	2002-03-08 05:39:12.000000000 +0100
-+++ shadow-4.0.3/man/useradd.8	2003-06-20 19:32:04.000000000 +0200
+--- shadow-4.0.4.1/man/useradd.8.orig	2003-05-07 16:04:53.000000000 +0200
++++ shadow-4.0.4.1/man/useradd.8	2004-02-29 00:41:58.145372048 +0100
 @@ -38,7 +38,7 @@
  .br
- [\fB-m\fR [\fB-k\fR \fIskeleton_dir\fR]] [\fB-o\fR] [\fB-p\fR \fIpasswd\fR]
+ [[\fB-M\fR] \fB-m\fR [\fB-k\fR \fIskeleton_dir\fR]] [\fB-o\fR] [\fB-p\fR \fIpasswd\fR]
  .br
 -[\fB-s\fR \fIshell\fR] [\fB-u\fR \fIuid\fR] \fIlogin\fR
 +[\fB-r\fR] [\fB-s\fR \fIshell\fR] [\fB-u\fR \fIuid\fR] \fIlogin\fR
  .TP 8
  \fBuseradd\fR \fB-D\fR [\fB-g\fI default_group\fR] [\fB-b\fI default_home\fR]
  .br
-@@ -100,6 +100,9 @@
+@@ -96,6 +96,9 @@
  .IP "\fB-p \fIpasswd\fR"
- The encrypted password, as returned by \fBcrypt\fR(3).
- The default is to disable the account.
+ The encrypted password, as returned by \fBcrypt\fR(3). The default is to
+ disable the account.
 +.IP "\fB-r\fR"
 +This flag is used to create a system account, with uid lower than
 +usual (chosen between SYS_UID_MIN and SYS_UID_MAX).
- .IP "\fB-s \fIshell\fR"
- The name of the user's login shell.
- The default is to leave this field blank, which causes the system
-diff -Nur shadow-4.0.3.orig/po/cs.po shadow-4.0.3/po/cs.po
---- shadow-4.0.3.orig/po/cs.po	2003-06-20 19:06:15.000000000 +0200
-+++ shadow-4.0.3/po/cs.po	2003-06-20 19:23:08.000000000 +0200
-@@ -865,8 +865,8 @@
- msgstr "%s: nelze aktualizovat soubory s DBM databázemi stínovıch hesel\n"
+ .IP "\fB-s\fR \fIshell\fR"
+ The name of the user's login shell. The default is to leave this field
+ blank, which causes the system to select the default login shell.
+--- shadow-4.0.4.1/po/cs.po.orig	2004-02-29 01:08:36.961315080 +0100
++++ shadow-4.0.4.1/po/cs.po	2004-02-29 01:09:26.960714016 +0100
+@@ -768,8 +768,8 @@
+ msgstr "%s: nelze aktualizovat soubory s DBM databÃ¡zemi stÃ­novÃ½ch hesel\n"
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "Pou¾ití: groupadd [-g gid [-o]] [-f] skupina\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "Pou¾ití: groupadd [-g gid [-o]] [-f] [-r] skupina\n"
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "PouÅ¾itÃ­: groupadd [-g gid [-o]] [-f] skupina\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "PouÅ¾itÃ­: groupadd [-g gid [-o]] [-f] [-r] skupina\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1982,8 +1982,8 @@
- msgstr "[-A program] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1769,8 +1769,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                 [-f vypnutÃ­] [-e vyprÅ¡enÃ­]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p heslo]  jméno\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p heslo] [-r] jméno\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "                 [-p heslo]  jmÃ©no\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                 [-p heslo] [-r]  jmÃ©no\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/de.po shadow-4.0.3/po/de.po
---- shadow-4.0.3.orig/po/de.po	2003-06-20 19:06:15.000000000 +0200
-+++ shadow-4.0.3/po/de.po	2003-06-20 19:23:24.000000000 +0200
-@@ -867,8 +867,8 @@
- msgstr "%s : DBM-Shadow-Dateien können nicht aktualisiert werden\n"
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/de.po.orig	2004-02-29 01:08:36.966314320 +0100
++++ shadow-4.0.4.1/po/de.po	2004-02-29 01:10:04.905945464 +0100
+@@ -769,8 +769,8 @@
+ msgstr "%s: DBM-Shadow-Dateien kÃ¶nnen nicht aktualisiert werden\n"
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
 -msgstr "Syntax: groupadd [-g gid [-o]] [-f] Gruppe\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
 +msgstr "Syntax: groupadd [-g gid [-o]] [-f] [-r] Gruppe\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1988,8 +1988,8 @@
- msgstr "[-A Programm] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1769,8 +1769,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                [-f inaktiv] [-e Ablauf]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p Kennwort] Name\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p Kennwort] [-r] Name\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "                [-p Kennwort] Name\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                [-p Kennwort] [-r] Name\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/el.po shadow-4.0.3/po/el.po
---- shadow-4.0.3.orig/po/el.po	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/po/el.po	2003-06-20 19:23:39.000000000 +0200
-@@ -872,8 +872,8 @@
- msgstr "%s: áäõíáìßá áíáíİùóçò ôùí DBM áñ÷åßùí óêéùäşí óõíèçìáôéêşí\n"
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/el.po.orig	2004-02-29 01:08:36.971313560 +0100
++++ shadow-4.0.4.1/po/el.po	2004-02-29 01:10:30.875997416 +0100
+@@ -775,8 +775,8 @@
+ msgstr "%s: Î±Î´Ï…Î½Î±Î¼Î¯Î± Î±Î½Î±Î½Î­Ï‰ÏƒÎ·Ï‚ Ï„Ï‰Î½ DBM Î±ÏÏ‡ÎµÎ¯Ï‰Î½ ÏƒÎºÎ¹Ï‰Î´ÏÎ½ ÏƒÏ…Î½Î¸Î·Î¼Î±Ï„Î¹ÎºÏÎ½\n"
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "÷ñŞóç: groupadd [-g gid [-o]] [-f] ïìÜäá\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "÷ñŞóç: groupadd [-g gid [-o]] [-f] [-r] ïìÜäá\n"
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Ï‡ÏÎ®ÏƒÎ·: groupadd [-g gid [-o]] [-f] Î¿Î¼Î¬Î´Î±\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Ï‡ÏÎ®ÏƒÎ·: groupadd [-g gid [-o]] [-f] [-r] Î¿Î¼Î¬Î´Î±\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -2009,8 +2009,8 @@
- msgstr "[-A ğñüãñáììá] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1798,8 +1798,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "               [-f Î±Î½ÎµÎ½ÎµÏÎ³ÏŒ] [-e Î»Î®Î¾Î·]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p óõíèçìáôéêü] üíïìá\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p óõíèçìáôéêü] [-r] üíïìá\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "               [-p ÏƒÏ…Î½Î¸Î·Î¼Î±Ï„Î¹ÎºÏŒ] ÏŒÎ½Î¿Î¼Î±\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "               [-p ÏƒÏ…Î½Î¸Î·Î¼Î±Ï„Î¹ÎºÏŒ] [-r] ÏŒÎ½Î¿Î¼Î±\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/fr.po shadow-4.0.3/po/fr.po
---- shadow-4.0.3.orig/po/fr.po	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/po/fr.po	2003-06-20 19:23:52.000000000 +0200
-@@ -869,8 +869,8 @@
- msgstr "%s : impossible de mettre à jours les fichiers DBM shadow\n"
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/fr.po.orig	2004-02-29 01:08:36.976312800 +0100
++++ shadow-4.0.4.1/po/fr.po	2004-02-29 01:10:54.569395472 +0100
+@@ -772,8 +772,8 @@
+ msgstr "%s: impossible de mettre Ã  jours les fichiers DBM shadow\n"
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "usage: groupadd [-g gid [-o]] [-f] groupe\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "usage: groupadd [-g gid [-o]] [-f] [-r] groupe\n"
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Usage: groupadd [-g gid [-o]] [-f] groupe\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Usage: groupadd [-g gid [-o]] [-f] [-r] groupe\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1988,8 +1988,8 @@
- msgstr "[-A program] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1771,8 +1771,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "               [-f inactif] [-e expire]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p mot-de-passe] nom\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p mot-de-passe] [-r] nom\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "               [-p mot-de-passe] nom\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "               [-p mot-de-passe] [-r] nom\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/ja.po shadow-4.0.3/po/ja.po
---- shadow-4.0.3.orig/po/ja.po	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/po/ja.po	2003-06-20 19:24:06.000000000 +0200
-@@ -867,8 +867,8 @@
- msgstr "%s: DBM ¥·¥ã¥É¥¦¡¦¥Õ¥¡¥¤¥ë¤ò¹¹¿·¤Ç¤­¤Ş¤»¤ó\n"
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/ja.po.orig	2004-02-29 01:08:36.981312040 +0100
++++ shadow-4.0.4.1/po/ja.po	2004-02-29 01:12:06.636439616 +0100
+@@ -773,8 +773,8 @@
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "»ÈÍÑË¡: groupadd [-g ¥°¥ë¡¼¥×ID [-o]] [-f] ¥°¥ë¡¼¥×\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "»ÈÍÑË¡: groupadd [-g ¥°¥ë¡¼¥×ID [-o]] [-f] [-r] ¥°¥ë¡¼¥×\n"
+ #: src/groupadd.c:102
+ #, fuzzy
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "ä½¿ç”¨æ³•: groupadd [-g ã‚°ãƒ«ãƒ¼ãƒ—ID [-o]] ã‚°ãƒ«ãƒ¼ãƒ—\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "ä½¿ç”¨æ³•: groupadd [-g ã‚°ãƒ«ãƒ¼ãƒ—ID [-o]] [-f] [-r] ã‚°ãƒ«ãƒ¼ãƒ—\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1979,8 +1979,8 @@
- msgstr "[-A ¥×¥í¥°¥é¥à] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1767,8 +1767,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                [-f ç„¡åŠ¹æ—¥æ•°] [-e æœŸé™åˆ‡ã‚Œæ—¥]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p ¥Ñ¥¹¥ï¡¼¥É] ¥æ¡¼¥¶Ì¾\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p ¥Ñ¥¹¥ï¡¼¥É] [-r] ¥æ¡¼¥¶Ì¾\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "                [-p ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰] ãƒ¦ãƒ¼ã‚¶å\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                [-p ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰] [-r] ãƒ¦ãƒ¼ã‚¶å\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/ko.po shadow-4.0.3/po/ko.po
---- shadow-4.0.3.orig/po/ko.po	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/po/ko.po	2003-06-20 19:25:14.000000000 +0200
-@@ -862,8 +862,8 @@
- msgstr "%s: DBM ½¦µµ¿ì ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/ko.po.orig	2004-02-29 01:08:36.986311280 +0100
++++ shadow-4.0.4.1/po/ko.po	2004-02-29 01:12:19.165534904 +0100
+@@ -767,8 +767,8 @@
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "»ç¿ë¹ı: groupadd [-g gid(±×·ì ¾ÆÀÌµğ) [-o]] [-f] ±×·ì¸í\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "»ç¿ë¹ı: groupadd [-g gid(±×·ì ¾ÆÀÌµğ) [-o]] [-f] [-r] ±×·ì¸í\n"
+ #: src/groupadd.c:102
+ #, fuzzy
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "ì‚¬ìš©ë²•: groupadd [-g gid(ê·¸ë£¹ ì•„ì´ë””) [-o]] ê·¸ë£¹ëª…\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "ì‚¬ìš©ë²•: groupadd [-g gid(ê·¸ë£¹ ì•„ì´ë””) [-o]] [-f] [-r] ê·¸ë£¹ëª…\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1978,8 +1978,8 @@
- msgstr "[-A ÇÁ·Î±×·¥] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1772,8 +1772,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                [-f ë¹„í™œì„±í™”] [-e ë§Œê¸°]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p ÆĞ½º¿öµå] ÀÌ¸§\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p ÆĞ½º¿öµå] [-r] ÀÌ¸§\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "                [-p íŒ¨ìŠ¤ì›Œë“œ] ì´ë¦„\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                [-p íŒ¨ìŠ¤ì›Œë“œ] [-r] ì´ë¦„\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/pl.po shadow-4.0.3/po/pl.po
---- shadow-4.0.3.orig/po/pl.po	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/po/pl.po	2003-06-20 19:25:27.000000000 +0200
-@@ -865,8 +865,8 @@
- msgstr "%s: nie mogê zaktualizowaæ pliku DBM z ukrytymi has³ami\n"
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/pl.po.orig	2004-02-29 01:08:36.990310672 +0100
++++ shadow-4.0.4.1/po/pl.po	2004-02-29 01:12:55.314039496 +0100
+@@ -770,8 +770,8 @@
+ msgstr "%s: nie moÅ¼na zaktualizowaÄ‡ pliku DBM z ukrytymi hasÅ‚ami\n"
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "u¿ycie: groupadd [-g gid [-o]] [-f] grupa\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "u¿ycie: groupadd [-g gid [-o]] [-f] [-r] grupa\n"
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "UÅ¼ycie: groupadd [-g gid [-o]] [-f] grupa\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "UÅ¼ycie: groupadd [-g gid [-o]] [-f] [-r] grupa\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1979,8 +1979,8 @@
- msgstr "[-A program] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1770,8 +1770,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                [-f nieaktywne] [-e utrata_waÅ¼noÅ›ci]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p has³o] nazwa\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p has³o] [-r] nazwa\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "                [-p has³o] nazwa\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                [-p has³o] [-r] nazwa\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/sv.po shadow-4.0.3/po/sv.po
---- shadow-4.0.3.orig/po/sv.po	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/po/sv.po	2003-06-20 19:26:10.000000000 +0200
-@@ -864,8 +864,8 @@
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/sv.po.orig	2004-02-29 01:08:36.994310064 +0100
++++ shadow-4.0.4.1/po/sv.po	2004-02-29 01:13:32.484388744 +0100
+@@ -766,8 +766,8 @@
  msgstr "%s: kan inte uppdatera DBM-skuggfiler\n"
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "Användning: groupadd [-g gid [-o]] [-f] grupp\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "Användning: groupadd [-g gid [-o]] [-f] [-r] grupp\n"
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "AnvÃ¤ndning: groupadd [-g gid [-o]] [-f] grupp\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "AnvÃ¤ndning: groupadd [-g gid [-o]] [-f] [-r] grupp\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1977,8 +1977,8 @@
- msgstr "[-A program] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1761,8 +1761,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                    [-f inaktiv] [-e upphÃ¶r]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p passwd] namn\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p passwd] [-r] namn\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "                    [-p passwd] namn\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                    [-p passwd] [-r] namn\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/po/uk.po shadow-4.0.3/po/uk.po
---- shadow-4.0.3.orig/po/uk.po	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/po/uk.po	2003-06-20 19:26:33.000000000 +0200
-@@ -868,8 +868,8 @@
- msgstr "%s: ÎÅ ÍÏÖÕ ÏÎÏ×ÉÔÉ DBM ÆÁÊÌ Ú ĞÒÉÈÏ×ÁÎÉÍÉ ĞÁÒÏÌÑÍÉ\n"
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/uk.po.orig	2004-02-29 01:08:37.000309152 +0100
++++ shadow-4.0.4.1/po/uk.po	2004-02-29 01:13:52.693316520 +0100
+@@ -771,8 +771,8 @@
+ msgstr "%s: Ğ½Ğµ Ğ¼Ğ¾Ğ¶Ñƒ Ğ¾Ğ½Ğ¾Ğ²Ğ¸Ñ‚Ğ¸ DBM Ñ„Ğ°Ğ¹Ğ» Ğ· Ğ¿Ñ€Ğ¸Ñ…Ğ¾Ğ²Ğ°Ğ½Ğ¸Ğ¼Ğ¸ Ğ¿Ğ°Ñ€Ğ¾Ğ»ÑĞ¼Ğ¸\n"
  
- #: src/groupadd.c:101
--msgid "usage: groupadd [-g gid [-o]] [-f] group\n"
--msgstr "×ÉËÏÒÉÓÔÏ×ÕÊÔÅ: groupadd [-g gid [-o]] [-f] ÇÒÕĞÁ\n"
-+msgid "usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
-+msgstr "×ÉËÏÒÉÓÔÏ×ÕÊÔÅ: groupadd [-g gid [-o]] [-f] [-r] ÇÒÕĞÁ\n"
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Ğ²Ğ¸ĞºĞ¾Ñ€Ğ¸ÑÑ‚Ğ¾Ğ²ÑƒĞ¹Ñ‚Ğµ: groupadd [-g gid [-o]] [-f] Ğ³Ñ€ÑƒĞ¿Ğ°\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Ğ²Ğ¸ĞºĞ¾Ñ€Ğ¸ÑÑ‚Ğ¾Ğ²ÑƒĞ¹Ñ‚Ğµ: groupadd [-g gid [-o]] [-f] [-r] Ğ³Ñ€ÑƒĞ¿Ğ°\n"
  
- #: src/groupadd.c:167 src/groupadd.c:192 src/groupmod.c:179 src/groupmod.c:228
- #: src/useradd.c:970 src/usermod.c:552 src/usermod.c:695
-@@ -1984,8 +1984,8 @@
- msgstr "[-A ĞÒÏÇÒÁÍÁ] "
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1777,8 +1777,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                 [-f Ğ½ĞµĞ°ĞºÑ‚Ğ¸Ğ²Ğ½Ğ¸Ğ¹] [-e Ğ¿Ñ€Ğ¾ÑÑ‚Ñ€Ğ¾Ñ‡ĞµĞ½Ğ¸Ğ¹]\n"
  
- #: src/useradd.c:750
--msgid "[-p passwd] name\n"
--msgstr "[-p ĞÁÒÏÌØ] ¦Í'Ñ\n"
-+msgid "[-p passwd] [-r] name\n"
-+msgstr "[-p ĞÁÒÏÌØ] [-r] ¦Í'Ñ\n"
+-msgid "               [-p passwd] name\n"
+-msgstr "                 [-p Ğ¿Ğ°Ñ€Ğ¾Ğ»ÑŒ] Ñ–Ğ¼'Ñ\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                 [-p Ğ¿Ğ°Ñ€Ğ¾Ğ»ÑŒ] [-r] Ñ–Ğ¼'Ñ\n"
  
- #: src/useradd.c:753
- #, c-format
-diff -Nur shadow-4.0.3.orig/src/groupadd.c shadow-4.0.3/src/groupadd.c
---- shadow-4.0.3.orig/src/groupadd.c	2003-06-20 19:06:16.000000000 +0200
-+++ shadow-4.0.3/src/groupadd.c	2003-06-20 19:21:43.000000000 +0200
-@@ -71,6 +71,7 @@
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/po/ru.po.orig	2004-02-29 01:08:37.000000000 +0100
++++ shadow-4.0.4.1/po/ru.po	2004-02-29 01:13:16.948750520 +0100
+@@ -764,8 +764,8 @@
+ msgstr "%s: Ğ½Ğµ Ğ¼Ğ¾Ğ³Ñƒ Ğ¾Ğ±Ğ½Ğ¾Ğ²Ğ¸Ñ‚ÑŒ shadow-Ñ„Ğ°Ğ¹Ğ»Ñ‹ Ğ±Ğ°Ğ·Ñ‹ Ğ´Ğ°Ğ½Ğ½Ñ‹Ñ…\n"
+ 
+ #: src/groupadd.c:102
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Ğ·Ğ°Ğ¿ÑƒÑĞº: groupadd [-g gid [-o]] [-f] Ğ³Ñ€ÑƒĞ¿Ğ¿Ğ°\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Ğ·Ğ°Ğ¿ÑƒÑĞº: groupadd [-g gid [-o]] [-f] [-r] Ğ³Ñ€ÑƒĞ¿Ğ¿Ğ°\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:940 src/usermod.c:533 src/usermod.c:676
+@@ -1770,8 +1770,8 @@
+ msgid "               [-f inactive] [-e expire]\n"
+ msgstr "                [-f Ğ½ĞµĞ°ĞºÑ‚Ğ¸Ğ²Ğ½.] [-e Ğ¸ÑÑ‚ĞµĞºĞ°ĞµÑ‚]\n"
+ 
+-msgid "               [-p passwd] name\n"
+-msgstr "                [-p Ğ¿Ğ°Ñ€Ğ¾Ğ»ÑŒ] Ğ¸Ğ¼Ñ\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                [-p Ğ¿Ğ°Ñ€Ğ¾Ğ»ÑŒ] [-r] Ğ¸Ğ¼Ñ\n"
+ 
+ #: src/useradd.c:733
+ msgid "       useradd -D [-g group] [-b base] [-s shell]\n"
+--- shadow-4.0.4.1/src/groupadd.c.orig	2004-01-05 02:08:56.000000000 +0100
++++ shadow-4.0.4.1/src/groupadd.c	2004-02-29 01:15:16.315604000 +0100
+@@ -72,6 +72,7 @@
  static int oflg = 0;		/* permit non-unique group ID to be specified with -g */
  static int gflg = 0;		/* ID value for the new group */
  static int fflg = 0;		/* if group already exists, do nothing and exit(0) */
@@ -334,16 +346,16 @@ diff -Nur shadow-4.0.3.orig/src/groupadd.c shadow-4.0.3/src/groupadd.c
  
  #ifdef	NDBM
  extern int gr_dbm_mode;
-@@ -98,7 +99,7 @@
+@@ -99,7 +100,7 @@
  
  static void usage (void)
  {
--	fprintf (stderr, _("usage: groupadd [-g gid [-o]] [-f] group\n"));
-+	fprintf (stderr, _("usage: groupadd [-g gid [-o]] [-f] [-r] group\n"));
+-	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] group\n"));
++	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"));
  	exit (E_USAGE);
  }
  
-@@ -224,8 +225,13 @@
+@@ -225,8 +226,13 @@
  	const struct group *grp;
  	gid_t gid_min, gid_max;
  
@@ -359,7 +371,7 @@ diff -Nur shadow-4.0.3.orig/src/groupadd.c shadow-4.0.3/src/groupadd.c
  
  	/*
  	 * Start with some GID value if the user didn't provide us with
-@@ -333,7 +339,7 @@
+@@ -334,7 +340,7 @@
  	char *cp;
  	int arg;
  
@@ -368,7 +380,7 @@ diff -Nur shadow-4.0.3.orig/src/groupadd.c shadow-4.0.3/src/groupadd.c
  		switch (arg) {
  		case 'g':
  			gflg++;
-@@ -379,6 +385,12 @@
+@@ -380,6 +386,12 @@
  			 */
  			fflg++;
  			break;
@@ -381,10 +393,9 @@ diff -Nur shadow-4.0.3.orig/src/groupadd.c shadow-4.0.3/src/groupadd.c
  		default:
  			usage ();
  		}
-diff -Nur shadow-4.0.3.orig/src/useradd.c shadow-4.0.3/src/useradd.c
---- shadow-4.0.3.orig/src/useradd.c	2002-01-10 14:01:28.000000000 +0100
-+++ shadow-4.0.3/src/useradd.c	2003-06-20 19:19:40.000000000 +0200
-@@ -71,10 +71,10 @@
+--- shadow-4.0.4.1/src/useradd.c.orig	2004-02-29 01:14:44.212484416 +0100
++++ shadow-4.0.4.1/src/useradd.c	2004-02-29 01:15:56.318522632 +0100
+@@ -72,10 +72,10 @@
  /*
   * These defaults are used if there is no defaults file.
   */
@@ -398,7 +409,7 @@ diff -Nur shadow-4.0.3.orig/src/useradd.c shadow-4.0.3/src/useradd.c
  static const char *def_template = SKEL_DIR;
  
  #ifdef SHADOWPWD
-@@ -87,7 +87,7 @@
+@@ -88,7 +88,7 @@
  #define	VALID(s)	(strcspn (s, ":\n") == strlen (s))
  
  static const char *user_name = "";
@@ -407,24 +418,24 @@ diff -Nur shadow-4.0.3.orig/src/useradd.c shadow-4.0.3/src/useradd.c
  static uid_t user_id;
  static gid_t user_gid;
  static const char *user_comment = "";
-@@ -120,6 +120,7 @@
-  mflg = 0,	/* create user's home directory if it doesn't exist */
-  nflg = 0,	/* create a group having the same name as the user */
-  oflg = 0,	/* permit non-unique user ID to be specified with -u */
-+ rflg = 0,	/* create system account (with lower uid) */
-  sflg = 0,	/* shell program for new account */
-  uflg = 0;	/* specify user ID for new account */
+@@ -121,6 +121,7 @@
+  mflg = 0,			/* create user's home directory if it doesn't exist */
+  nflg = 0,			/* create a group having the same name as the user */
+  oflg = 0,			/* permit non-unique user ID to be specified with -u */
++ rflg = 0,			/* create system account (wuth lower uid) */
+  sflg = 0,			/* shell program for new account */
+  uflg = 0;			/* specify user ID for new account */
  
-@@ -747,7 +748,7 @@
- #ifdef AUTH_METHODS
- 	fprintf (stderr, _("[-A program] "));
+@@ -702,7 +703,7 @@
+ #ifdef SHADOWPWD
+ 	fprintf (stderr, _("               [-f inactive] [-e expire]\n"));
  #endif
--	fprintf (stderr, _("[-p passwd] name\n"));
-+	fprintf (stderr, _("[-p passwd] [-r] name\n"));
- 
+-	fprintf (stderr, _("               [-p passwd] name\n"));
++	fprintf (stderr, _("               [-p passwd] [-r] name\n"));
  	fprintf (stderr,
- 		 _("       %s\t-D [-g group] [-b base] [-s shell]\n"),
-@@ -1006,8 +1007,13 @@
+ 		 _("       useradd -D [-g group] [-b base] [-s shell]\n"));
+ #ifdef SHADOWPWD
+@@ -950,8 +951,13 @@
  	const struct passwd *pwd;
  	uid_t uid_min, uid_max;
  
@@ -440,7 +451,7 @@ diff -Nur shadow-4.0.3.orig/src/useradd.c shadow-4.0.3/src/useradd.c
  
  	/*
  	 * Start with some UID value if the user didn't provide us with
-@@ -1160,9 +1166,9 @@
+@@ -1033,9 +1039,9 @@
  	char *cp;
  
  #ifdef SHADOWPWD
@@ -452,7 +463,7 @@ diff -Nur shadow-4.0.3.orig/src/useradd.c shadow-4.0.3/src/useradd.c
  #endif
  	while ((arg = getopt (argc, argv, FLAGS)) != EOF) {
  #undef FLAGS
-@@ -1328,6 +1334,9 @@
+@@ -1189,6 +1195,9 @@
  			}
  			user_pass = optarg;
  			break;

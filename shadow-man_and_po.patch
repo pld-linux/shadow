@@ -1,80 +1,40 @@
-diff -ur shadow-4.0.3.orig/man/pl/useradd.8 shadow-4.0.3/man/pl/useradd.8
---- shadow-4.0.3.orig/man/pl/useradd.8	Sat Jan 27 03:55:54 2001
-+++ shadow-4.0.3/man/pl/useradd.8	Fri Feb 22 23:29:22 2002
-@@ -34,7 +34,7 @@
- .br
- [\fB-e\fR \fIdata_wa¿no¶ci\fR] [\fB-f\fR \fIdni_nieaktywno¶ci\fR]
- .br
--[\fB-g\fR \fIgrupa_pocz±tkowa\fR] [\fB-G\fR \fIgrupa [,...]\fR]
-+[\fB-g\fR \fIgrupa_pocz±tkowa\fR] [\fB-G\fR \fIgrupa\fR[,...]]
- .br
- [\fB-m\fR [\fB-k\fR \fIkatalog_wzorców\fR]] [\fB-o\fR] [\fB-p\fR \fIhas³o\fR]
- .br
-diff -ur shadow-4.0.3.orig/po/cs.po shadow-4.0.3/po/cs.po
---- shadow-4.0.3.orig/po/cs.po	Sat Oct  6 22:04:56 2001
-+++ shadow-4.0.3/po/cs.po	Fri Feb 22 23:29:22 2002
-@@ -1974,9 +1974,8 @@
- msgstr "\t\t [-d domácí adr.] [-s shell] [-c komentáø] [-m [-k ¹ablona]]\n"
+--- shadow-4.0.4.1/po/cs.po.orig	2004-01-14 15:16:19.000000000 +0100
++++ shadow-4.0.4.1/po/cs.po	2004-02-28 23:33:54.722146736 +0100
+@@ -2029,7 +2029,6 @@
+ msgstr "\t\t[-d domÃ¡cÃ­ adr. [-m]] [-s shell] [-c komentÃ¡Å™] [-l novÃ© jmÃ©no]\n"
  
- #: src/useradd.c:745 src/usermod.c:329
+ #: src/usermod.c:313
 -#, fuzzy
- msgid "[-f inactive] [-e expire ] "
--msgstr " [-f vypnutí] [-e vypr¹ení] "
-+msgstr " [-f vypnutí] [-e vypr¹ení ] "
+ msgid "[-f inactive] [-e expire] "
+ msgstr "[-f vypnutÃ­] [-e vyprÅ¡enÃ­] "
  
- #: src/useradd.c:748
- msgid "[-A program] "
-@@ -1992,9 +1991,8 @@
- msgstr "         %s -D [-g skupina [-b základní adr.] [-s shell]\n"
+--- shadow-4.0.4.1/po/sv.po.orig	2004-01-14 15:16:20.000000000 +0100
++++ shadow-4.0.4.1/po/sv.po	2004-02-28 23:34:47.160174944 +0100
+@@ -2021,9 +2021,8 @@
+ msgstr "\t\t[-d hem [-m]] [-s skal] [-c kommentar] [-l nytt_namn]\n"
  
- #: src/useradd.c:756
+ #: src/usermod.c:313
 -#, fuzzy
- msgid "\t\t[-f inactive] [-e expire ]\n"
--msgstr "\t\t [-f vypnutí] [-e vypr¹ení]\n"
-+msgstr "\t\t [-f vypnutí] [-e vypr¹ení ]\n"
+ msgid "[-f inactive] [-e expire] "
+-msgstr "    [-f inaktiv] [-e upphÃ¶r] "
++msgstr "[-f inaktiv] [-e upphÃ¶r] "
  
- #: src/useradd.c:850 src/usermod.c:480
- #, c-format
-diff -ur shadow-4.0.3.orig/po/sv.po shadow-4.0.3/po/sv.po
---- shadow-4.0.3.orig/po/sv.po	Sat Oct  6 22:04:59 2001
-+++ shadow-4.0.3/po/sv.po	Fri Feb 22 23:29:22 2002
-@@ -1969,9 +1969,8 @@
- msgstr "\t\t    [-d hem] [-s skal] [-c kommentar] [-m [-k mall]]\n"
- 
- #: src/useradd.c:745 src/usermod.c:329
--#, fuzzy
- msgid "[-f inactive] [-e expire ] "
--msgstr "    [-f inaktiv] [-e upphör] "
-+msgstr "    [-f inaktiv] [-e upphör ] "
- 
- #: src/useradd.c:748
- msgid "[-A program] "
-@@ -1987,9 +1986,8 @@
- msgstr "            %s -D [-g grupp] [-b bas] [-s skal]\n"
- 
- #: src/useradd.c:756
--#, fuzzy
- msgid "\t\t[-f inactive] [-e expire ]\n"
--msgstr "\t\t    [-f inaktiv] [-e utgång]\n"
-+msgstr "\t\t    [-f inaktiv] [-e utgång ]\n"
- 
- #: src/useradd.c:850 src/usermod.c:480
- #, c-format
-diff -Nur shadow-4.0.3.orig/man/login.defs.5 shadow-4.0.3/man/login.defs.5
---- shadow-4.0.3.orig/man/login.defs.5	2002-03-08 05:39:11.000000000 +0100
-+++ shadow-4.0.3/man/login.defs.5	2003-06-20 19:41:39.000000000 +0200
-@@ -82,10 +82,6 @@
- If not specified, only the superuser can make any changes.
- The most restrictive setting is better achieved by not installing chfn SUID.
+ #: src/usermod.c:315
+ msgid "[-p passwd] [-L|-U] name\n"
+--- shadow-4.0.4.1/man/login.defs.5.orig	2003-05-01 20:17:39.000000000 +0200
++++ shadow-4.0.4.1/man/login.defs.5	2004-02-29 00:37:26.554660112 +0100
+@@ -68,10 +68,6 @@
+ any changes. The most restrictive setting is better achieved by not
+ installing chfn SUID.
  .\"
 -.IP "CREATE_HOME (boolean)"
 -This defines whether useradd should create home directories for users by
--default.  This option is OR'ed with the -m flag on useradd command line.
+-default. This option is OR'ed with the \fI-m\fR flag on useradd command line.
 -.\"
  .IP "GID_MAX (number)"
  .IP "GID_MIN (number)"
- Range of group IDs to choose from for the
-@@ -147,7 +143,6 @@
+ Range of group IDs to choose from for the fBuseradd\fR and \fBgroupadd\fR
+@@ -128,7 +124,6 @@
  .IP pwconv 12
  PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
  .IP useradd 12
@@ -82,211 +42,3 @@ diff -Nur shadow-4.0.3.orig/man/login.defs.5 shadow-4.0.3/man/login.defs.5
  GID_MAX GID_MIN
  PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
  UID_MAX UID_MIN
---- shadow-4.0.3/po/de.po.orig	2003-06-20 19:51:01.000000000 +0200
-+++ shadow-4.0.3/po/de.po	2003-06-20 19:53:18.000000000 +0200
-@@ -486,7 +486,7 @@
- #: src/chfn.c:358 src/chsh.c:215
- #, c-format
- msgid "%s: cannot change user `%s' on NIS client.\n"
--msgstr "%s: Kann den Benutzer `%' nicht auf dem NIS-Client ändern.\n"
-+msgstr "%s: Kann den Benutzer `%s' nicht auf dem NIS-Client ändern.\n"
- 
- #: src/chfn.c:366 src/chsh.c:223
- #, c-format
-@@ -1547,7 +1547,7 @@
- #, c-format
- msgid "User %s has a TCFS key, his old password is required.\n"
- msgstr ""
--"Benutzer besitzt einen TCFS-Schlüssel, sein altes Kennwort wird benötigt.\n"
-+"Benutzer %s besitzt einen TCFS-Schlüssel, sein altes Kennwort wird benötigt.\n"
- 
- #: src/passwd.c:286
- msgid "You can use -t option to force the change.\n"
---- shadow-4.0.3/po/el.po.orig	2003-06-20 19:51:01.000000000 +0200
-+++ shadow-4.0.3/po/el.po	2003-06-20 19:55:28.000000000 +0200
-@@ -6,7 +6,7 @@
- msgstr ""
- "Project-Id-Version: Shadow 980726\n"
- "POT-Creation-Date: 2002-03-12 12:16+0100\n"
--"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-+"PO-Revision-Date: 2003-06-20 19:55+0200\n"
- "Last-Translator: Nikos Mavroyanopoulos <nmav@i-net.paiko.gr>\n"
- "Language-Team: Hellenic <el@li.org>\n"
- "MIME-Version: 1.0\n"
-@@ -832,7 +832,7 @@
- "%s: Áäõíáìßá äçìéïõñãßáò êëåéäşìáôïò ôïõ áñ÷åßïõ óêéùäşí óõíèçìáôéêşí\n"
- 
- #: src/gpasswd.c:590
--#, c-format
-+#, fuzzy, c-format
- msgid "%s: can't open file\n"
- msgstr "%s: áäõíáìßá áíïßãìáôïò ôïõ áñ÷åßïõ %s\n"
- 
-@@ -1776,7 +1776,7 @@
- msgstr "%s: áäõíáìßá áíïßãìáôïò ôïõ áñ÷åßïõ óõíèçìáôéêşí\n"
- 
- #: src/pwconv.c:117
--#, c-format
-+#, fuzzy, c-format
- msgid "%s: can't remove shadow entry for %s\n"
- msgstr ""
- "áäõíáìßá áöáßñåóçò êáôá÷şñçóçò ãéá ôïí %s, áğü ôï áñ÷åßï óêéùäşí "
-@@ -2044,7 +2044,7 @@
- #: src/useradd.c:1039
- #, c-format
- msgid "%s: uid %u is not unique\n"
--msgstr "%s: Ôï uid %ld äåí åßíáé ìïíáäéêü\n"
-+msgstr "%s: Ôï uid %u äåí åßíáé ìïíáäéêü\n"
- 
- #: src/useradd.c:1069
- #, c-format
---- shadow-4.0.3/po/fr.po.orig	2003-06-20 19:51:01.000000000 +0200
-+++ shadow-4.0.3/po/fr.po	2003-06-20 19:56:06.000000000 +0200
-@@ -1323,7 +1323,7 @@
- "Login timed out after %d seconds.\n"
- msgstr ""
- "\n"
--"Tentative de connexion: délai de %s secondes dépassé.\n"
-+"Tentative de connexion: délai de %d secondes dépassé.\n"
- 
- #: src/login.c:689
- #, c-format
-@@ -1342,7 +1342,7 @@
- "%s login: "
- msgstr ""
- "\n"
--"% login: "
-+"%s login: "
- 
- #: src/login.c:855
- msgid "login: "
---- shadow-4.0.3/po/ja.po.orig	2003-06-20 19:51:01.000000000 +0200
-+++ shadow-4.0.3/po/ja.po	2003-06-20 19:56:43.000000000 +0200
-@@ -885,7 +885,7 @@
- #: src/groupadd.c:255 src/useradd.c:1034
- #, c-format
- msgid "%s: name %s is not unique\n"
--msgstr "s: Ì¾Á° %s ¤Ï½ÅÊ£¤·¤Æ¤¤¤Ş¤¹\n"
-+msgstr "%s: Ì¾Á° %s ¤Ï½ÅÊ£¤·¤Æ¤¤¤Ş¤¹\n"
- 
- #: src/groupadd.c:270
- #, c-format
-@@ -1322,7 +1322,7 @@
- "Login timed out after %d seconds.\n"
- msgstr ""
- "\n"
--"%sÉÃ¸å¤Î¥í¥°¥¤¥ó¡¦¥¿¥¤¥àÀ©¸Â¤Ç¤¹.\n"
-+"%dÉÃ¸å¤Î¥í¥°¥¤¥ó¡¦¥¿¥¤¥àÀ©¸Â¤Ç¤¹.\n"
- 
- #: src/login.c:689
- #, c-format
---- shadow-4.0.3/po/ko.po.orig	2003-06-20 19:51:01.000000000 +0200
-+++ shadow-4.0.3/po/ko.po	2003-06-20 19:59:11.000000000 +0200
-@@ -346,17 +346,17 @@
- #: src/chage.c:544 src/chpasswd.c:162
- #, c-format
- msgid "%s: can't open password file\n"
--msgstr "ÆĞ½º¿öµå ÆÄÀÏÀ» ¿­¼ö°¡ ¾ø½À´Ï´Ù\n"
-+msgstr "%s: ÆĞ½º¿öµå ÆÄÀÏÀ» ¿­¼ö°¡ ¾ø½À´Ï´Ù\n"
- 
- #: src/chage.c:552
- #, c-format
- msgid "%s: unknown user: %s\n"
--msgstr "¾Ë¼ö¾ø´Â »ç¿ëÀÚ: %s\n"
-+msgstr "%s: ¾Ë¼ö¾ø´Â »ç¿ëÀÚ: %s\n"
- 
- #: src/chage.c:571
- #, c-format
- msgid "%s: can't lock shadow password file"
--msgstr "%"
-+msgstr ""
- 
- #: src/chage.c:579
- #, c-format
-@@ -366,7 +366,7 @@
- #: src/chage.c:674
- #, c-format
- msgid "Changing the aging information for %s\n"
--msgstr "%sÀÇ ¿¬·É¿¡ ´ëÇÑ Á¤º¸¸¦ °»½ÅÇÕ´Ï´Ù %s\n"
-+msgstr "ÀÇ ¿¬·É¿¡ ´ëÇÑ Á¤º¸¸¦ °»½ÅÇÕ´Ï´Ù %s\n"
- 
- #: src/chage.c:677
- #, c-format
-@@ -376,12 +376,12 @@
- #: src/chage.c:705 src/chage.c:771 src/pwunconv.c:174
- #, c-format
- msgid "%s: can't update password file\n"
--msgstr "ÆĞ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
-+msgstr "%s: ÆĞ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
- 
- #: src/chage.c:737 src/pwunconv.c:168
- #, c-format
- msgid "%s: can't update shadow password file\n"
--msgstr "½¦µµ¿ì ÆĞ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
-+msgstr "%s: ½¦µµ¿ì ÆĞ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
- 
- #: src/chage.c:789 src/chage.c:805 src/chfn.c:570 src/chsh.c:382
- #: src/passwd.c:747 src/passwd.c:859
-@@ -391,12 +391,12 @@
- #: src/chage.c:823
- #, c-format
- msgid "%s: can't rewrite shadow password file\n"
--msgstr "½¦µµ¿ì ÆĞ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
-+msgstr "%s: ½¦µµ¿ì ÆĞ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
- 
- #: src/chage.c:838
- #, c-format
- msgid "%s: can't rewrite password file\n"
--msgstr "ÆĞ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
-+msgstr "%s: ÆĞ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
- 
- #: src/chage.c:857 src/chpasswd.c:343 src/groupadd.c:590 src/groupdel.c:409
- #: src/groupmod.c:604 src/newusers.c:628 src/useradd.c:1869 src/userdel.c:849
-@@ -468,12 +468,12 @@
- #: src/chfn.c:379 src/passwd.c:1115
- #, c-format
- msgid "%s: Permission denied.\n"
--msgstr "Á¢±Ù±ÇÇÑ ¾øÀ½.\n"
-+msgstr "%s: Á¢±Ù±ÇÇÑ ¾øÀ½.\n"
- 
- #: src/chfn.c:332 src/chsh.c:190 src/passwd.c:1165
- #, c-format
- msgid "%s: Unknown user %s\n"
--msgstr "¾Ë¼ö¾ø´Â »ç¿ëÀÚ %s\n"
-+msgstr "%s: ¾Ë¼ö¾ø´Â »ç¿ëÀÚ %s\n"
- 
- #: src/chfn.c:341 src/chsh.c:198 src/passwd.c:1096
- #, c-format
-@@ -483,7 +483,7 @@
- #: src/chfn.c:358 src/chsh.c:215
- #, c-format
- msgid "%s: cannot change user `%s' on NIS client.\n"
--msgstr "NIS Å¬¶óÀÌ¾ğÆ®¿¡¼­ '%s'ÀÇ »ç¿ëÀÚ ÀÌ¸§À» º¯°æÇÒ ¼ö ¾ø½À´Ï´Ù.\n"
-+msgstr "%s: NIS Å¬¶óÀÌ¾ğÆ®¿¡¼­ '%s'ÀÇ »ç¿ëÀÚ ÀÌ¸§À» º¯°æÇÒ ¼ö ¾ø½À´Ï´Ù.\n"
- 
- #: src/chfn.c:366 src/chsh.c:223
- #, c-format
-@@ -503,12 +503,12 @@
- #: src/chfn.c:456
- #, c-format
- msgid "%s: invalid room number: \"%s\"\n"
--msgstr "À¯È¿ÇÏÁö ¾Ê´Â ¹æ ¹øÈ£: \"%s\"\n"
-+msgstr "%s: À¯È¿ÇÏÁö ¾Ê´Â ¹æ ¹øÈ£: \"%s\"\n"
- 
- #: src/chfn.c:462
- #, c-format
- msgid "%s: invalid work phone: \"%s\"\n"
--msgstr "À¯È¿ÇÏÁö ¾Ê´Â Á÷Àå ÀüÈ­¹øÈ£: \"%s\"\n"
-+msgstr "%s: À¯È¿ÇÏÁö ¾Ê´Â Á÷Àå ÀüÈ­¹øÈ£: \"%s\"\n"
- 
- #: src/chfn.c:468
- #, c-format
-@@ -2296,7 +2296,7 @@
- #: src/usermod.c:1239
- #, c-format
- msgid "%s: uid %lu is not unique\n"
--msgstr "%s: uid(»ç¿ëÀÚ ¾ÆÀÌµğ) %u ´Â ÀûÀıÇÏÁö ¾Ê½À´Ï´Ù\n"
-+msgstr "%s: uid(»ç¿ëÀÚ ¾ÆÀÌµğ) %lu ´Â ÀûÀıÇÏÁö ¾Ê½À´Ï´Ù\n"
- 
- #: src/usermod.c:1392
- #, c-format
