@@ -21,13 +21,9 @@ Source4:	userdb.pamd
 Source5:	chsh.pamd
 Source6:	chfn.pamd
 Source7:	passwd.pamd
+Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-pld.patch
-Patch2:		%{name}-utmpx.patch
 BuildRequires:	pam-devel
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	libtool
-BuildRequires:	gettext-devel
 Provides:	shadow-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	shadow-utils
@@ -37,14 +33,14 @@ Obsoletes:	passwd
 This package includes the programs necessary to convert standard UNIX
 password files to the shadow password format, as well as programs for
 command-line management of the user's accounts.
- - 'pwconv' converts everything to the shadow password format.
- - 'pwunconv' unconverts from shadow passwords, generating a file in
+ - pwconv - converts everything to the shadow password format,
+ - pwunconv - unconverts from shadow passwords, generating a file in
    the current directory called npasswd that is a standard UNIX password
-   file.
- - 'pwck' checks the integrity of the password and shadow files.
- - 'lastlog' prints out the last login times of all users.
- - 'useradd', 'userdel' and 'usermod' for accounts management.
- - 'groupadd', 'groupdel' and 'groupmod' for group management.
+   file,
+ - pwck - checks the integrity of the password and shadow files,
+ - lastlog - prints out the last login times of all users,
+ - useradd, userdel, usermod - for accounts management,
+ - groupadd, groupdel, groupmod - for group management.
 
 A number of man pages are also included that relate to these
 utilities, and shadow passwords in general.
@@ -54,13 +50,13 @@ Pakiet zawiera programy do obs³ugi shadow password. Zanjduj± siê w nim
 programy do konwersji standardowego pliku hase³ do wersji shadow
 password a tak¿e programy do zarz±dania kontami u¿ytkowników w
 systemie
- - 'pwconv' konwertuje do formatu shadow passwords
- - 'pwunconv' konwertuje z shadow passwords do formatu standardowego
+ - pwconv - konwertuje do formatu shadow passwords
+ - pwunconv - konwertuje z shadow passwords do formatu standardowego
    pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
-   standardowym plikiem z has³ami.
- - 'lastlog' wy¶wietla czas logowania u¿ytkowników
- - 'userdel' i 'usermod' do zarz±dzania kontami u¿ytkowników.
- - 'groupadd', 'groupdel' and 'groupmod' do zarz±dzania grupami
+   standardowym plikiem z has³ami,
+ - lastlog - wy¶wietla czas logowania u¿ytkowników,
+ - useradd, userdel, usermod - do zarz±dzania kontami u¿ytkowników,
+ - groupadd, groupdel, groupmod - do zarz±dzania grupami.
 
 Ostrze¿enie:
 
@@ -70,48 +66,51 @@ pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
 
 %description -l pt_BR
 Este pacote inclui os programas necessários para converter
-arquivos-padrão UNIX de senha para o formato shadow.  - 'pwconv5'
-converte tudo para o formato de senhas do shadow.  - 'pwunconv'
-desconverte senhas shadow, gerando um arquivo no diretório corrente
-chamado npasswd que é o arquivo-padrão UNIX de senha.  - 'pwck'
-checa a integridade da senha e dos arquivos shadow.  - 'lastlog'
-mostra o último momento de login de todos os usuários.
+arquivos-padrão UNIX de senha para o formato shadow.
+ - pwconv - converte tudo para o formato de senhas do shadow,
+ - pwunconv - desconverte senhas shadow, gerando um arquivo no
+   diretório corrente chamado npasswd que é o arquivo-padrão UNIX de
+   senha,
+ - pwck - checa a integridade da senha e dos arquivos shadow,
+ - lastlog - mostra o último momento de login de todos os usuários.
 
-Várias páginas de manual estão também incluídas sobre estes utilitários e
-senhas shadow em geral.
+Várias páginas de manual estão também incluídas sobre estes
+utilitários e senhas shadow em geral.
 
 %description -l es
-Este paquete incluye los programas necesarios para convertir Archivos padrón
-UNIX de contraseña al formato shadow.  - 'pwconv5' convierte todo al formato de
-contraseñas del shadow.  - 'pwunconv' deshace la conversión de contraseñas
-shadow, creando un archivo en el directorio corriente llamado npasswd que es el
-archivo padrón UNIX de contraseña.  - 'pwck' chequea la integridad de la
-contraseña y de los archivos shadow.  - 'lastlog' enseña el último momento de
-login de todos los usuarios.  Están también incluidas, en general, varias
-páginas de manual sobre estos utilitarios y contraseñas shadow.
+Este paquete incluye los programas necesarios para convertir Archivos
+padrón UNIX de contraseña al formato shadow.
+ - pwconv5 - convierte todo al formato de contraseñas del shadow,
+ - pwunconv - deshace la conversión de contraseñas shadow, creando un
+   archivo en el directorio corriente llamado npasswd que es el archivo
+   padrón UNIX de contraseña,
+ - pwck - chequea la integridad de la contraseña y de los archivos
+   shadow,
+ - lastlog enseña el último momento de login de todos los usuarios.
+   Están también incluidas, en general, varias páginas de manual sobre
+   estos utilitarios y contraseñas shadow.
 
 %package extras
 Summary:	shadow - not often used files
 Summary(pl):	shadow - pliki nie u¿ywane czêsto
 Group:		Applications/System
-Requires:	shadow
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
+Requires:	%{name} = %{version}
 
 %description extras
-Programs for shadow often not used.
-If you have small system you may skip them.
+Programs for shadow often not used. If you have small system you may
+skip them.
 
 %description -l pl extras
-Programy nie u¿ywane czêsto.
-W ma³ych systemach mo¿na je pomin±æ.
+Programy nie u¿ywane czêsto. W ma³ych systemach mo¿na je pomin±æ.
 
 %prep
 %setup -q 
+%patch0 -p1 
 %patch1 -p1 
-%patch2 -p1 
 
 %build
-gettextize --copy --force
-aclocal
 %configure \
 	--disable-desrpc \
 	--with-libcrypt \
@@ -147,9 +146,6 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/{porttime,utmp}
 ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
 
 echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
-echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
-echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
-echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpunconv.8
 echo .so vipw.8   > $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8
 
 echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/pl/man1/sg.1
@@ -188,7 +184,7 @@ fi
 
 %dir /etc/skel
 
-%{!?_without_static:#}%attr(755,root,root) /usr/lib/lib*
+%{!?_without_static:#}%attr(755,root,root) %{_libdir}/lib*
 %attr(755,root,root) %{_sbindir}/user*
 %attr(755,root,root) %{_sbindir}/group*
 %attr(755,root,root) %{_sbindir}/grpck
@@ -197,23 +193,13 @@ fi
 %attr(755,root,root) %{_sbindir}/dpasswd
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
-%attr(4755,root,root) %{_bindir}/expiry
-%attr(4755,root,root) %{_bindir}/gpasswd
 %attr(4755,root,root) %{_bindir}/passwd
-%attr(755,root,root) %{_bindir}/chage
 %attr(755,root,root) %{_bindir}/faillog
 %attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
-%attr(755,root,root) %{_bindir}/newgrp
-%attr(755,root,root) %{_bindir}/sg
 
-%{_mandir}/man1/chage.*
-%{_mandir}/man1/expiry.*
-%{_mandir}/man1/gpasswd.*
 #%{_mandir}/man1/login.*
-%{_mandir}/man1/newgrp.*
 %{_mandir}/man1/passwd.*
-%{_mandir}/man1/sg.*
 #%{_mandir}/man1/su.*
 %{_mandir}/man5/faillog.*
 #%{_mandir}/man5/limits.*	# it's not used when PAM is enabled?
@@ -240,15 +226,12 @@ fi
 %{_mandir}/man8/vigr.*
 %{_mandir}/man8/vipw.*
 
-%lang(pl) %{_mandir}/pl/man1/chage.*
-%lang(pl) %{_mandir}/pl/man1/gpasswd.*
 %lang(pl) %{_mandir}/pl/man1/newgrp.*
 %lang(pl) %{_mandir}/pl/man1/passwd.*
 %lang(pl) %{_mandir}/pl/man1/sg.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
 %lang(pl) %{_mandir}/pl/man5/login.defs.*
 %lang(pl) %{_mandir}/pl/man5/passwd.*
-%lang(pl) %{_mandir}/pl/man5/porttime.*
 %lang(pl) %{_mandir}/pl/man5/shadow.*
 %lang(pl) %{_mandir}/pl/man8/faillog.*
 %lang(pl) %{_mandir}/pl/man8/groupadd.*
@@ -267,15 +250,11 @@ fi
 %lang(pl) %{_mandir}/pl/man8/vigr.*
 %lang(pl) %{_mandir}/pl/man8/vipw.*
 
-%lang(ja) %{_mandir}/ja/man1/chage.*
-%lang(ja) %{_mandir}/ja/man1/gpasswd.*
 %lang(ja) %{_mandir}/ja/man1/newgrp.*
 %lang(ja) %{_mandir}/ja/man1/passwd.*
-%lang(ja) %{_mandir}/ja/man1/sg.*
 %lang(ja) %{_mandir}/ja/man5/faillog.*
 %lang(ja) %{_mandir}/ja/man5/login.defs.*
 %lang(ja) %{_mandir}/ja/man5/passwd.*
-%lang(ja) %{_mandir}/ja/man5/porttime.*
 %lang(ja) %{_mandir}/ja/man5/shadow.*
 %lang(ja) %{_mandir}/ja/man8/faillog.*
 %lang(ja) %{_mandir}/ja/man8/groupadd.*
@@ -288,41 +267,54 @@ fi
 %lang(ja) %{_mandir}/ja/man8/userdel.*
 %lang(ja) %{_mandir}/ja/man8/usermod.*
 
-%lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.*
 %lang(pt_BR) %{_mandir}/pt_BR/man5/shadow.*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupadd.*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupdel.*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupmod.*
 
-%files -f %{name}.lang extras
+%files extras
 %defattr(644,root,root,755)
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chsh
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chfn
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/security/*
 %attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/porttime
 %attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/utmp
+%attr(755,root,root) %{_bindir}/chage
 %attr(4755,root,root) %{_bindir}/chfn
 %attr(4755,root,root) %{_bindir}/chsh
+%attr(4755,root,root) %{_bindir}/expiry
+%attr(4755,root,root) %{_bindir}/gpasswd
+%attr(4755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_sbindir}/chpasswd
-%attr(755,root,root) %{_sbindir}/logoutd
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
+%attr(755,root,root) %{_bindir}/sg
 #%attr(755,root,root) %{_bindir}/su
 
+%{_mandir}/man1/chage.*
 %{_mandir}/man1/chfn.*
 %{_mandir}/man1/chsh.*
+%{_mandir}/man1/expiry.*
+%{_mandir}/man1/gpasswd.*
+%{_mandir}/man1/newgrp.*
+%{_mandir}/man1/sg.*
 %{_mandir}/man8/chpasswd.*
-%{_mandir}/man8/logoutd.*
 %{_mandir}/man8/mkpasswd.*
 %{_mandir}/man8/newusers.*
+%lang(pl) %{_mandir}/pl/man1/chage.*
 %lang(pl) %{_mandir}/pl/man1/chfn.*
 %lang(pl) %{_mandir}/pl/man1/chsh.*
 %lang(pl) %{_mandir}/pl/man8/chpasswd.*
-%lang(pl) %{_mandir}/pl/man8/logoutd.*
+%lang(pl) %{_mandir}/pl/man1/gpasswd.*
 %lang(pl) %{_mandir}/pl/man8/mkpasswd.*
 %lang(pl) %{_mandir}/pl/man8/newusers.*
+
+%lang(ja) %{_mandir}/ja/man1/chage.*
 %lang(ja) %{_mandir}/ja/man1/chfn.*
 %lang(ja) %{_mandir}/ja/man1/chsh.*
 %lang(ja) %{_mandir}/ja/man8/chpasswd.*
-%lang(ja) %{_mandir}/ja/man8/logoutd.*
+%lang(ja) %{_mandir}/ja/man1/gpasswd.*
 %lang(ja) %{_mandir}/ja/man8/mkpasswd.*
+%lang(ja) %{_mandir}/ja/man1/sg.*
+
+%lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.*
