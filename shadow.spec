@@ -84,12 +84,12 @@ autoconf
 	--with-md5crypt \
 	--with-nls \
 	--without-included-gettext 
-make  
+%{__make}  
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/etc/{default,pam.d}
 
