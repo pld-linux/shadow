@@ -1,3 +1,6 @@
+
+# _with_selinux
+
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
@@ -6,13 +9,13 @@ Summary(pl):	Narzêdzia do obs³ugi shadow password
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
-Version:	4.0.0
-Release:	15
+Version:	4.0.3
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
+# Source0-md5:	4fa404ebb4e29828232b3c9a2abddefd
 Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-# Source0-md5: 292f375297dc1b5ad6667afbd3c8b5c7
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -24,10 +27,11 @@ Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-man_and_po.patch
 Patch2:		%{name}-pld.patch
-Patch3:		%{name}-sort-SEGV.patch
-Patch4:		%{name}-chage_expdays.patch
+Patch3:		%{name}-chage_expdays.patch
+Patch4:		%{name}-selinux.patch
 BuildRequires:	gettext-devel
 BuildRequires:	pam-devel
+%{?_with_selinux:BuildRequires:selinux-libs-devel}
 Provides:	shadow-utils
 Provides:	passwd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -111,10 +115,10 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+%{?_with_selinux:%patch4 -p1}
 
 %build
 %configure \
@@ -124,6 +128,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 	%{!?_without_static:--disable-shared} \
 	%{?_without_static:--disable-static} \
 	%{?_without_static:--enable-shared} \
+	%{?_with_selinux:--with-selinux} \
 	--with-libpam \
 	--with-md5crypt \
 	--with-nls \
