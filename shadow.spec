@@ -196,15 +196,14 @@ fi
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/sg
-%attr(755,root,root) %{_bindir}/su
 
 %{_mandir}/man1/chage.*
 %{_mandir}/man1/expiry.*
 %{_mandir}/man1/gpasswd.*
-%{_mandir}/man1/login.*
+#%{_mandir}/man1/login.*
 %{_mandir}/man1/newgrp.*
 %{_mandir}/man1/passwd.*
-%{_mandir}/man1/su.*
+#%{_mandir}/man1/su.*
 %{_mandir}/man5/faillog.*
 %{_mandir}/man5/limits.*
 %{_mandir}/man5/login.*
@@ -289,6 +288,7 @@ fi
 %attr(755,root,root) %{_sbindir}/logoutd
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
+%attr(755,root,root) %{_bindir}/su
 
 %{_mandir}/man1/chfn.*
 %{_mandir}/man1/chsh.*
