@@ -25,6 +25,7 @@ Patch1:		%{name}-man_and_po.patch
 Patch2:		%{name}-pld.patch
 Patch3:		%{name}-sort-SEGV.patch
 Patch4:		%{name}-chage_expdays.patch
+BuildRequires:	gettext-devel
 BuildRequires:	pam-devel
 Provides:	shadow-utils
 Provides:	passwd
