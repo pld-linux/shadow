@@ -18,7 +18,9 @@ Patch0:		shadow-cvs.patch
 Patch1:		shadow-pld.patch
 Patch2:		shadow-utmpx.patch
 Patch3:		shadow-pam-userdb.patch
+Patch4:		shadow-DESTDIR.patch
 BuildRequires:	pam-devel
+BuildRequires:	gettext-devel
 Requires:	pam
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -59,36 +61,33 @@ nigdy nie powinien zostaæ odinstalowany !
 
 %prep
 %setup -q 
-%patch0 -p1 -b .cvs
+%patch0 -p1
 %patch1 -p1 
 %patch2 -p1 
 %patch3 -p1
+%patch4 -p1
 
 %build
 libtoolize --copy --force 
+gettextize --copy --force
+automake 
 aclocal 
 autoheader 
-automake 
 autoconf
 %configure \
-    --disable-desrpc \
-    --with-libcrypt \
-    --disable-shared \
-    --with-libpam \
-    --with-md5crypt \
-    --with-nls \
-    --without-included-gettext 
+	--disable-desrpc \
+	--with-libcrypt \
+	--disable-shared \
+	--with-libpam \
+	--with-md5crypt \
+	--with-nls \
+	--without-included-gettext 
 make  
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make \
-    prefix=$RPM_BUILD_ROOT%{_prefix} \
-    exec_prefix=$RPM_BUILD_ROOT \
-    mandir=$RPM_BUILD_ROOT%{_mandir} \
-    infodir$RPM_BUILD_ROOT=%{_infodir} \
-    install
+make install DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/etc/{default,pam.d}
 
