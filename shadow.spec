@@ -142,12 +142,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gpasswd
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_bindir}/expiry
 
 %{_mandir}/man1/gpasswd.*
-%{_mandir}/man1/newgrp.*
 %{_mandir}/man1/chage.*
 %{_mandir}/man3/shadow.*
 %{_mandir}/man5/login.defs.*
@@ -178,7 +176,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %lang(pl) %{_mandir}/pl/man1/change.*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.*
-%lang(pl) %{_mandir}/pl/man1/newgrp.*
 %lang(pl) %{_mandir}/pl/man3/pw_auth.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
 %lang(pl) %{_mandir}/pl/man5/login.defs.*
