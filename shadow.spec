@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	5
+Release:	6
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -200,6 +200,7 @@ fi
 %attr(755,root,root) %{_sbindir}/*conv
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
+%attr(755,root,root) %{_sbindir}/chpasswd
 %attr(4755,root,root) %{_bindir}/passwd
 %attr(755,root,root) %{_bindir}/faillog
 %attr(755,root,root) %{_bindir}/groups
@@ -285,7 +286,6 @@ fi
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
 %attr(4755,root,root) %{_bindir}/newgrp
-%attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/dpasswd
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
