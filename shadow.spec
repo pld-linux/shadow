@@ -19,7 +19,6 @@ Patch1:		shadow-pld.patch
 Patch2:		shadow-utmpx.patch
 Patch3:		shadow-pam-userdb.patch
 BuildRequires:	pam-devel
-BuildRequires:	cracklib-devel
 Requires:	pam
 Buildroot:	/tmp/%{name}-%{version}-root
 
