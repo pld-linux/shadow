@@ -39,6 +39,7 @@ BuildRequires:	pam-devel
 %{?_with_selinux:BuildRequires:	selinux-libs-devel}
 Provides:	shadow-utils
 Provides:	passwd
+Requires:	pam >= 0.77.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	shadow-utils
 Obsoletes:	passwd
