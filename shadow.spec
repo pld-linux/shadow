@@ -2,7 +2,7 @@ Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux
-Summary(pl):	Narzêdzia do obs³ugi shadow passwords
+Summary(pl):	Narzêdzia do obs³ugi shadow password
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
@@ -36,7 +36,7 @@ This package includes the programs necessary to convert standard UNIX
 password files to the shadow password format, as well as programs for
 command-line management of the user's accounts.
  - pwconv - converts everything to the shadow password format,
- - pwunconv - unconverts from shadow passwords, generating a file in
+ - pwunconv - unconverts from shadow password, generating a file in
    the current directory called npasswd that is a standard UNIX password
    file,
  - pwck - checks the integrity of the password and shadow files,
@@ -65,8 +65,8 @@ Pakiet zawiera programy do obs³ugi shadow password. Zanjduj± siê w nim
 programy do konwersji standardowego pliku hase³ do wersji shadow
 password a tak¿e programy do zarz±dania kontami u¿ytkowników w
 systemie
- - pwconv - konwertuje do formatu shadow passwords
- - pwunconv - konwertuje z shadow passwords do formatu standardowego
+ - pwconv - konwertuje do formatu shadow password
+ - pwunconv - konwertuje z shadow password do formatu standardowego
    pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
    standardowym plikiem z has³ami,
  - lastlog - wy¶wietla czas logowania u¿ytkowników,
@@ -101,11 +101,11 @@ Group(pl):	Aplikacje/System
 Requires:	%{name} = %{version}
 
 %description extras
-Programs for shadow often not used. If you have small system you may
+Programs for shadow not often used. If you have small system you may
 skip them.
 
 %description extras -l pl
-Programy nie u¿ywane czêsto. W ma³ych systemach mo¿na je pomin±æ.
+Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 
 %prep
 %setup -q
