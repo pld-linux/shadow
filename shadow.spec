@@ -156,11 +156,10 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,security,skel/tmp}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,security,skel}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
@@ -207,6 +206,7 @@ fi
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/login.defs
 %attr(600,root,root) %config(noreplace) %verify(not md5 size mtime) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel
+%dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
 %attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/groupadd
