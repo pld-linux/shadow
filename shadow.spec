@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -180,7 +180,7 @@ fi
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/shadow
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/passwd
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/useradd
-%attr(750,root,root) %dir /etc/security
+%attr(755,root,root) %dir /etc/security
 
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
 %attr(400,root,root) %ghost %{_sysconfdir}/shadow
