@@ -55,14 +55,14 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 This package includes the programs necessary to convert standard UNIX
 password files to the shadow password format, as well as programs for
 command-line management of the user's accounts.
- - pwconv - converts everything to the shadow password format,
- - pwunconv - unconverts from shadow password, generating a file in the
-   current directory called npasswd that is a standard UNIX password
-   file,
- - pwck - checks the integrity of the password and shadow files,
- - lastlog - prints out the last login times of all users,
- - useradd, userdel, usermod - for accounts management,
- - groupadd, groupdel, groupmod - for group management.
+- pwconv - converts everything to the shadow password format,
+- pwunconv - unconverts from shadow password, generating a file in the
+  current directory called npasswd that is a standard UNIX password
+  file,
+- pwck - checks the integrity of the password and shadow files,
+- lastlog - prints out the last login times of all users,
+- useradd, userdel, usermod - for accounts management,
+- groupadd, groupdel, groupmod - for group management.
 
 A number of man pages are also included that relate to these
 utilities, and shadow passwords in general.
@@ -70,28 +70,28 @@ utilities, and shadow passwords in general.
 %description -l es
 Este paquete incluye los programas necesarios para convertir Archivos
 padrón UNIX de contraseña al formato shadow.
- - pwconv5 - convierte todo al formato de contraseñas del shadow,
- - pwunconv - deshace la conversión de contraseñas shadow, creando un
-   archivo en el directorio corriente llamado npasswd que es el archivo
-   padrón UNIX de contraseña,
- - pwck - chequea la integridad de la contraseña y de los archivos
-   shadow,
- - lastlog enseña el último momento de login de todos los usuarios.
-   Están también incluidas, en general, varias páginas de manual sobre
-   estos utilitarios y contraseñas shadow.
+- pwconv5 - convierte todo al formato de contraseñas del shadow,
+- pwunconv - deshace la conversión de contraseñas shadow, creando un
+  archivo en el directorio corriente llamado npasswd que es el archivo
+  padrón UNIX de contraseña,
+- pwck - chequea la integridad de la contraseña y de los archivos
+  shadow,
+- lastlog enseña el último momento de login de todos los usuarios.
+  Están también incluidas, en general, varias páginas de manual sobre
+  estos utilitarios y contraseñas shadow.
 
 %description -l pl
 Pakiet zawiera programy do obs³ugi mechanizmu ukrytych hase³ (shadow
 password). Znajduj± siê w nim programy do konwersji standardowego
 pliku hase³ do wersji shadow password a tak¿e programy do zarz±dzania
 kontami u¿ytkowników w systemie:
- - pwconv - konwertuje do formatu shadow password
- - pwunconv - konwertuje z shadow password do formatu standardowego
-   pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
-   standardowym plikiem z has³ami,
- - lastlog - wy¶wietla czas logowania u¿ytkowników,
- - useradd, userdel, usermod - do zarz±dzania kontami u¿ytkowników,
- - groupadd, groupdel, groupmod - do zarz±dzania grupami.
+- pwconv - konwertuje do formatu shadow password
+- pwunconv - konwertuje z shadow password do formatu standardowego
+  pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
+  standardowym plikiem z has³ami,
+- lastlog - wy¶wietla czas logowania u¿ytkowników,
+- useradd, userdel, usermod - do zarz±dzania kontami u¿ytkowników,
+- groupadd, groupdel, groupmod - do zarz±dzania grupami.
 
 Ostrze¿enie:
 
@@ -102,12 +102,12 @@ nigdy nie powinien zostaæ odinstalowany!
 %description -l pt_BR
 Este pacote inclui os programas necessários para converter
 arquivos-padrão UNIX de senha para o formato shadow.
- - pwconv - converte tudo para o formato de senhas do shadow,
- - pwunconv - desconverte senhas shadow, gerando um arquivo no
-   diretório corrente chamado npasswd que é o arquivo-padrão UNIX de
-   senha,
- - pwck - checa a integridade da senha e dos arquivos shadow,
- - lastlog - mostra o último momento de login de todos os usuários.
+- pwconv - converte tudo para o formato de senhas do shadow,
+- pwunconv - desconverte senhas shadow, gerando um arquivo no
+  diretório corrente chamado npasswd que é o arquivo-padrão UNIX de
+  senha,
+- pwck - checa a integridade da senha e dos arquivos shadow,
+- lastlog - mostra o último momento de login de todos os usuários.
 
 Várias páginas de manual estão também incluídas sobre estes
 utilitários e senhas shadow em geral.
