@@ -71,6 +71,7 @@ pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
 
 %build
 gettextize --copy --force
+libtoolize --copy --force
 aclocal
 autoheader
 autoconf
