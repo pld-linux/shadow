@@ -1,0 +1,2 @@
+- added conditional build with shared libshadow
+  (define _without_static for it)
