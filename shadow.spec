@@ -35,6 +35,7 @@ Patch1:		%{name}-man_and_po.patch
 Patch2:		%{name}-pl.po-update.patch
 Patch3:		%{name}-pld.patch
 Patch4:		%{name}-chage_expdays.patch
+Patch5:		%{name}-revert-broken.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -134,6 +135,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__autoheader}
@@ -159,6 +161,11 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,security,skel/tmp}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# we prefer these from other packages
+rm -f $RPM_BUILD_ROOT{/bin/id,%{_bindir}/{groups,login,su}}
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/{groups,id,login,su}.1*
+rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/adduser.8*
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
@@ -198,7 +205,6 @@ fi
 %doc ChangeLog NEWS TODO doc/{HOWTO,README,README.linux,README.pam,WISHLIST}
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not md5 size mtime) %{_sysconfdir}/default/*
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chage
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/passwd
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/shadow
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/useradd
@@ -363,6 +369,7 @@ fi
 
 %files extras
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chage
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chfn
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chsh
 %attr(640,root,root) %config %verify(not md5 size mtime) /etc/security/*
@@ -443,27 +450,8 @@ fi
 %lang(zh_TW) %{_mandir}/zh_TW/man1/chfn.1*
 %lang(zh_TW) %{_mandir}/zh_TW/man1/chsh.1*
 
-# unpackaged:
-# - /bin/login already in login (from util-linux.spec)
-#%attr(755,root,root) %{_bindir}/login
-#%{_mandir}/man1/login.1*
-#%{_mandir}/man5/porttime.5*
-#%lang(hu) %{_mandir}/hu/man1/login.1*
-#%lang(id) %{_mandir}/id/man1/login.1*
-#%lang(it) %{_mandir}/it/man1/login.1*
-#%lang(ja) %{_mandir}/ja/man1/login.1*
-#%lang(ja) %{_mandir}/ja/man5/porttime.5*
-#%lang(ko) %{_mandir}/ko/man1/login.1*
-#%lang(pl) %{_mandir}/pl/man1/login.1*
-#%lang(pl) %{_mandir}/pl/man5/porttime.5*
-
-# - /bin/su already in coreutils
-#%attr(4755,root,root) %{_bindir}/su
-#%{_mandir}/man1/su.1*
-#%lang(ja) %{_mandir}/ja/man1/su.1*
-#%lang(pl) %{_mandir}/pl/man1/su.1*
-
 # - unknown reason (removed w/o comment in rev 1.27)
+# probably it works only with login from shadow
 #%attr(755,root,root) %{_sbindir}/logoutd
 #%{_mandir}/man8/logoutd.8*
 #%lang(ja) %{_mandir}/ja/man8/logoutd.8*
