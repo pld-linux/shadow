@@ -36,8 +36,8 @@ This package includes the programs necessary to convert standard UNIX
 password files to the shadow password format, as well as programs for
 command-line management of the user's accounts.
  - pwconv - converts everything to the shadow password format,
- - pwunconv - unconverts from shadow password, generating a file in
-   the current directory called npasswd that is a standard UNIX password
+ - pwunconv - unconverts from shadow password, generating a file in the
+   current directory called npasswd that is a standard UNIX password
    file,
  - pwck - checks the integrity of the password and shadow files,
  - lastlog - prints out the last login times of all users,
