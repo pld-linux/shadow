@@ -131,6 +131,11 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch3 -p1
 %patch4 -p1
 
+# ugh, too populated to patch
+%{__perl} -pi -e 's/instead DES/instead of DES/' src/chpasswd.c po/*.po
+
+rm -f po/stamp-po
+
 %build
 %{__autoheader}
 %{__gettextize}
@@ -164,12 +169,11 @@ install %{SOURCE5} $RPM_BUILD_ROOT/etc/pam.d/chsh
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
 install %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/useradd
-install etc/pam.d/usermod $RPM_BUILD_ROOT/etc/pam.d/userdel
+sed -e 's/usermod/userdel/' etc/pam.d/usermod > $RPM_BUILD_ROOT/etc/pam.d/userdel
 install etc/pam.d/usermod $RPM_BUILD_ROOT/etc/pam.d/usermod
 install etc/pam.d/groupadd $RPM_BUILD_ROOT/etc/pam.d/groupadd
 install etc/pam.d/groupmod $RPM_BUILD_ROOT/etc/pam.d/groupmod
 install etc/pam.d/groupdel $RPM_BUILD_ROOT/etc/pam.d/groupdel
-
 
 > $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
@@ -189,6 +193,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 
 # /bin/login already in login (from util-linux.spec)
 rm -f $RPM_BUILD_ROOT{%{_bindir}/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1*,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
+# /bin/id already in coreutils
+rm -f $RPM_BUILD_ROOT%{_mandir}/cs/man1/id.1
 # /bin/su already in coreutils
 rm -f $RPM_BUILD_ROOT{%{_bindir}/su,%{_mandir}/{,*/}man1/su.1}
 # /usr/bin/groups already in coreutils
@@ -275,6 +281,8 @@ fi
 %lang(cs) %{_mandir}/cs/man5/shadow.5*
 
 %lang(de) %{_mandir}/de/man1/passwd.1*
+%lang(de) %{_mandir}/de/man8/vigr.8*
+%lang(de) %{_mandir}/de/man8/vipw.8*
 
 %lang(es) %{_mandir}/es/man1/passwd.1*
 
