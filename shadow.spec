@@ -70,7 +70,10 @@ pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
 %configure \
 	--disable-desrpc \
 	--with-libcrypt \
-	--disable-shared \
+	%{!?bcond_off_static:--enable-static} \
+	%{!?bcond_off_static:--disable-shared} \
+	%{?bcond_off_static:--disable-static} \
+	%{?bcond_off_static:--enable-shared} \
 	--with-libpam \
 	--with-md5crypt \
 	--with-nls \
@@ -102,13 +105,16 @@ gzip -9nf doc/ANNOUNCE NEWS doc/README doc/README.linux doc/HOWTO
 
 %find_lang %{name}
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %post
+%{!?bcond_off_static:#}/sbin/ldconfig
 if [ ! -f /etc/shadow ]; then
 	%{_sbindir}/pwconv
 fi
 
-%clean
-rm -rf $RPM_BUILD_ROOT
+%{!?bcond_off_static:#}%postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -121,6 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
 %attr(400,root,root) %ghost %{_sysconfdir}/shadow
 
+%{!?bcond_off_static:#}%attr(755,root,root) /lib/lib*.so.*.*.*
 %attr(755,root,root) %{_sbindir}/user*
 %attr(755,root,root) %{_sbindir}/group*
 %attr(755,root,root) %{_sbindir}/grpck
