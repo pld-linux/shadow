@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	19990307
-Release:	1
+Release:	2
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
@@ -14,6 +14,7 @@ Source0:	%{name}-%{version}.tar.gz
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Patch0:		%{name}-%{version}-pld.patch
+Patch1:		%{name}-utmpx.patch
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -53,20 +54,19 @@ nigdy nie powinien zostaæ odinstalowany !
 
 %prep
 %setup -q 
-%patch -p1 
+%patch0 -p1 
+%patch1 -p1 
 
 %build
-autoconf
-CFLAGS=$RPM_OPT_FLAGS LDFLAGS=-s \
-    ./configure \
-	--prefix=%{_prefix} \
-	--disable-desrpc \
-	--with-libcrypt \
-	--disable-shared \
-	--with-libpam \
-	--with-md5crypt \
-	--with-nls \
-	--without-included-gettext %{_target_platform}
+libtoolize --copy --force && aclocal && autoheader && automake && autoconf
+%configure \
+    --disable-desrpc \
+    --with-libcrypt \
+    --disable-shared \
+    --with-libpam \
+    --with-md5crypt \
+    --with-nls \
+    --without-included-gettext 
 make  
 
 %install
@@ -93,6 +93,8 @@ echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpunconv.8
 gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[1358]/* \
 	doc/ANNOUNCE doc/CHANGES doc/README doc/README.linux doc/HOWTO
 
+%find_lang %{name}
+
 %post
 if [ ! -f /etc/shadow ]; then
 %{_sbindir}/pwconv
@@ -101,7 +103,7 @@ fi
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 
 %doc doc/*.gz
@@ -140,9 +142,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*conv.8.gz
 %{_mandir}/man8/lastlog.8.gz
 %{_mandir}/man8/faillog.8.gz
-
-%lang(el) %{_datadir}/locale/el/LC_MESSAGES/shadow.mo
-%lang(pl) %{_datadir}/locale/pl/LC_MESSAGES/shadow.mo
 
 %changelog
 * Tue May 18 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
