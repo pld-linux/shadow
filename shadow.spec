@@ -11,13 +11,13 @@ Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
-Version:	4.0.4.1
-Release:	3
+Version:	4.0.6
+Release:	0.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-# Source0-md5:	3a3d17d3d7c630b602baf66ae7434c61
+# Source0-md5:	3ca79b02c0aaa82128f4c32cb68ffe4f
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -28,9 +28,6 @@ Source7:	passwd.pamd
 Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-man_and_po.patch
-Patch2:		%{name}-pl.po-update.patch
-Patch3:		%{name}-userdel-exit-bug.patch
-Patch4:		%{name}-useradd-p.patch
 Patch5:		%{name}-pld.patch
 Patch6:		%{name}-chage_expdays.patch
 Patch7:		%{name}-selinux.patch
@@ -129,11 +126,8 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1 -I need help with this one ;-)
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %{?with_selinux:%patch7 -p1}
@@ -211,6 +205,7 @@ fi
 %dir /etc/skel
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
+#%attr(644,root,root) %{_libdir}/lib*.a
 %attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/groupadd
 %attr(755,root,root) %{_sbindir}/groupdel
@@ -265,7 +260,6 @@ fi
 %lang(fr) %{_mandir}/fr/man5/faillog.5*
 %lang(fr) %{_mandir}/fr/man5/passwd.5*
 %lang(fr) %{_mandir}/fr/man5/shadow.5*
-%lang(fr) %{_mandir}/fr/man8/adduser.8*
 %lang(fr) %{_mandir}/fr/man8/chpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/useradd.8*
 %lang(fr) %{_mandir}/fr/man8/userdel.8*
