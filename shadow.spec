@@ -213,7 +213,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/shadow
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/useradd
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/login.defs
-%attr(600,root,root) %ghost %{_sysconfdir}/shadow
+%attr(600,root,root) %config(noreplace) %verify(not md5 size mtime) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
 %attr(755,root,root) %{_sbindir}/chpasswd
