@@ -78,10 +78,10 @@ automake -a -c --foreign
 %configure \
 	--disable-desrpc \
 	--with-libcrypt \
-	%{!?bcond_off_static:--enable-static} \
-	%{!?bcond_off_static:--disable-shared} \
-	%{?bcond_off_static:--disable-static} \
-	%{?bcond_off_static:--enable-shared} \
+	%{!?_without_static:--enable-static} \
+	%{!?_without_static:--disable-shared} \
+	%{?_without_static:--disable-static} \
+	%{?_without_static:--enable-shared} \
 	--with-libpam \
 	--with-md5crypt \
 	--with-nls \
@@ -117,12 +117,12 @@ gzip -9nf doc/ANNOUNCE NEWS doc/README doc/README.linux doc/HOWTO
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{!?bcond_off_static:#}/sbin/ldconfig
+%{!?_without_static:#}/sbin/ldconfig
 if [ ! -f /etc/shadow ]; then
 	%{_sbindir}/pwconv
 fi
 
-%{!?bcond_off_static:#}%postun -p /sbin/ldconfig
+%{!?_without_static:#}%postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -137,7 +137,7 @@ fi
 
 %dir /etc/skel
 
-%{!?bcond_off_static:#}%attr(755,root,root) /lib/lib*.so.*.*.*
+%{!?_without_static:#}%attr(755,root,root) /lib/lib*.so.*.*.*
 %attr(755,root,root) %{_sbindir}/user*
 %attr(755,root,root) %{_sbindir}/group*
 %attr(755,root,root) %{_sbindir}/grpck
