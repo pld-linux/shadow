@@ -1,0 +1,23 @@
+diff -Nur shadow-4.0.0.orig/src/chage.c shadow-4.0.0/src/chage.c
+--- shadow-4.0.0.orig/src/chage.c	Mon Oct  9 20:39:50 2000
++++ shadow-4.0.0/src/chage.c	Fri May 31 18:39:12 2002
+@@ -121,6 +121,7 @@
+ #define	CLOSE_FAIL	"failed rewriting %s\n"
+ 
+ #define	EPOCH		"1969-12-31"
++#define	EPOCH_SHORT	"12/31/69"
+ 
+ #ifdef	SHADOWPWD
+ #define	DBMERROR2	"error updating DBM shadow entry.\n"
+@@ -509,7 +510,10 @@
+ 			case 'E':
+ 				Eflg++;
+ 				if (!isnum(optarg))
+-					expdays = strtoday (optarg);
++					if (strcmp (optarg, EPOCH_SHORT) == 0)
++						expdays = -1;
++					else
++						expdays = strtoday (optarg);
+ 				else
+ 					expdays = strtol (optarg, 0, 10);
+ 				break;
