@@ -1,0 +1,2 @@
+- updated to 4.0.4.1, updated patches
+- newgrp+sg is back, Conflicts: util-linux < 2.12-10
