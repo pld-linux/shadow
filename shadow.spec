@@ -5,19 +5,19 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	981228
-Release:	1d
+Release:	2
+Copyright:      BSD
+Group:          Utilities/System
+Group(pl):      Narzêdzia/System
 URL:		ftp://ftp.ists.pwr.wroc.pl/pub/linux/shadow
 Source0:	%{name}-%{version}.tar.gz
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	shells
-Patch0:		%{name}-man.patch
-Patch1:		%{name}-useradd.patch
-Patch2:		%{name}-groupadd.patch
-Patch3:		%{name}-getdef.patch
-Copyright:	BSD
-Group:		Utilities/System
-Group(pl):	U¿ytki/System
+Patch0:		shadow-man.patch
+Patch1:		shadow-useradd.patch
+Patch2:		shadow-groupadd.patch
+Patch3:		shadow-getdef.patch
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	shadow-utils
 
@@ -53,7 +53,7 @@ a tak¿e programy do zarz±danie kontami u¿ytkowników w systemie
 Ostrze¿enie:
 
 Programy znajduj±ce siê w tym pakiecie s± niezbêdne do prawid³owej pracy
-twojego systemy i podobnie jak pakiet z bibliotekami systemowymi - glibc
+twojego systemu i podobnie jak pakiet z bibliotekami systemowymi - glibc
 nigdy nie powinien zostaæ odinstalowany !
 
 %prep
@@ -94,18 +94,21 @@ echo .so pwconv.8 > $RPM_BUILD_ROOT/usr/man/man8/pwunconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT/usr/man/man8/grpconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT/usr/man/man8/grpunconv.8
 
-bzip2 -9 $RPM_BUILD_ROOT/usr/man/man[1358]/* doc/ANNOUNCE doc/CHANGES 
-bzip2 -9 doc/README doc/README.linux doc/HOWTO
+gzip -9nf $RPM_BUILD_ROOT/usr/man/man[1358]/* \
+	doc/ANNOUNCE doc/CHANGES doc/README doc/README.linux doc/HOWTO
 
 %post
 if [ ! -f /etc/shadow ]; then
 /usr/sbin/pwconv
 fi
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %files
 %defattr(644,root,root,755)
 
-%doc doc/*.bz2
+%doc doc/*.gz
 
 %attr(750,root,root) %dir /etc/default
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/default/*
@@ -127,26 +130,23 @@ fi
 %attr(755,root,root) /usr/bin/lastlog
 %attr(755,root,root) /usr/bin/faillog
 
-%attr(644,root, man) /usr/man/man1/chage.1.bz2
-%attr(644,root, man) /usr/man/man1/gpasswd.1.bz2
-%attr(644,root, man) /usr/man/man3/shadow.3.bz2
-%attr(644,root, man) /usr/man/man5/shadow.5.bz2
-%attr(644,root, man) /usr/man/man5/faillog.5.bz2
-%attr(644,root, man) /usr/man/man8/group*.8.bz2
-%attr(644,root, man) /usr/man/man8/user*.8.bz2
-%attr(644,root, man) /usr/man/man8/pwck.8.bz2
-%attr(644,root, man) /usr/man/man8/grpck.8.bz2
-%attr(644,root, man) /usr/man/man8/chpasswd.8.bz2
-%attr(644,root, man) /usr/man/man8/newusers.8.bz2
-%attr(644,root, man) /usr/man/man8/mkpasswd.8.bz2
-%attr(644,root, man) /usr/man/man8/*conv.8.bz2
-%attr(644,root, man) /usr/man/man8/lastlog.8.bz2
-%attr(644,root, man) /usr/man/man8/faillog.8.bz2
+/usr/man/man1/chage.1.gz
+/usr/man/man1/gpasswd.1.gz
+/usr/man/man3/shadow.3.gz
+/usr/man/man5/shadow.5.gz
+/usr/man/man5/faillog.5.gz
+/usr/man/man8/group*.8.gz
+/usr/man/man8/user*.8.gz
+/usr/man/man8/pwck.8.gz
+/usr/man/man8/grpck.8.gz
+/usr/man/man8/chpasswd.8.gz 
+/usr/man/man8/newusers.8.gz
+/usr/man/man8/mkpasswd.8.gz
+/usr/man/man8/*conv.8.gz
+/usr/man/man8/lastlog.8.gz
+/usr/man/man8/faillog.8.gz
 
 %lang(el) /usr/share/locale/el/LC_MESSAGES/shadow.mo
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Tue Feb 02 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
