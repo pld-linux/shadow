@@ -55,3 +55,6 @@ CHFN_RESTRICT		yes
 #
 #CREATE_HOME	yes
 
+# chkpasswd uses this one
+MD5_CRYPT_ENAB	yes
+
