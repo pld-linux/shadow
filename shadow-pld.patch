@@ -1,5 +1,6 @@
---- ./src/groupadd.c.org	Sat Oct  6 23:48:13 2001
-+++ ./src/groupadd.c	Sat Oct  6 23:55:55 2001
+diff -Nur shadow-4.0.0.orig/src/groupadd.c shadow-4.0.0/src/groupadd.c
+--- shadow-4.0.0.orig/src/groupadd.c	Mon Oct  9 21:02:20 2000
++++ shadow-4.0.0/src/groupadd.c	Thu Oct 18 10:41:15 2001
 @@ -78,6 +78,8 @@
  static int oflg = 0; /* permit non-unique group ID to be specified with -g */
  static int gflg = 0; /* ID value for the new group */
@@ -55,8 +56,9 @@
  		default:
  			usage();
  		}
---- ./src/useradd.c.org	Sat Oct  6 23:56:11 2001
-+++ ./src/useradd.c	Sun Oct  7 00:25:24 2001
+diff -Nur shadow-4.0.0.orig/src/useradd.c shadow-4.0.0/src/useradd.c
+--- shadow-4.0.0.orig/src/useradd.c	Fri Sep  7 17:12:54 2001
++++ shadow-4.0.0/src/useradd.c	Thu Oct 18 10:51:10 2001
 @@ -78,10 +78,10 @@
  /*
   * These defaults are used if there is no defaults file.
@@ -80,15 +82,20 @@
  static uid_t user_id;
  static gid_t user_gid;
  static const char *user_comment = "";
-@@ -122,6 +122,7 @@
+@@ -122,10 +122,12 @@
  	sflg = 0, /* shell program for new account */
  	cflg = 0, /* comment (GECOS) field for new account */
  	mflg = 0, /* create user's home directory if it doesn't exist */
-+	Mflg = 0, /* don't crate user's home directory */
++	Mflg = 0, /* don't create user's home directory */
  	kflg = 0, /* specify a directory to fill new user directory */
  	fflg = 0, /* days until account with expired password is locked */
  	eflg = 0, /* days since 1970-01-01 when account is locked */
-@@ -179,6 +180,7 @@
+ 	Dflg = 0, /* set/show new user default values */
++	rflg = 0, /* system account */
+ 	nflg = 0; /* create a group having the same name as the user */
+ 
+ #ifdef AUTH_METHODS
+@@ -179,6 +181,7 @@
   * exit status values
   */
  #define E_SUCCESS	0	/* success */
@@ -96,7 +103,7 @@
  #define E_PW_UPDATE	1	/* can't update password file */
  #define E_USAGE		2	/* bad command syntax */
  #define E_BAD_ARG	3	/* invalid argument to option */
-@@ -728,7 +730,7 @@
+@@ -728,7 +731,7 @@
  #ifdef AUTH_METHODS
  	fprintf(stderr, _("[-A program] "));
  #endif
@@ -105,16 +112,24 @@
  
  	fprintf(stderr, _("       %s\t-D [-g group] [-b base] [-s shell]\n"),
  		Prog);
-@@ -986,7 +988,7 @@
+@@ -985,9 +988,14 @@
+ {
  	const struct passwd *pwd;
  	uid_t uid_min, uid_max;
- 
+-
 -	uid_min = getdef_num("UID_MIN", 100);
++	
++	if (!rflg) {
 +	uid_min = getdef_num("UID_MIN", 500);
  	uid_max = getdef_num("UID_MAX", 60000);
++	} else {
++	uid_min = 1;
++	uid_max = 949;
++	}
  
  	/*
-@@ -1143,9 +1145,9 @@
+ 	 * Start with some UID value if the user didn't provide us with
+@@ -1143,9 +1151,9 @@
  	char *cp;
  
  #ifdef SHADOWPWD
@@ -126,7 +141,7 @@
  #endif
  	while ((arg = getopt(argc, argv, FLAGS)) != EOF) {
  #undef FLAGS
-@@ -1278,6 +1280,9 @@
+@@ -1278,6 +1286,9 @@
  		case 'o':
  			oflg++;
  			break;
@@ -136,7 +151,17 @@
  		case 'O':
  			/*
  			 * override login.defs defaults (-O name=value)
-@@ -1329,7 +1334,9 @@
+@@ -1304,6 +1315,9 @@
+ 			}
+ 			user_pass = optarg;
+ 			break;
++		case 'r':  /* system account */
++			rflg++;
++			break;
+ 		case 's':
+ 			if (!VALID(optarg) || (optarg[0] &&
+ 			    (optarg[0] != '/' && optarg[0] != '*'))) {
+@@ -1329,7 +1343,9 @@
  	 * Certain options are only valid in combination with others.
  	 * Check it here so that they can be specified in any order.
  	 */
