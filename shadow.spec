@@ -235,9 +235,10 @@ fi
 
 %lang(ja) %{_mandir}/ja/man1/passwd.*
 %lang(ja) %{_mandir}/ja/man5/faillog.*
-%lang(ja) %{_mandir}/ja/man5/login.defs.*
+%lang(ja) %{_mandir}/ja/man5/login.*
 %lang(ja) %{_mandir}/ja/man5/passwd.*
 %lang(ja) %{_mandir}/ja/man5/shadow.*
+%lang(ja) %{_mandir}/ja/man5/suauth.*
 %lang(ja) %{_mandir}/ja/man8/faillog.*
 %lang(ja) %{_mandir}/ja/man8/groupadd.*
 %lang(ja) %{_mandir}/ja/man8/groupdel.*
@@ -252,9 +253,10 @@ fi
 %lang(pl) %{_mandir}/pl/man1/groups.*
 %lang(pl) %{_mandir}/pl/man1/passwd.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
-%lang(pl) %{_mandir}/pl/man5/login.defs.*
+%lang(pl) %{_mandir}/pl/man5/login.*
 %lang(pl) %{_mandir}/pl/man5/passwd.*
 %lang(pl) %{_mandir}/pl/man5/shadow.*
+%lang(pl) %{_mandir}/pl/man5/suauth.*
 %lang(pl) %{_mandir}/pl/man8/faillog.*
 %lang(pl) %{_mandir}/pl/man8/groupadd.*
 %lang(pl) %{_mandir}/pl/man8/groupdel.*
@@ -321,8 +323,8 @@ fi
 %lang(pl) %{_mandir}/pl/man1/chage.*
 %lang(pl) %{_mandir}/pl/man1/chfn.*
 %lang(pl) %{_mandir}/pl/man1/chsh.*
-%lang(pl) %{_mandir}/pl/man1/newgrp.*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.*
+%lang(pl) %{_mandir}/pl/man1/newgrp.*
 %lang(pl) %{_mandir}/pl/man1/sg.*
 %lang(pl) %{_mandir}/pl/man5/d_passwd.*
 %lang(pl) %{_mandir}/pl/man5/dialups.*
