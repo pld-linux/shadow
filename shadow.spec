@@ -16,8 +16,7 @@ Release:	0.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-#Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-Source0:	ftp://ftp.icm.edu.pl/pub/Linux/distributions/pld/software/shadow/shadow-4.0.7.tar.bz2 
+Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
 # Source0-md5:	89ebec0d1c0d861a5bd5c4c63e5cb0cc
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
