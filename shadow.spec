@@ -24,6 +24,7 @@ Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-man_and_po.patch
 Patch2:		%{name}-pld.patch
 Patch3:		%{name}-sort-SEGV.patch
+Patch4:		%{name}-chage_expdays.patch
 BuildRequires:	pam-devel
 Provides:	shadow-utils
 Provides:	passwd
@@ -111,6 +112,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %configure \
