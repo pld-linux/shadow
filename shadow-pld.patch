@@ -1,6 +1,6 @@
-diff -Nur shadow-19990307/src/groupadd.c shadow-19990307.pld/src/groupadd.c
---- shadow-19990307/src/groupadd.c	Sun Mar  7 20:14:54 1999
-+++ shadow-19990307.pld/src/groupadd.c	Tue May 18 17:32:55 1999
+diff -Naur shadow-19990827/src/groupadd.c shadow-19990827-patched/src/groupadd.c
+--- shadow-19990827/src/groupadd.c	Mon Jun  7 18:40:45 1999
++++ shadow-19990827-patched/src/groupadd.c	Wed Apr 12 12:25:07 2000
 @@ -72,6 +72,8 @@
  static int oflg = 0; /* permit non-unique group ID to be specified with -g */
  static int gflg = 0; /* ID value for the new group */
@@ -57,12 +57,15 @@ diff -Nur shadow-19990307/src/groupadd.c shadow-19990307.pld/src/groupadd.c
  			break;
  		default:
  			usage();
-diff -Nur shadow-19990307/src/useradd.c shadow-19990307.pld/src/useradd.c
---- shadow-19990307/src/useradd.c	Sun Mar  7 20:15:05 1999
-+++ shadow-19990307.pld/src/useradd.c	Tue May 18 17:33:18 1999
-@@ -74,8 +74,8 @@
+diff -Naur shadow-19990827/src/useradd.c shadow-19990827-patched/src/useradd.c
+--- shadow-19990827/src/useradd.c	Mon Jun  7 18:40:45 1999
++++ shadow-19990827-patched/src/useradd.c	Wed Apr 12 12:25:41 2000
+@@ -72,10 +72,10 @@
+ /*
+  * These defaults are used if there is no defaults file.
   */
- static gid_t def_group = 100;
+-static gid_t def_group = 100;
++static gid_t def_group = 1000;
  static const char *def_gname = "other";
 -static const char *def_home = "/home";
 -static const char *def_shell = "";
