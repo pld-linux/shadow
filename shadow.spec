@@ -31,7 +31,7 @@ Patch3:		%{name}-chage_expdays.patch
 Patch4:		%{name}-selinux.patch
 BuildRequires:	gettext-devel
 BuildRequires:	pam-devel
-%{?_with_selinux:BuildRequires:selinux-libs-devel}
+%{?_with_selinux:BuildRequires: selinux-libs-devel}
 Provides:	shadow-utils
 Provides:	passwd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
