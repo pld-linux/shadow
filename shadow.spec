@@ -12,7 +12,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.3
-Release:	5
+Release:	6
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -41,6 +41,8 @@ BuildRequires:	pam-devel
 Provides:	shadow-utils
 Provides:	passwd
 Requires:	pam >= 0.77.3
+# to force proper coreutils version, so "groups" command exists
+Requires:	/usr/bin/groups
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	shadow-utils
 Obsoletes:	passwd
@@ -175,9 +177,6 @@ install man/pl/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install man/pl/dialups.5 $RPM_BUILD_ROOT%{_mandir}/pl/man5
 
 ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
-
-#echo '.so vipw.8'   > $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8
-#echo '.so vipw.8'   > $RPM_BUILD_ROOT%{_mandir}/pl/man8/vigr.8
 
 %find_lang %{name}
 
@@ -352,7 +351,6 @@ fi
 %attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
-%attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_sbindir}/dpasswd
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
@@ -362,7 +360,6 @@ fi
 %{_mandir}/man1/chsh.1*
 %{_mandir}/man1/expiry.1*
 %{_mandir}/man1/gpasswd.1*
-%{_mandir}/man1/sg.1*
 %{_mandir}/man8/dpasswd.8*
 %{_mandir}/man8/mkpasswd.8*
 %{_mandir}/man8/newusers.8*
@@ -372,24 +369,20 @@ fi
 %lang(fr) %{_mandir}/fr/man1/chage.1*
 %lang(fr) %{_mandir}/fr/man1/chsh.1*
 %lang(fr) %{_mandir}/fr/man1/gpasswd.1*
-#%lang(fr) %{_mandir}/fr/man1/sg.1*
 
 %lang(hu) %{_mandir}/hu/man1/chsh.1*
 %lang(hu) %{_mandir}/hu/man1/gpasswd.1*
-%lang(hu) %{_mandir}/hu/man1/sg.1*
 
 %lang(id) %{_mandir}/id/man1/chsh.1*
 
 %lang(it) %{_mandir}/it/man1/chfn.1*
 %lang(it) %{_mandir}/it/man1/chsh.1*
 %lang(it) %{_mandir}/it/man1/gpasswd.1*
-#%lang(it) %{_mandir}/it/man1/sg.1*
 
 %lang(ja) %{_mandir}/ja/man1/chage.1*
 %lang(ja) %{_mandir}/ja/man1/chfn.1*
 %lang(ja) %{_mandir}/ja/man1/chsh.1*
 %lang(ja) %{_mandir}/ja/man1/gpasswd.1*
-%lang(ja) %{_mandir}/ja/man1/sg.1*
 %lang(ja) %{_mandir}/ja/man8/chpasswd.8*
 %lang(ja) %{_mandir}/ja/man8/dpasswd.8*
 %lang(ja) %{_mandir}/ja/man8/mkpasswd.8*
@@ -397,14 +390,12 @@ fi
 
 %lang(ko) %{_mandir}/ko/man1/chfn.1*
 %lang(ko) %{_mandir}/ko/man1/chsh.1*
-#%lang(ko) %{_mandir}/ko/man1/sg.1*
 
 %lang(pl) %{_mandir}/pl/man1/chage.1*
 %lang(pl) %{_mandir}/pl/man1/chfn.1*
 %lang(pl) %{_mandir}/pl/man1/chsh.1*
 %lang(pl) %{_mandir}/pl/man1/expiry.1*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.1*
-%lang(pl) %{_mandir}/pl/man1/sg.1*
 %lang(pl) %{_mandir}/pl/man5/d_passwd.5*
 %lang(pl) %{_mandir}/pl/man5/dialups.5*
 %lang(pl) %{_mandir}/pl/man8/chpasswd.8*
@@ -432,6 +423,15 @@ fi
 #%{_mandir}/man1/su.1*
 #%lang(ja) %{_mandir}/ja/man1/su.1*
 #%lang(pl) %{_mandir}/pl/man1/su.1*
+# - newgrp/sg commands in util-linux
+#%attr(755,root,root) %{_bindir}/sg
+#%{_mandir}/man1/sg.1*
+#%lang(fr) %{_mandir}/fr/man1/sg.1*
+#%lang(hu) %{_mandir}/hu/man1/sg.1*
+#%lang(it) %{_mandir}/it/man1/sg.1*
+#%lang(ja) %{_mandir}/ja/man1/sg.1*
+#%lang(ko) %{_mandir}/ko/man1/sg.1*
+#%lang(pl) %{_mandir}/pl/man1/sg.1*
 # - unknown reason (removed w/o comment in rev 1.27)
 #%attr(755,root,root) %{_sbindir}/logoutd
 #%{_mandir}/man8/logoutd.8*
