@@ -18,7 +18,7 @@ Source4:	userdb.pamd
 Patch0:		%{name}-%{version}-pld.patch
 Patch1:		%{name}-utmpx.patch
 Patch2:		%{name}-pam-userdb.patch
-BuildPrereq:	pam-devel
+BuildRequires:	pam-devel
 Requires:	pam
 Buildroot:	/tmp/%{name}-%{version}-root
 
