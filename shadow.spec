@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	8
+Release:	9
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -186,10 +186,10 @@ fi
 
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/default/*
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chage
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/shadow
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/passwd
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/useradd
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/chage
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/shadow
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/passwd
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/useradd
 
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
 %attr(400,root,root) %ghost %{_sysconfdir}/shadow
@@ -283,8 +283,8 @@ fi
 
 %files extras
 %defattr(644,root,root,755)
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chsh
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chfn
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/chsh
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/chfn
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/security/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/d_passwd
 %attr(644,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/dialups
