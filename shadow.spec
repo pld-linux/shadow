@@ -49,13 +49,13 @@ utilities, and shadow passwords in general.
 %description -l pl
 Pakiet zawiera programy do obs³ugi shadow password. Zanjduj± siê w nim
 programy do konwersji standardowego pliku hase³ do wersji shadow
-password a tak¿e programy do zarz±danie kontami u¿ytkowników w
+password a tak¿e programy do zarz±dania kontami u¿ytkowników w
 systemie
  - 'pwconv' konwertuje do formatu shadow passwords
  - 'pwunconv' konwertuje z shadow passwords do formatu standardowego
-   pliku hase³. W bierz±cym katalogu tworzy plik npasswd bêd±cy
+   pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
    standardowym plikiem z has³ami.
- - 'lastlog' wy¶wietla czas logowanie u¿ytkowników
+ - 'lastlog' wy¶wietla czas logowania u¿ytkowników
  - 'userdel' i 'usermod' do zarz±dzania kontami u¿ytkowników.
  - 'groupadd', 'groupdel' and 'groupmod' do zarz±dzania grupami
 
