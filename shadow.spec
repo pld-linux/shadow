@@ -3,6 +3,8 @@
 %bcond_without	selinux		# build without SE-Linux support
 %bcond_with	shared		# build with shared libshadow
 #
+%define		_snap	20041023
+#
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
@@ -11,13 +13,15 @@ Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
-Version:	4.0.4.1
-Release:	3
+Version:	4.0.5
+%define		_rel	1
+Release:	0.%{_snap}.%{_rel}
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-# Source0-md5:	3a3d17d3d7c630b602baf66ae7434c61
+#Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}-%{_snap}.tar.bz2
+# Source0-md5:	2de5963d4a065fca38962a761390c78f
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -29,12 +33,8 @@ Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-man_and_po.patch
 Patch2:		%{name}-pl.po-update.patch
-Patch3:		%{name}-userdel-exit-bug.patch
-Patch4:		%{name}-useradd-p.patch
-Patch5:		%{name}-pld.patch
-Patch6:		%{name}-chage_expdays.patch
-Patch7:		%{name}-selinux.patch
-Patch8:		%{name}-setlocale_hack.patch
+Patch3:		%{name}-pld.patch
+Patch4:		%{name}-chage_expdays.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -134,10 +134,6 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%{?with_selinux:%patch7 -p1}
-%patch8 -p1
 
 %build
 %{__autoheader}
