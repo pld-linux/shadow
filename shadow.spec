@@ -12,7 +12,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.4.1
-Release:	2
+Release:	3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -34,6 +34,7 @@ Patch4:		%{name}-useradd-p.patch
 Patch5:		%{name}-pld.patch
 Patch6:		%{name}-chage_expdays.patch
 Patch7:		%{name}-selinux.patch
+Patch8:		%{name}-setlocale_hack.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -136,8 +137,10 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch5 -p1
 %patch6 -p1
 %{?with_selinux:%patch7 -p1}
+%patch8 -p1
 
 %build
+%{__autoheader}
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}
