@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	3
+Release:	4
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -205,17 +205,13 @@ fi
 %attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
 
-#%{_mandir}/man1/login.*
 %{_mandir}/man1/passwd.*
 #%{_mandir}/man1/su.*
 %{_mandir}/man5/faillog.*
-#%{_mandir}/man5/limits.*	# it's not used when PAM is enabled?
 %{_mandir}/man5/login.*
 %{_mandir}/man5/passwd.*
-#%{_mandir}/man5/porttime.*	# not used with PAM?
 %{_mandir}/man5/shadow.*
 %{_mandir}/man5/suauth.*
-#%{_mandir}/man8/adduser.*	# no such program/symlink
 %{_mandir}/man8/faillog.*
 %{_mandir}/man8/groupadd.*
 %{_mandir}/man8/groupdel.*
