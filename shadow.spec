@@ -34,6 +34,7 @@ Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-no_CREATE_HOME.patch
 Patch2:		%{name}-pld.patch
 Patch3:		%{name}-chage_expdays.patch
+Patch4:		%{name}-configure.in.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -132,6 +133,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__autoheader}
