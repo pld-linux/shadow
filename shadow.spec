@@ -231,7 +231,6 @@ fi
 %lang(pl) %{_mandir}/pl/man1/chage.*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.*
 %lang(pl) %{_mandir}/pl/man1/passwd.*
-%lang(pl) %{_mandir}/pl/man3/shadow.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
 %lang(pl) %{_mandir}/pl/man5/login.defs.*
 %lang(pl) %{_mandir}/pl/man5/passwd.*
@@ -252,7 +251,6 @@ fi
 %lang(ja) %{_mandir}/ja/man1/chage.*
 %lang(ja) %{_mandir}/ja/man1/gpasswd.*
 %lang(ja) %{_mandir}/ja/man1/passwd.*
-%lang(ja) %{_mandir}/ja/man3/shadow.*
 %lang(ja) %{_mandir}/ja/man5/faillog.*
 %lang(ja) %{_mandir}/ja/man5/login.defs.*
 %lang(ja) %{_mandir}/ja/man5/passwd.*
