@@ -98,6 +98,30 @@ diff -urN shadow-4.0.6.orig/man/useradd.8 shadow-4.0.6/man/useradd.8
  .IP "\fB-s\fR \fIshell\fR"
  The name of the user's login shell. The default is to leave this field
  blank, which causes the system to select the default login shell.
+--- shadow-4.0.7/po/ca.po.orig	2005-02-06 20:53:02.764551000 +0100
++++ shadow-4.0.7/po/ca.po	2005-02-06 21:16:22.244798552 +0100
+@@ -764,8 +764,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Forma d'ús: groupadd [-g gid [-o]] [-f] grup\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Forma d'ús: groupadd [-g gid [-o]] [-f] [-r] grup\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1714,8 +1714,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "                     [-p contrasenya] nom\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                     [-p contrasenya] [-r] nom\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
 diff -urN shadow-4.0.6.orig/po/cs.po shadow-4.0.6/po/cs.po
 --- shadow-4.0.6.orig/po/cs.po	2004-11-18 15:47:10.872310304 +0100
 +++ shadow-4.0.6/po/cs.po	2004-11-18 21:45:00.699400472 +0100
@@ -120,6 +144,30 @@ diff -urN shadow-4.0.6.orig/po/cs.po shadow-4.0.6/po/cs.po
 -msgstr "                 [-p heslo] jméno\n"
 +msgid "               [-p passwd] [-r] name\n"
 +msgstr "                 [-p heslo] [-r] jméno\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/da.po.orig	2005-02-06 20:53:02.782549000 +0100
++++ shadow-4.0.7/po/da.po	2005-02-06 21:17:02.084741960 +0100
+@@ -777,8 +777,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Brug: groupadd [-g gid [-o]] [-f] gruppe\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Brug: groupadd [-g gid [-o]] [-f] [-r] gruppe\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1730,8 +1730,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "              [-p adgangskode] navn\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "              [-p adgangskode] [-r] navn\n"
  
  #: src/useradd.c:730
  #, c-format
@@ -173,6 +221,78 @@ diff -urN shadow-4.0.6.orig/po/el.po shadow-4.0.6/po/el.po
  
  #: src/useradd.c:730
  #, c-format
+--- shadow-4.0.7/po/es.po.orig	2005-02-06 20:53:02.810544000 +0100
++++ shadow-4.0.7/po/es.po	2005-02-06 21:17:29.589560592 +0100
+@@ -785,8 +785,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Modo de uso: groupadd [-g gid [-o]] [-f] grupo\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Modo de uso: groupadd [-g gid [-o]] [-f] [-r] grupo\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1747,8 +1747,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "                     [-p contraseña] nombre\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                     [-p contraseña] [-r] nombre\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/eu.po.orig	2005-02-06 20:53:02.818543000 +0100
++++ shadow-4.0.7/po/eu.po	2005-02-06 21:17:44.920229976 +0100
+@@ -760,8 +760,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Erabilera: groupadd [-g gid [-o]] [-f] taldea\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Erabilera: groupadd [-g gid [-o]] [-f] [-r] taldea\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1708,8 +1708,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "              [-p pasahitz] izena\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "              [-p pasahitz] [-r] izena\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/fi.po.orig	2005-02-06 20:53:02.828542000 +0100
++++ shadow-4.0.7/po/fi.po	2005-02-06 21:18:04.821204568 +0100
+@@ -779,8 +779,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Käyttö: groupadd [-g gid [-o]] [-f] ryhmä\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Käyttö: groupadd [-g gid [-o]] [-f] [-r] ryhmä\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1732,8 +1732,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "               [-p salansana] nimi\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "               [-p salansana] [-r] nimi\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
 diff -urN shadow-4.0.6.orig/po/fr.po shadow-4.0.6/po/fr.po
 --- shadow-4.0.6.orig/po/fr.po	2004-11-18 15:47:10.877309544 +0100
 +++ shadow-4.0.6/po/fr.po	2004-11-18 21:45:00.703399864 +0100
@@ -195,6 +315,54 @@ diff -urN shadow-4.0.6.orig/po/fr.po shadow-4.0.6/po/fr.po
 -msgstr "               [-p mot-de-passe] nom\n"
 +msgid "               [-p passwd] [-r] name\n"
 +msgstr "               [-p mot-de-passe] [-r] nom\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/id.po.orig	2005-02-06 20:53:02.954523000 +0100
++++ shadow-4.0.7/po/id.po	2005-02-06 21:18:31.035219432 +0100
+@@ -757,8 +757,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Penggunaan: groupadd [-g gid [-o]] [-f] grup\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Penggunaan: groupadd [-g gid [-o]] [-f] [-r] grup\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1704,8 +1704,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "                    [-p kata_sandi] nama\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                    [-p kata_sandi] [-r] nama\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/it.po.orig	2005-02-06 20:53:02.963521000 +0100
++++ shadow-4.0.7/po/it.po	2005-02-06 21:18:46.662843672 +0100
+@@ -813,8 +813,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Uso: groupadd [-g GID [-o]] [-f] GRUPPO\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Uso: groupadd [-g GID [-o]] [-f] [-r] GRUPPO\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1775,8 +1775,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "             [-p PASSWORD] NOME\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "             [-p PASSWORD] [-r] NOME\n"
  
  #: src/useradd.c:730
  #, c-format
@@ -248,6 +416,78 @@ diff -urN shadow-4.0.6.orig/po/ko.po shadow-4.0.6/po/ko.po
  
  #: src/useradd.c:730
  #, c-format
+--- shadow-4.0.7/po/nb.po.orig	2005-02-06 20:53:02.989517000 +0100
++++ shadow-4.0.7/po/nb.po	2005-02-06 21:19:10.761180168 +0100
+@@ -765,8 +765,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Bruk: groupadd [-g gid [-o]] [-f] gruppe\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Bruk: groupadd [-g gid [-o]] [-f] [-r] gruppe\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1710,8 +1710,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "              [-p passord] navn\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "              [-p passord] [-r] navn\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/nl.po.orig	2005-02-06 20:53:02.998516000 +0100
++++ shadow-4.0.7/po/nl.po	2005-02-06 21:19:23.540237456 +0100
+@@ -784,8 +784,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Gebruik: groupadd [-g gid [-o]] [-f] groep\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Gebruik: groupadd [-g gid [-o]] [-f] [-r] groep\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1739,8 +1739,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "                 [-p wachtwoord] naam\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                 [-p wachtwoord] [-r] naam\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/nn.po.orig	2005-02-06 20:53:03.008514000 +0100
++++ shadow-4.0.7/po/nn.po	2005-02-06 21:19:36.046336240 +0100
+@@ -757,8 +757,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Bruk: groupadd [-g gid [-o]] [-f] gruppe\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Bruk: groupadd [-g gid [-o]] [-f] [-r] gruppe\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1704,8 +1704,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "              [-p passord] namn\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "              [-p passord] [-r] namn\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
 diff -urN shadow-4.0.6.orig/po/pl.po shadow-4.0.6/po/pl.po
 --- shadow-4.0.6.orig/po/pl.po	2004-11-18 15:47:10.882308784 +0100
 +++ shadow-4.0.6/po/pl.po	2004-11-18 21:45:00.707399256 +0100
@@ -273,6 +513,82 @@ diff -urN shadow-4.0.6.orig/po/pl.po shadow-4.0.6/po/pl.po
  
  #: src/useradd.c:730
  #, c-format
+--- shadow-4.0.7/po/pt.po.orig	2005-02-06 20:53:03.025512000 +0100
++++ shadow-4.0.7/po/pt.po	2005-02-06 21:20:01.224508576 +0100
+@@ -782,8 +782,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Utilização: groupadd [-g gid [-o]] [-f] grupo\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Utilização: groupadd [-g gid [-o]] [-f] [-r] grupo\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1740,8 +1740,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "                    [-p passwd] nome\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                    [-p passwd] [-r] nome\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/pt_BR.po.orig	2005-02-06 20:53:03.035510000 +0100
++++ shadow-4.0.7/po/pt_BR.po	2005-02-06 21:20:14.226531968 +0100
+@@ -763,8 +763,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Uso : groupadd [-g gid [-o]] [-f] grupo\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Uso : groupadd [-g gid [-o]] [-f] [-r] grupo\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1711,8 +1711,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "              [-p passwd] nome\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "              [-p passwd] [-r] nome\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/ro.po.orig	2005-02-06 20:53:03.144494000 +0100
++++ shadow-4.0.7/po/ro.po	2005-02-06 21:21:15.902155848 +0100
+@@ -768,9 +768,9 @@
+ msgstr "%s: nu pot actualiza fişierele criptate DBM\n"
+ 
+ #: src/groupadd.c:102
+-#, fuzzy, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "utilizare: groupadd [-g id_grup [-o]] grup\n"
++#, c-format
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Utilizare: groupadd [-g id_grup [-o]] [-f] [-r] grup\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1721,9 +1721,9 @@
+ msgstr "\t\t[-f inactivă] [-e expiră ]\n"
+ 
+ #: src/useradd.c:728
+-#, fuzzy, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "[-p passwd] nume\n"
++#, c-format
++msgid "               [-p passwd] [-r] name\n"
++msgstr "               [-p passwd] [-r] nume\n"
+ 
+ #: src/useradd.c:730
+ #, fuzzy, c-format
 diff -urN shadow-4.0.6.orig/po/ru.po shadow-4.0.6/po/ru.po
 --- shadow-4.0.6.orig/po/ru.po	2004-11-18 15:47:10.883308632 +0100
 +++ shadow-4.0.6/po/ru.po	2004-11-18 21:45:00.708399104 +0100
@@ -295,6 +611,30 @@ diff -urN shadow-4.0.6.orig/po/ru.po shadow-4.0.6/po/ru.po
 -msgstr "                [-p пароль] имя\n"
 +msgid "               [-p passwd] [-r] name\n"
 +msgstr "                [-p пароль] [-r] имя\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/sk.po.orig	2005-02-06 20:53:03.163491000 +0100
++++ shadow-4.0.7/po/sk.po	2005-02-06 21:21:37.557863680 +0100
+@@ -760,8 +760,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Použitie: groupadd [-g gid [-o]] [-f] skupina\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Použitie: groupadd [-g gid [-o]] [-f] [-r] skupina\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1712,8 +1712,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "                  [-p heslo] meno\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                  [-p heslo] [-r] meno\n"
  
  #: src/useradd.c:730
  #, c-format
@@ -323,6 +663,30 @@ diff -urN shadow-4.0.6.orig/po/sv.po shadow-4.0.6/po/sv.po
  
  #: src/useradd.c:730
  #, c-format
+--- shadow-4.0.7/po/tr.po.orig	2005-02-06 20:53:03.189487000 +0100
++++ shadow-4.0.7/po/tr.po	2005-02-06 21:21:59.907466024 +0100
+@@ -760,8 +760,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "Kullanım: groupadd [-g gid [-o]] [-f] grup\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "Kullanım: groupadd [-g gid [-o]] [-f] [-r] grup\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1707,8 +1707,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "                  [-p parola] isim\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "                  [-p parola] [-r] isim\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
 diff -urN shadow-4.0.6.orig/po/uk.po shadow-4.0.6/po/uk.po
 --- shadow-4.0.6.orig/po/uk.po	2004-11-18 15:47:10.886308176 +0100
 +++ shadow-4.0.6/po/uk.po	2004-11-18 21:45:00.711398648 +0100
@@ -348,6 +712,58 @@ diff -urN shadow-4.0.6.orig/po/uk.po shadow-4.0.6/po/uk.po
  
  #: src/useradd.c:730
  #, c-format
+--- shadow-4.0.7/po/zh_CN.po.orig	2005-02-06 20:53:03.206484000 +0100
++++ shadow-4.0.7/po/zh_CN.po	2005-02-06 21:22:32.575499728 +0100
+@@ -755,8 +755,8 @@
+ 
+ #: src/groupadd.c:102
+ #, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "用法：groupadd [-g gid [-o]] [-f] 组\n"
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "用法：groupadd [-g gid [-o]] [-f] [-r] 组\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1700,8 +1700,8 @@
+ 
+ #: src/useradd.c:728
+ #, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "               [-p 密码] 名称\n"
++msgid "               [-p passwd] [-r] name\n"
++msgstr "               [-p 密码] [-r] 名称\n"
+ 
+ #: src/useradd.c:730
+ #, c-format
+--- shadow-4.0.7/po/zh_TW.po.orig	2005-02-06 20:53:03.214483000 +0100
++++ shadow-4.0.7/po/zh_TW.po	2005-02-06 21:23:09.122943672 +0100
+@@ -764,9 +764,9 @@
+ msgstr "%s：無法更新 DBM shadow檔案\n"
+ 
+ #: src/groupadd.c:102
+-#, fuzzy, c-format
+-msgid "Usage: groupadd [-g gid [-o]] [-f] group\n"
+-msgstr "用法：groupadd [-g gid [-o]] 群組\n"
++#, c-format
++msgid "Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"
++msgstr "用法：groupadd [-g gid [-o]] [-f] [-r] 群組\n"
+ 
+ #: src/groupadd.c:168 src/groupadd.c:193 src/groupmod.c:180 src/groupmod.c:229
+ #: src/useradd.c:937 src/usermod.c:533 src/usermod.c:676
+@@ -1715,9 +1715,9 @@
+ msgstr "\t\t[-f 無效日] [-e 過期日 ]\n"
+ 
+ #: src/useradd.c:728
+-#, fuzzy, c-format
+-msgid "               [-p passwd] name\n"
+-msgstr "[-p 密碼] 名稱\n"
++#, c-format
++msgid "               [-p passwd] [-r] name\n"
++msgstr "               [-p 密碼] [-r] 名稱\n"
+ 
+ #: src/useradd.c:730
+ #, fuzzy, c-format
 diff -urN shadow-4.0.6.orig/src/groupadd.c shadow-4.0.6/src/groupadd.c
 --- shadow-4.0.6.orig/src/groupadd.c	2004-11-18 15:47:10.972295104 +0100
 +++ shadow-4.0.6/src/groupadd.c	2004-11-18 21:45:59.462467128 +0100
