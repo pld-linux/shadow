@@ -12,7 +12,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.3
-Release:	6
+Release:	7
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -43,8 +43,6 @@ Provides:	passwd
 Requires:	pam >= 0.77.3
 # to force proper coreutils version, so "groups" command exists
 Requires:	/usr/bin/groups
-# to force proper util-linux version, so "newgrp" command exists
-Requires:	/usr/bin/newgrp
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	shadow-utils
 Obsoletes:	passwd
@@ -114,7 +112,9 @@ utilitários e senhas shadow em geral.
 Summary:	shadow - not often used programs
 Summary(pl):	shadow - programy nieczêsto u¿ywane
 Group:		Applications/System
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+# to force proper util-linux version, so "newgrp" command exists
+Requires:	/usr/bin/newgrp
 
 %description extras
 Programs for shadow not often used. If you have small system you may
