@@ -24,7 +24,7 @@ BuildRequires:	gettext-devel
 Requires:	pam
 Obsoletes:	shadow-utils
 Provides:	shadow-utils
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This package includes the programs necessary to convert standard
