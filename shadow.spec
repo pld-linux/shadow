@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	19990307
-Release:	2
+Release:	3
 Copyright:      BSD
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
@@ -13,8 +13,13 @@ URL:		ftp://ftp.ists.pwr.wroc.pl/pub/linux/shadow
 Source0:	%{name}-%{version}.tar.gz
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
+Source3:	chage.pamd
+Source4:	userdb.pamd
 Patch0:		%{name}-%{version}-pld.patch
 Patch1:		%{name}-utmpx.patch
+Patch2:		%{name}-pam-userdb.patch
+BuildPrereq:	pam-devel
+Requires:	pam
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -56,6 +61,7 @@ nigdy nie powinien zostaæ odinstalowany !
 %setup -q 
 %patch0 -p1 
 %patch1 -p1 
+%patch2 -p1 
 
 %build
 libtoolize --copy --force && aclocal && autoheader && automake && autoconf
@@ -79,10 +85,12 @@ make \
     infodir$RPM_BUILD_ROOT=%{_infodir} \
     install
 
-install -d $RPM_BUILD_ROOT/etc/default
+install -d $RPM_BUILD_ROOT/etc/{default,pam.d}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/login.defs
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/default/useradd
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/chage
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/pam.d/userdb
 
 :> $RPM_BUILD_ROOT/etc/shadow
 
@@ -110,6 +118,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(750,root,root) %dir /etc/default
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/default/*
+%attr(644,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
 
 %config(noreplace) %verify(not size mtime md5) /etc/login.defs
 %attr(400,root,root) %ghost /etc/shadow
@@ -144,6 +153,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/faillog.8.gz
 
 %changelog
+* Mon Jun 21 1999 Jan Rêkorajski <baggins@pld.org.pl>
+  [19990307-3]
+- added pam-userdb patch for rebuilding /var/db database
+  after chage, chpasswd, user/group add/del/mod
+
 * Tue May 18 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [19990307-1]
 - updated to latest version,
