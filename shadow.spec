@@ -125,7 +125,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(750,root,root) %dir /etc/default
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/default/*
-%attr(644,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/*
 
 %config(noreplace) %verify(not size mtime md5) /etc/login.defs
 %attr(400,root,root) %ghost /etc/shadow
