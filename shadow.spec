@@ -208,7 +208,7 @@ fi
 %attr(4755,root,root) %{_bindir}/passwd
 %{_mandir}/man1/groups.*
 %{_mandir}/man1/passwd.*
-#%{_mandir}/man1/su.*
+#%%{_mandir}/man1/su.*
 %{_mandir}/man5/faillog.*
 %{_mandir}/man5/login.*
 %{_mandir}/man5/passwd.*
