@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	6
+Release:	7
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -147,9 +147,11 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/{porttime,utmp}
 
 touch $RPM_BUILD_ROOT%{_sysconfdir}/{d_passwd,dialups}
 install man/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install man/groups.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install man/ja/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/ja/man8
 install man/pl/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/pl/man8
 install man/pl/dialups.5 $RPM_BUILD_ROOT%{_mandir}/pl/man5
+install man/pl/groups.1 $RPM_BUILD_ROOT%{_mandir}/pl/man1
 
 ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
 
@@ -206,6 +208,7 @@ fi
 %attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
 
+%{_mandir}/man1/groups.*
 %{_mandir}/man1/passwd.*
 #%{_mandir}/man1/su.*
 %{_mandir}/man5/faillog.*
@@ -246,6 +249,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/userdel.*
 %lang(ja) %{_mandir}/ja/man8/usermod.*
 
+%lang(pl) %{_mandir}/pl/man1/groups.*
 %lang(pl) %{_mandir}/pl/man1/passwd.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
 %lang(pl) %{_mandir}/pl/man5/login.defs.*
