@@ -144,11 +144,12 @@ install %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
 install %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/useradd
 
-:> $RPM_BUILD_ROOT%{_sysconfdir}/shadow
-touch $RPM_BUILD_ROOT/etc/security/{chfn,chsh}.allow
-touch $RPM_BUILD_ROOT%{_sysconfdir}/{porttime,utmp}
+> $RPM_BUILD_ROOT%{_sysconfdir}/shadow
+> $RPM_BUILD_ROOT/etc/security/chfn.allow
+> $RPM_BUILD_ROOT/etc/security/chsh.allow
 
-touch $RPM_BUILD_ROOT%{_sysconfdir}/{d_passwd,dialups}
+> $RPM_BUILD_ROOT%{_sysconfdir}/d_passwd
+> $RPM_BUILD_ROOT%{_sysconfdir}/dialups
 install man/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install man/groups.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install man/ja/dpasswd.8 $RPM_BUILD_ROOT%{_mandir}/ja/man8
