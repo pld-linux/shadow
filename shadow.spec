@@ -7,7 +7,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	13
+Release:	14
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -193,7 +193,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/useradd
 
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/login.defs
-%attr(600,root,root) %ghost %{_sysconfdir}/shadow
+%attr(600,root,root) %config(noreplace) %verify(not md5 size mtime) %ghost %{_sysconfdir}/shadow
 
 %dir /etc/skel
 
