@@ -21,7 +21,7 @@ License:	BSD
 Group:		Applications/System
 #Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
 Source0:	%{name}-%{version}-%{_snap}.tar.bz2
-# Source0-md5:	2de5963d4a065fca38962a761390c78f
+# Source0-md5:	e424a793e672948f7c2190dfcfa64c90
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
