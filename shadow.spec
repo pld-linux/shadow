@@ -167,8 +167,6 @@ echo .so vipw.8   > $RPM_BUILD_ROOT%{_mandir}/pl/man8/vigr.8
 
 echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/ja/man1/sg.1
 
-gzip -9nf doc/ANNOUNCE NEWS doc/README doc/README.linux doc/HOWTO
-
 %find_lang %{name}
 
 %clean
@@ -184,20 +182,16 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc doc/*.gz
-
+%doc doc/ANNOUNCE NEWS doc/README doc/README.linux doc/HOWTO
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not md5 size mtime) %{_sysconfdir}/default/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chage
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/passwd
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/shadow
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/useradd
-
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/login.defs
 %attr(600,root,root) %ghost %{_sysconfdir}/shadow
-
 %dir /etc/skel
-
 %{!?_without_static:#}%attr(755,root,root) %{_libdir}/lib*
 %attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/group*
@@ -211,7 +205,6 @@ fi
 %attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(4755,root,root) %{_bindir}/passwd
-
 %{_mandir}/man1/groups.*
 %{_mandir}/man1/passwd.*
 #%{_mandir}/man1/su.*
