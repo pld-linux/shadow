@@ -90,11 +90,11 @@ install %{SOURCE3} $RPM_BUILD_ROOT/etc/shells
 
 touch $RPM_BUILD_ROOT/etc/shadow
 
-echo .so pwconv.8 > $RPM_BUILD_ROOT/usr/man/man8/pwunconv.8
-echo .so pwconv.8 > $RPM_BUILD_ROOT/usr/man/man8/grpconv.8
-echo .so pwconv.8 > $RPM_BUILD_ROOT/usr/man/man8/grpunconv.8
+echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
+echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
+echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpunconv.8
 
-gzip -9nf $RPM_BUILD_ROOT/usr/man/man[1358]/* \
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[1358]/* \
 	doc/ANNOUNCE doc/CHANGES doc/README doc/README.linux doc/HOWTO
 
 %post
@@ -130,21 +130,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/lastlog
 %attr(755,root,root) /usr/bin/faillog
 
-/usr/man/man1/chage.1.gz
-/usr/man/man1/gpasswd.1.gz
-/usr/man/man3/shadow.3.gz
-/usr/man/man5/shadow.5.gz
-/usr/man/man5/faillog.5.gz
-/usr/man/man8/group*.8.gz
-/usr/man/man8/user*.8.gz
-/usr/man/man8/pwck.8.gz
-/usr/man/man8/grpck.8.gz
-/usr/man/man8/chpasswd.8.gz 
-/usr/man/man8/newusers.8.gz
-/usr/man/man8/mkpasswd.8.gz
-/usr/man/man8/*conv.8.gz
-/usr/man/man8/lastlog.8.gz
-/usr/man/man8/faillog.8.gz
+%{_mandir}/man1/chage.1.gz
+%{_mandir}/man1/gpasswd.1.gz
+%{_mandir}/man3/shadow.3.gz
+%{_mandir}/man5/shadow.5.gz
+%{_mandir}/man5/faillog.5.gz
+%{_mandir}/man8/group*.8.gz
+%{_mandir}/man8/user*.8.gz
+%{_mandir}/man8/pwck.8.gz
+%{_mandir}/man8/grpck.8.gz
+%{_mandir}/man8/chpasswd.8.gz 
+%{_mandir}/man8/newusers.8.gz
+%{_mandir}/man8/mkpasswd.8.gz
+%{_mandir}/man8/*conv.8.gz
+%{_mandir}/man8/lastlog.8.gz
+%{_mandir}/man8/faillog.8.gz
 
 %lang(el) /usr/share/locale/el/LC_MESSAGES/shadow.mo
 
