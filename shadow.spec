@@ -144,9 +144,18 @@ install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/{chfn,chsh}.allow
 touch $RPM_BUILD_ROOT%{_sysconfdir}/{porttime,utmp}
 
+ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
+
+echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpunconv.8
+echo .so vipw.8   > $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8
+
+echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/pl/man1/sg.1
+echo .so vipw.8   > $RPM_BUILD_ROOT%{_mandir}/pl/man8/vigr.8
+
+echo .so newgrp.1 > $RPM_BUILD_ROOT%{_mandir}/ja/man1/sg.1
 
 gzip -9nf doc/ANNOUNCE NEWS doc/README doc/README.linux doc/HOWTO
 
@@ -172,7 +181,7 @@ fi
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chage
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/shadow
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/passwd
-%attr(750,root,root) %dir /etc/security/
+%attr(750,root,root) %dir /etc/security
 
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
 %attr(400,root,root) %ghost %{_sysconfdir}/shadow
@@ -186,6 +195,7 @@ fi
 %attr(755,root,root) %{_sbindir}/pwck
 %attr(755,root,root) %{_sbindir}/*conv
 %attr(755,root,root) %{_sbindir}/dpasswd
+%attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
@@ -203,15 +213,16 @@ fi
 #%{_mandir}/man1/login.*
 %{_mandir}/man1/newgrp.*
 %{_mandir}/man1/passwd.*
+%{_mandir}/man1/sg.*
 #%{_mandir}/man1/su.*
 %{_mandir}/man5/faillog.*
-%{_mandir}/man5/limits.*
+#%{_mandir}/man5/limits.*	# it's not used when PAM is enabled?
 %{_mandir}/man5/login.*
 %{_mandir}/man5/passwd.*
 %{_mandir}/man5/porttime.*
 %{_mandir}/man5/shadow.*
 %{_mandir}/man5/suauth.*
-%{_mandir}/man8/adduser.*
+#%{_mandir}/man8/adduser.*	# no such program/symlink
 %{_mandir}/man8/faillog.*
 %{_mandir}/man8/groupadd.*
 %{_mandir}/man8/groupdel.*
@@ -226,11 +237,14 @@ fi
 %{_mandir}/man8/useradd.*
 %{_mandir}/man8/userdel.*
 %{_mandir}/man8/usermod.*
+%{_mandir}/man8/vigr.*
 %{_mandir}/man8/vipw.*
 
 %lang(pl) %{_mandir}/pl/man1/chage.*
 %lang(pl) %{_mandir}/pl/man1/gpasswd.*
+%lang(pl) %{_mandir}/pl/man1/newgrp.*
 %lang(pl) %{_mandir}/pl/man1/passwd.*
+%lang(pl) %{_mandir}/pl/man1/sg.*
 %lang(pl) %{_mandir}/pl/man5/faillog.*
 %lang(pl) %{_mandir}/pl/man5/login.defs.*
 %lang(pl) %{_mandir}/pl/man5/passwd.*
@@ -241,16 +255,23 @@ fi
 %lang(pl) %{_mandir}/pl/man8/groupdel.*
 %lang(pl) %{_mandir}/pl/man8/groupmod.*
 %lang(pl) %{_mandir}/pl/man8/grpck.*
+%lang(pl) %{_mandir}/pl/man8/grpconv.*
+%lang(pl) %{_mandir}/pl/man8/grpunconv.*
 %lang(pl) %{_mandir}/pl/man8/lastlog.*
 %lang(pl) %{_mandir}/pl/man8/pwck.*
 %lang(pl) %{_mandir}/pl/man8/pwconv.*
+%lang(pl) %{_mandir}/pl/man8/pwunconv.*
 %lang(pl) %{_mandir}/pl/man8/useradd.*
 %lang(pl) %{_mandir}/pl/man8/userdel.*
 %lang(pl) %{_mandir}/pl/man8/usermod.*
+%lang(pl) %{_mandir}/pl/man8/vigr.*
+%lang(pl) %{_mandir}/pl/man8/vipw.*
 
 %lang(ja) %{_mandir}/ja/man1/chage.*
 %lang(ja) %{_mandir}/ja/man1/gpasswd.*
+%lang(ja) %{_mandir}/ja/man1/newgrp.*
 %lang(ja) %{_mandir}/ja/man1/passwd.*
+%lang(ja) %{_mandir}/ja/man1/sg.*
 %lang(ja) %{_mandir}/ja/man5/faillog.*
 %lang(ja) %{_mandir}/ja/man5/login.defs.*
 %lang(ja) %{_mandir}/ja/man5/passwd.*
@@ -286,7 +307,7 @@ fi
 %attr(755,root,root) %{_sbindir}/logoutd
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
-%attr(755,root,root) %{_bindir}/su
+#%attr(755,root,root) %{_bindir}/su
 
 %{_mandir}/man1/chfn.*
 %{_mandir}/man1/chsh.*
