@@ -1,10 +1,12 @@
---- shadow-4.0.4.1/configure.in.orig	2004-10-23 09:58:15.000000000 +0000
-+++ shadow-4.0.4.1/configure.in	2004-10-23 09:57:32.000000000 +0000
-@@ -271,6 +271,7 @@
+diff -urN shadow-4.0.6.orig/configure.in shadow-4.0.6/configure.in
+--- shadow-4.0.6.orig/configure.in	2004-11-18 15:47:10.912304224 +0100
++++ shadow-4.0.6/configure.in	2004-11-18 21:27:30.545048200 +0100
+@@ -34,7 +34,7 @@
  
- AM_GNU_GETTEXT_VERSION(0.14.1)
- AM_GNU_GETTEXT([external])
-+AC_CHECK_FUNCS([setlocale])
+ AC_CHECK_FUNCS(a64l fchmod fchown fsync getgroups gethostname getspnam \
+ 	gettimeofday getusershell getutent initgroups lchown lckpwdf lstat \
+-	memcpy memset setgroups sigaction strchr updwtmp updwtmpx)
++	memcpy memset setgroups sigaction strchr updwtmp updwtmpx setlocale)
  
- AC_CONFIG_FILES([ m4/Makefile 
- 	Makefile
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ AC_C_CONST

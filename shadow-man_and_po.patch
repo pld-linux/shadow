@@ -1,28 +1,6 @@
---- shadow-4.0.4.1/po/cs.po.orig	2004-01-14 15:16:19.000000000 +0100
-+++ shadow-4.0.4.1/po/cs.po	2004-02-28 23:33:54.722146736 +0100
-@@ -2029,7 +2029,6 @@
- msgstr "\t\t[-d domácí adr. [-m]] [-s shell] [-c komentář] [-l nové jméno]\n"
- 
- #: src/usermod.c:313
--#, fuzzy
- msgid "[-f inactive] [-e expire] "
- msgstr "[-f vypnutí] [-e vypršení] "
- 
---- shadow-4.0.4.1/po/sv.po.orig	2004-01-14 15:16:20.000000000 +0100
-+++ shadow-4.0.4.1/po/sv.po	2004-02-28 23:34:47.160174944 +0100
-@@ -2021,9 +2021,8 @@
- msgstr "\t\t[-d hem [-m]] [-s skal] [-c kommentar] [-l nytt_namn]\n"
- 
- #: src/usermod.c:313
--#, fuzzy
- msgid "[-f inactive] [-e expire] "
--msgstr "    [-f inaktiv] [-e upphör] "
-+msgstr "[-f inaktiv] [-e upphör] "
- 
- #: src/usermod.c:315
- msgid "[-p passwd] [-L|-U] name\n"
---- shadow-4.0.4.1/man/login.defs.5.orig	2003-05-01 20:17:39.000000000 +0200
-+++ shadow-4.0.4.1/man/login.defs.5	2004-02-29 00:37:26.554660112 +0100
+diff -urN shadow-4.0.6.orig/man/login.defs.5 shadow-4.0.6/man/login.defs.5
+--- shadow-4.0.6.orig/man/login.defs.5	2004-11-18 14:58:57.793125192 +0100
++++ shadow-4.0.6/man/login.defs.5	2004-11-18 15:24:50.477081352 +0100
 @@ -68,10 +68,6 @@
  any changes. The most restrictive setting is better achieved by not
  installing chfn SUID.

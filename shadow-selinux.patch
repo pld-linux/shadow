@@ -1,146 +1,31 @@
---- shadow-4.0.3/lib/commonio.h.selinux	2001-08-14 17:09:54.000000000 -0400
-+++ shadow-4.0.3/lib/commonio.h	2003-06-20 15:52:54.000000000 -0400
-@@ -1,5 +1,8 @@
- /* $Id$ */
- 
-+#ifdef WITH_SELINUX
-+#include <selinux/selinux.h>
-+#endif
- /*
-  * Linked list entry.
-  */
-@@ -70,6 +73,9 @@ struct commonio_db {
- 	 */
- 	FILE *fp;
- 
-+#ifdef WITH_SELINUX
-+        security_context_t scontext;
-+#endif
- 	/*
- 	 * Head, tail, current position in linked list.
- 	 */
---- shadow-4.0.3/lib/Makefile.am.selinux	2003-06-20 15:46:31.000000000 -0400
-+++ shadow-4.0.3/lib/Makefile.am	2003-06-20 15:51:00.000000000 -0400
-@@ -1,14 +1,14 @@
+diff -urN shadow-4.0.6.orig/lib/Makefile.am shadow-4.0.6/lib/Makefile.am
+--- shadow-4.0.6.orig/lib/Makefile.am	2004-11-18 15:47:10.964296320 +0100
++++ shadow-4.0.6/lib/Makefile.am	2004-11-18 21:16:59.076046080 +0100
+@@ -1,13 +1,13 @@
  
  AUTOMAKE_OPTIONS = 1.0 foreign
  
 -DEFS = 
 +DEFS = -DWITH_SELINUX
- INCLUDES =
  
  lib_LTLIBRARIES = libshadow.la
  
  libshadow_la_LDFLAGS = -version-info 0:0:0
- libshadow_la_LIBADD = $(INTLLIBS) $(LIBCRYPT) $(LIBSKEY) $(LIBMD) \
--	$(top_builddir)/libmisc/libmisc.la
-+	$(top_builddir)/libmisc/libmisc.la -lselinux
+ libshadow_la_LIBADD = $(INTLLIBS) $(LIBCRYPT) $(LIBSKEY) $(LIBMD) $(LIBSELINUX) \
+-	$(top_builddir)/libmisc/libmisc.a
++	$(top_builddir)/libmisc/libmisc.a -lselinux
  
  libshadow_la_SOURCES = \
  	commonio.c \
---- shadow-4.0.3/lib/commonio.c.selinux	2003-06-20 15:53:16.000000000 -0400
-+++ shadow-4.0.3/lib/commonio.c	2003-07-08 13:53:32.033078008 -0400
-@@ -15,7 +15,10 @@ RCSID("$Id: commonio.c,v 1.22 2001/11/17
- #ifdef HAVE_SHADOW_H
- #include <shadow.h>
- #endif
--
-+#ifdef WITH_SELINUX
-+#include <selinux/selinux.h>
-+static security_context_t old_context=NULL;
-+#endif
- #include "commonio.h"
+diff -urN shadow-4.0.6.orig/src/Makefile.am shadow-4.0.6/src/Makefile.am
+--- shadow-4.0.6.orig/src/Makefile.am	2004-11-18 15:47:10.970295408 +0100
++++ shadow-4.0.6/src/Makefile.am	2004-11-18 21:20:49.376035160 +0100
+@@ -3,7 +3,7 @@
  
- /* local function prototypes */
-@@ -437,6 +440,15 @@ commonio_open(struct commonio_db *db, in
- 		return 0;
- 	}
- 
-+#ifdef WITH_SELINUX
-+	db->scontext=NULL;
-+	if ((is_selinux_enabled() > 0) && (! db->readonly)) {
-+	  if (fgetfilecon(fileno(db->fp),&db->scontext) < 0) {
-+		goto cleanup;
-+	  }
-+	}
-+#endif
-+
- 	buflen = BUFLEN;
- 	buf = (char *) malloc(buflen);
- 	if (!buf)
-@@ -492,6 +504,12 @@ cleanup_buf:
- 	free(buf);
- cleanup:
- 	free_linked_list(db);
-+#ifdef WITH_SELINUX
-+	if (db->scontext!= NULL) {
-+	  freecon(db->scontext);
-+	  db->scontext=NULL;
-+	}
-+#endif
- 	fclose(db->fp);
- 	db->fp = NULL;
- 	errno = ENOMEM;
-@@ -627,6 +645,19 @@ commonio_close(struct commonio_db *db)
- 			goto fail;
- 		}
- 
-+#ifdef WITH_SELINUX
-+		if (db->scontext != NULL) {
-+		  int stat=getfscreatecon(&old_context);
-+		  if (stat< 0) {
-+		    errors++;
-+		    goto fail;
-+		  }
-+		  if (setfscreatecon(db->scontext)<0) {
-+		    errors++;
-+		    goto fail;
-+		  }
-+		}
-+#endif
- 		/*
- 		 * Create backup file.
- 		 */
-@@ -683,14 +714,26 @@ commonio_close(struct commonio_db *db)
- 		goto fail;
- 
- 	nscd_need_reload = 1;
--
-+	goto success;
-+fail:
-+	errors++;
- success:
--	free_linked_list(db);
--	return 1;
- 
--fail:
-+#ifdef WITH_SELINUX
-+	if (db->scontext != NULL) {
-+	  if (setfscreatecon(old_context)<0) {
-+	    errors++;
-+	  }
-+	  if (old_context != NULL) {		  
-+	    freecon(old_context);
-+	    old_context=NULL;
-+	  }
-+	  freecon(db->scontext);
-+	  db->scontext=NULL;
-+	}
-+#endif
- 	free_linked_list(db);
--	return 0;
-+	return errors==0;
- }
- 
- 
---- shadow-4.0.3/src/Makefile.am.selinux	2003-06-20 15:50:17.000000000 -0400
-+++ shadow-4.0.3/src/Makefile.am	2003-06-20 15:50:44.000000000 -0400
-@@ -4,7 +4,7 @@ EXTRA_DOST = .indent.pro
  ubindir = ${prefix}/bin
  usbindir = ${prefix}/sbin
- 
--DEFS = -D_HAVE_CONFIG_H -DLOCALEDIR=\"$(datadir)/locale\"
+-
 +DEFS = -D_HAVE_CONFIG_H -DLOCALEDIR=\"$(datadir)/locale\" -DWITH_SELINUX
- 
- INCLUDES = -I${top_srcdir} \
+ INCLUDES = \
  	-I${top_srcdir}/lib \
+ 	-I$(top_srcdir)/libmisc
