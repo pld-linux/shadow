@@ -7,7 +7,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -21,6 +21,7 @@ Source4:	userdb.pamd
 Source5:	chsh.pamd
 Source6:	chfn.pamd
 Source7:	passwd.pamd
+Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-pld.patch
 BuildRequires:	pam-devel
@@ -138,6 +139,7 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/pam.d/shadow
 install %{SOURCE5} $RPM_BUILD_ROOT/etc/pam.d/chsh
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
+install %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/useradd
 
 :> $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 touch $RPM_BUILD_ROOT%{_sysconfdir}/security/{chfn,chsh}.allow
@@ -177,6 +179,7 @@ fi
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/chage
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/shadow
 %attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/passwd
+%attr(640,root,root) %config %verify(not size mtime md5) /etc/pam.d/useradd
 %attr(750,root,root) %dir /etc/security
 
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
