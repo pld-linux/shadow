@@ -7,7 +7,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	12
+Release:	13
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -234,6 +234,7 @@ fi
 %{_mandir}/man8/usermod.*
 %{_mandir}/man8/vigr.*
 %{_mandir}/man8/vipw.*
+%{_mandir}/man8/chpasswd.*
 
 %lang(ja) %{_mandir}/ja/man1/passwd.*
 %lang(ja) %{_mandir}/ja/man5/faillog.*
@@ -307,7 +308,6 @@ fi
 %{_mandir}/man1/gpasswd.*
 %{_mandir}/man1/newgrp.*
 %{_mandir}/man1/sg.*
-%{_mandir}/man8/chpasswd.*
 %{_mandir}/man8/dpasswd.*
 %{_mandir}/man8/mkpasswd.*
 %{_mandir}/man8/newusers.*
