@@ -1,361 +1,292 @@
-diff -ur shadow-4.0.0.orig/man/pl/useradd.8 shadow-4.0.0/man/pl/useradd.8
---- shadow-4.0.0.orig/man/pl/useradd.8	Sat Jan 27 03:55:54 2001
-+++ shadow-4.0.0/man/pl/useradd.8	Fri Feb 22 23:29:22 2002
-@@ -34,11 +34,11 @@
- \fBuseradd\fR [\fB-c\fR \fIkomentarz\fR] [\fB-d\fR \fIkatalog_domowy\fR]
+diff -ur shadow-4.0.3.orig/man/pl/useradd.8 shadow-4.0.3/man/pl/useradd.8
+--- shadow-4.0.3.orig/man/pl/useradd.8	Sat Jan 27 03:55:54 2001
++++ shadow-4.0.3/man/pl/useradd.8	Fri Feb 22 23:29:22 2002
+@@ -34,7 +34,7 @@
+ .br
  [\fB-e\fR \fIdata_wa¿no¶ci\fR] [\fB-f\fR \fIdni_nieaktywno¶ci\fR]
  .br
 -[\fB-g\fR \fIgrupa_pocz±tkowa\fR] [\fB-G\fR \fIgrupa [,...]\fR]
 +[\fB-g\fR \fIgrupa_pocz±tkowa\fR] [\fB-G\fR \fIgrupa\fR[,...]]
  .br
--[\fB-m\fR [\fB-k\fR \fIkatalog_wzorców\fR]] [\fB-s\fR \fIpow³oka\fR]
-+[\fB-m\fR [\fB-k\fR \fIkatalog_wzorców\fR]] [\fB-p\fR \fIhas³o\fR]
+ [\fB-m\fR [\fB-k\fR \fIkatalog_wzorców\fR]] [\fB-o\fR] [\fB-p\fR \fIhas³o\fR]
  .br
--[\fB-u\fR \fIuid\fR [\fB-o\fR]] \fIlogin\fR
-+[\fB-s\fR \fIpow³oka\fR] [\fB-u\fR \fIuid\fR [\fB-o\fR]] \fIlogin\fR
- .TP 8
- \fBuseradd\fR \fB-D\fR [\fB-g\fI domy¶lna_grupa\fR] [\fB-b\fI katalog_bazowy\fR]
- .br
-@@ -99,18 +99,24 @@
- Opcja \fB-k\fR jest dozwolona tylko w po³±czeniu z opcj± \fB-m\fR.
- Domy¶lnym dzia³aniem jest nie tworzenie katalogu i nie kopiowanie
- jakichkolwiek plików.
-+.IP "\fB-o\fR"
-+Umo¿liwia utworzenie u¿ytkownaika z nieunikalnym UID (takim samym jak ju¿
-+istniej±cy).
-+.IP "\fB-p \fIpasswd\fR"
-+Zakodowane has³o w postaci zwracanej przez \fBcrypt\fR(3).
-+Domy¶lnym dzia³aniem jest blokowanie konta.
- .IP "\fB-s \fIpow³oka\fR"
- Nazwa pow³oki (shell) u¿ytkownika. Ustawienie tego pola na puste
- powoduje, ¿e system wybierze domy¶ln± pow³okê logowania.
- .IP "\fB-u \fIuid\fR"
- Numeryczna warto¶æ identyfikatora u¿ytkownika (user's ID). Warto¶æ ta musi
--byæ niepowtarzalna, chyba, ¿e u¿yto opcji \fI-o\fR. Warto¶æ musi byæ nieujemna.
-+byæ niepowtarzalna, chyba ¿e u¿yto opcji \fI-o\fR. Warto¶æ musi byæ nieujemna.
- Domy¶lnie u¿ywana jest tu najmniejsza warto¶æ identyfikatora wiêksza od 99
- i wiêksza od identyfikatorów pozosta³ych u¿ytkowników.
- Warto¶ci od 0 do 99 s± zwykle zarezerwowane dla kont systemowych.
- .SS Zmiana warto¶ci domy¶lnych
- Wywo³ane z opcj± \fB-D\fR, polecenie \fBuseradd\fR albo wy¶wietli bie¿±ce
--warto¶ci domy¶lne, albo zaaktualizuje domy¶lne warto¶ci z wiersza poleceñ.
-+warto¶ci domy¶lne, albo zaktualizuje domy¶lne warto¶ci z wiersza poleceñ.
- Dozwolonymi opcjami s±:
- .IP "\fB-b \fIkatalog_bazowy\fR"
- Pocz±tkowy przedrostek ¶cie¿ki dla katalogu domowego nowego u¿ytkownika.
-@@ -126,7 +132,7 @@
- istnieæ. Numer grupy musi odnosiæ siê do ju¿ istniej±cej grupy.
- .IP "\fB-s \fIdomy¶lna_pow³oka\fR"
- Nazwa pow³oki (shell) dla nowych u¿ytkowników. Podany program bêdzie u¿yty
--dla wszystkich przysz³uych nowych kont u¿ytkowników.
-+dla wszystkich przysz³ych nowych kont u¿ytkowników.
- .PP
- Bez podania opcji \fBuseradd\fR wy¶wietla bie¿±ce ustawienia domy¶lne.
- .SH UWAGI
-@@ -148,192 +154,7 @@
- .SH ZOBACZ TAK¯E
- .BR chfn (1),
- .BR chsh (1),
--.BR groupadd (8),
--.BR groupdel (8),
--.BR groupmod (8),
--.BR passwd (1),
--.BR userdel (8),
--.BR usermod (8).
--.SH AUTOR
--Julianne Frances Haugh (jockgrrl@ix.netcom.com)
--.SH OD T£UMACZA
--Niniejsza dokumentacja opisuje polecenie wchodz±ce w sk³ad pakietu
--shadow-password.
--Istnieje wiele programów i skryptów do zarz±dzania kontami
--u¿ytkowników czy grup. Z uwagi na powtarzaj±ce siê nazwy poleceñ, upewnij
--siê, ¿e korzystasz z w³a¶ciwej dokumentacji.
--.\" {PTM/WK/0.1/VIII-1999}
--.\" Copyright 1991 - 1994, Julianne Frances Haugh
--.\" All rights reserved.
--.\"
--.\" Redistribution and use in source and binary forms, with or without
--.\" modification, are permitted provided that the following conditions
--.\" are met:
--.\" 1. Redistributions of source code must retain the above copyright
--.\"    notice, this list of conditions and the following disclaimer.
--.\" 2. Redistributions in binary form must reproduce the above copyright
--.\"    notice, this list of conditions and the following disclaimer in the
--.\"    documentation and/or other materials provided with the distribution.
--.\" 3. Neither the name of Julianne F. Haugh nor the names of its contributors
--.\"    may be used to endorse or promote products derived from this software
--.\"    without specific prior written permission.
--.\"
--.\" THIS SOFTWARE IS PROVIDED BY JULIE HAUGH AND CONTRIBUTORS ``AS IS'' AND
--.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
--.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
--.\" ARE DISCLAIMED.  IN NO EVENT SHALL JULIE HAUGH OR CONTRIBUTORS BE LIABLE
--.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
--.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
--.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
--.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
--.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
--.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
--.\" SUCH DAMAGE.
--.\"
--.\"	$Id$
--.\"
--.TH USERADD 8
--.SH NAZWA
--useradd - twórz nowego u¿ytkownika lub zmieñ domy¶ln± informacjê o nowym
--.SH SK£ADNIA
--.TP 8
--.B useradd
--.\" .RB [ -A
--.\" .RI { metoda | \fBDEFAULT\fR "},... ]"
--.RB [ -c
--.IR komentarz ]
--.RB [ -d
--.IR katalog_domowy ]
--.br
--.RB [ -e
--.IR data_wa¿no¶ci ]
--.RB [ -f
--.IR dni_nieaktywno¶ci ]
--.br
--.RB [ -g
--.IR grupa_pocz±tkowa ]
--.RB [ -G
--.IR grupa [,...]]
--.br
--.RB [ -m " [" -k
--.IR katalog_wzorców ]]
--.RB [ -s
--.IR pow³oka ]
--.br
--.RB [ -u
--.IR uid " ["
--.BR -o ]]
--.I login
--.TP 8
--.B useradd
--\fB-D\fR
--[\fB-g\fI domy¶lna_grupa\fR]
--[\fB-b\fI katalog_bazowy\fR]
--.br
--[\fB-f\fI domy¶lne_dni_nieaktywno¶ci\fR]
--[\fB-e\fI domy¶lna_data_wa¿no¶ci\fR]
--.br
--[\fB-s\fI domy¶lna_pow³oka\fR]
--.SH OPIS
--.SS Tworzenie nowych u¿ytkowników
--Wywo³ane bez opcji \fB-D\fR, polecenie \fBuseradd\fR tworzy nowe konto
--u¿ytkownika pos³uguj±c siê warto¶ciami podanymi w wierszu poleceñ i domy¶lnymi
--warto¶ciami z systemu.
--W zale¿no¶ci od potrzeb i opcji wiersza poleceñ, do plików systemowych
--zostanie wprowadzone nowe konto u¿ytkownika, utworzony bêdzie jego katalog
--domowy, do którego przekopiowane zostan± pliki startowe.
--Polecenie \fBuseradd\fR posiada nastêpuj±ce opcje:
--.\" .IP "\fB-A {\fImetoda\fR|\fBDEFAULT\fR},..."
--.\" Okre¶la metodê autentykacji u¿ytkownika.
--.\" Metoda autentykacji jest nazw± programu odpowiedzialnego za weryfikacjê
--.\" to¿samo¶ci u¿ytkownika.
--.\" Mo¿e zostaæ u¿yty ³añcuch \fBDEFAULT\fR w celu zmiany metody autentykacji
--.\" u¿ytkownika na standardow± metodê has³a systemowego.
--.\" Argumentem tej opcji jest lista oddzielonych przecinkami nazw programów.
--.\" Mo¿e ona zawieraæ ³añcuch \fBDEFAULT\fR tylko jednokrotnie.
--.IP "\fB-c \fIkomentarz\fR"
--Pole komentarza dla zak³adanego u¿ytkownika w pliku hase³.
--.IP "\fB-d \fIkatalog_domowy\fR"
--Warto¶æ \fIkatalog_domowy\fR zostanie u¿yta do okre¶lenia katalogu logowania
--nowotworzonego u¿ytkownika.
--Domy¶lnie do \fIdomy¶lny_domowy\fR dodawana jest nazwa u¿ytkownika
--(\fIlogin\fR) tworz±c pe³n± nazwê katalogu logowania.
--.IP "\fB-e \fIdata_wa¿no¶ci\fR"
--Data, od której konto u¿ytkownika zostanie wy³±czone.
--Data podawana jest w formacie \fIMM/DD/YY\fR.
--.IP "\fB-f \fIdni_nieaktywno¶ci\fR"
--Liczba dni po wyga¶niêciu has³a do sta³ego wy³±czenia konta.
--Warto¶æ 0 wy³±cza konto natychmiast po przeterminowaniu has³a, za¶ warto¶æ
---1 wy³±cza tê cechê. Domy¶ln± warto¶ci± jest -1.
--.IP "\fB-g \fIgrupa_pocz±tkowa\fR"
--Nazwa lub numer pocz±tkowej grupy logowania u¿ytkownika. Nazwa grupy musi
--istnieæ. Numer grupy musi odnosiæ siê do ju¿ istniej±cej grupy.
--Domy¶lnym numerem grupy jest 1.
--.IP "\fB-G \fIgrupa,[...]\fR"
--Lista dodatkowych grup, do których równie¿ nale¿y u¿ytkownik.
--Ka¿da grupa oddzielona jest od nastêpnej przecinkiem, bez wtr±conej spacji.
--Do grup odnosz± siê te same ograniczenia, które obowi±zuj± przy grupie podanej
--w opcji \fB-g\fR.
--Domy¶lnie u¿ytkownik nale¿y tylko do grupy pocz±tkowej.
--.IP \fB-m\fR
--Je¶li nie istnieje katalog domowy u¿ytkownika, to zostanie on utworzony.
--Je¶li pos³u¿ono siê opcj± \fB-k\fR, to bêd± do niego przekopiowane wzorcowe
--pliki startowe zawarte w \fIkatalogu_wzorców\fR. W przeciwnym przypadku,
--zamiast nich zostan± u¿yte pliki zawarte w \fI/etc/skel\fR.
--W katalogu domowym u¿ytkownika zostan± równie¿ utworzone
--podkatalogi zawarte w \fIkatalogu_wzorców\fR lub \fI/etc/skel\fR.
--Opcja \fB-k\fR jest dozwolona tylko w po³±czeniu z opcj± \fB-m\fR.
--Domy¶lnym dzia³aniem jest nie tworzenie katalogu i nie kopiowanie
--jakichkolwiek plików.
--.IP "\fB-s \fIpow³oka\fR"
--Nazwa pow³oki (shell) u¿ytkownika. Ustawienie tego pola na puste
--powoduje, ¿e system wybierze domy¶ln± pow³okê logowania.
--.IP "\fB-u \fIuid\fR"
--Numeryczna warto¶æ identyfikatora u¿ytkownika (UID). Warto¶æ ta musi
--byæ niepowtarzalna, chyba, ¿e u¿yto opcji \fI-o\fR. Warto¶æ musi byæ nieujemna.
--Domy¶lnie u¿ywana jest tu najmniejsza warto¶æ identyfikatora wiêksza od 99
--i wiêksza od identyfikatorów pozosta³ych u¿ytkowników.
--Warto¶ci od 0 do 99 s± zwykle zarezerwowane dla kont systemowych.
--.SS Zmiana warto¶ci domy¶lnych
--Wywo³ane z opcj± \fB-D\fR, polecenie \fBuseradd\fR albo wy¶wietli bie¿±ce
--warto¶ci domy¶lne, albo zaaktualizuje domy¶lne warto¶ci z wiersza poleceñ.
--Dozwolonymi opcjami s±:
--.IP "\fB-b \fIkatalog_bazowy\fR"
--Pocz±tkowy przedrostek ¶cie¿ki dla katalogu domowego nowego u¿ytkownika.
--Je¶li przy tworzeniu nowego konta nie u¿yto opcji \fB-d\fR, to
--na koniec \fIkatalogu_bazowego\fR zostanie dodana nazwa u¿ytkownika, tworz±c
--now± nazwê katalogu.
--.IP "\fB-e \fIdomy¶lna_data_wa¿no¶ci\fR"
--Data, od której konto u¿ytkownika zostanie wy³±czone.
--.IP "\fB-f \fIdomy¶lne_dni_nieaktywno¶ci\fR"
--Liczba dni po wyga¶niêciu has³a do sta³ego wy³±czenia konta.
--.IP "\fB-g \fIdomy¶lna_grupa\fR"
--Nazwa lub numer pocz±tkowej grupy logowania u¿ytkownika. Nazwa grupy musi
--istnieæ. Numer grupy musi odnosiæ siê do ju¿ istniej±cej grupy.
--.IP "\fB-s \fIdomy¶lna_pow³oka\fR"
--Nazwa pow³oki (shell) dla nowych u¿ytkowników. Podany program bêdzie u¿yty
--dla wszystkich przysz³ych nowych kont u¿ytkowników.
--.PP
--Bez podania opcji \fBuseradd\fR wy¶wietla bie¿±ce ustawienia domy¶lne.
--.SH UWAGI
--Administrator systemu odpowiedzialny jest za umieszczenie domy¶lnych
--plików u¿ytkownika w katalogu \fI/etc/skel\fR.
--.SH OSTRZE¯ENIA
--Nie mo¿esz dodaæ u¿ytkownika do grupy NIS. Musi to zostaæ wykonane
--na serwerze NIS.
--.SH PLIKI
--.IR /etc/passwd " - informacja o kontach u¿ytkowników"
--.br
--.IR /etc/shadow " - bezpieczna informacja o kontach u¿ytkowników"
--.br
--.IR /etc/group " - informacja o grupach"
--.br
--.IR /etc/default/useradd " - ustawienia domy¶lne"
--.br
--.IR /etc/skel " - katalog plików domy¶lnych"
--.SH ZOBACZ TAK¯E
--.BR chfn (1),
--.BR chsh (1),
-+.BR crypt (3),
- .BR groupadd (8),
- .BR groupdel (8),
- .BR groupmod (8),
-diff -ur shadow-4.0.0.orig/po/cs.po shadow-4.0.0/po/cs.po
---- shadow-4.0.0.orig/po/cs.po	Sat Oct  6 22:04:56 2001
-+++ shadow-4.0.0/po/cs.po	Fri Feb 22 23:29:22 2002
-@@ -2047,15 +2047,15 @@
- #: src/useradd.c:720 src/usermod.c:321
- #, c-format
- msgid "usage: %s\t[-u uid [-o]] [-g group] [-G group,...] \n"
--msgstr "Pou¾ití: %s\t[-u uid [-o]] [-g skupina [-G skupina,...] \n"
-+msgstr "Pou¾ití: %s [-u uid [-o]] [-g skupina [-G skupina,...] \n"
+diff -ur shadow-4.0.3.orig/po/cs.po shadow-4.0.3/po/cs.po
+--- shadow-4.0.3.orig/po/cs.po	Sat Oct  6 22:04:56 2001
++++ shadow-4.0.3/po/cs.po	Fri Feb 22 23:29:22 2002
+@@ -1974,9 +1974,8 @@
+ msgstr "\t\t [-d domácí adr.] [-s shell] [-c komentáø] [-m [-k ¹ablona]]\n"
  
- #: src/useradd.c:723
- msgid "\t\t[-d home] [-s shell] [-c comment] [-m [-k template]]\n"
--msgstr "\t\t[-d domácí adr.] [-s shell] [-c komentáø] [-m [-k ¹ablona]]\n"
-+msgstr "\t\t [-d domácí adr.] [-s shell] [-c komentáø] [-m [-k ¹ablona]]\n"
- 
- #: src/useradd.c:726 src/usermod.c:327
+ #: src/useradd.c:745 src/usermod.c:329
+-#, fuzzy
  msgid "[-f inactive] [-e expire ] "
--msgstr "[-f vypnutí] [-e vypr¹ení ] "
+-msgstr " [-f vypnutí] [-e vypr¹ení] "
 +msgstr " [-f vypnutí] [-e vypr¹ení ] "
  
- #: src/useradd.c:729
+ #: src/useradd.c:748
  msgid "[-A program] "
-@@ -2068,11 +2068,11 @@
- #: src/useradd.c:733
- #, c-format
- msgid "       %s\t-D [-g group] [-b base] [-s shell]\n"
--msgstr "       %s\t-D [-g skupina [-b základní adr.] [-s shell]\n"
-+msgstr "         %s -D [-g skupina [-b základní adr.] [-s shell]\n"
+@@ -1992,9 +1991,8 @@
+ msgstr "         %s -D [-g skupina [-b základní adr.] [-s shell]\n"
  
- #: src/useradd.c:736
+ #: src/useradd.c:756
+-#, fuzzy
  msgid "\t\t[-f inactive] [-e expire ]\n"
--msgstr "\t\t[-f vypnutí] [-e vypr¹ení ]\n"
+-msgstr "\t\t [-f vypnutí] [-e vypr¹ení]\n"
 +msgstr "\t\t [-f vypnutí] [-e vypr¹ení ]\n"
  
- #: src/useradd.c:833 src/usermod.c:479
+ #: src/useradd.c:850 src/usermod.c:480
  #, c-format
-diff -ur shadow-4.0.0.orig/po/fr.po shadow-4.0.0/po/fr.po
---- shadow-4.0.0.orig/po/fr.po	Sat Oct  6 22:04:58 2001
-+++ shadow-4.0.0/po/fr.po	Fri Feb 22 23:29:22 2002
-@@ -2075,7 +2075,7 @@
- #: src/useradd.c:733
- #, c-format
- msgid "       %s\t-D [-g group] [-b base] [-s shell]\n"
--msgstr "       %s\t-D [-g groupe] [-b base] [-s shell]\n"
-+msgstr "        %s\t-D [-g groupe] [-b base] [-s shell]\n"
+diff -ur shadow-4.0.3.orig/po/sv.po shadow-4.0.3/po/sv.po
+--- shadow-4.0.3.orig/po/sv.po	Sat Oct  6 22:04:59 2001
++++ shadow-4.0.3/po/sv.po	Fri Feb 22 23:29:22 2002
+@@ -1969,9 +1969,8 @@
+ msgstr "\t\t    [-d hem] [-s skal] [-c kommentar] [-m [-k mall]]\n"
  
- #: src/useradd.c:736
- msgid "\t\t[-f inactive] [-e expire ]\n"
-diff -ur shadow-4.0.0.orig/po/pl.po shadow-4.0.0/po/pl.po
---- shadow-4.0.0.orig/po/pl.po	Sat Oct  6 22:04:58 2001
-+++ shadow-4.0.0/po/pl.po	Fri Feb 22 23:29:22 2002
-@@ -2068,7 +2068,7 @@
- #: src/useradd.c:733
- #, c-format
- msgid "       %s\t-D [-g group] [-b base] [-s shell]\n"
--msgstr "       %s\t-D [-g grupa] [-b baza] [-s pow³oka]\n"
-+msgstr "        %s\t-D [-g grupa] [-b baza] [-s pow³oka]\n"
- 
- #: src/useradd.c:736
- msgid "\t\t[-f inactive] [-e expire ]\n"
-diff -ur shadow-4.0.0.orig/po/sv.po shadow-4.0.0/po/sv.po
---- shadow-4.0.0.orig/po/sv.po	Sat Oct  6 22:04:59 2001
-+++ shadow-4.0.0/po/sv.po	Fri Feb 22 23:29:22 2002
-@@ -2046,15 +2046,15 @@
- #: src/useradd.c:720 src/usermod.c:321
- #, c-format
- msgid "usage: %s\t[-u uid [-o]] [-g group] [-G group,...] \n"
--msgstr "Användning: %s\t[-u uid [-o]] [-g grupp] [-G grupp,...] \n"
-+msgstr "Användning: %s [-u uid [-o]] [-g grupp] [-G grupp,...] \n"
- 
- #: src/useradd.c:723
- msgid "\t\t[-d home] [-s shell] [-c comment] [-m [-k template]]\n"
--msgstr "\t\t[-d hem] [-s skal] [-c kommentar] [-m [-k mall]]\n"
-+msgstr "\t\t    [-d hem] [-s skal] [-c kommentar] [-m [-k mall]]\n"
- 
- #: src/useradd.c:726 src/usermod.c:327
+ #: src/useradd.c:745 src/usermod.c:329
+-#, fuzzy
  msgid "[-f inactive] [-e expire ] "
--msgstr "[-f inaktiv] [-e upphör ] "
+-msgstr "    [-f inaktiv] [-e upphör] "
 +msgstr "    [-f inaktiv] [-e upphör ] "
  
- #: src/useradd.c:729
+ #: src/useradd.c:748
  msgid "[-A program] "
-@@ -2067,11 +2067,11 @@
- #: src/useradd.c:733
- #, c-format
- msgid "       %s\t-D [-g group] [-b base] [-s shell]\n"
--msgstr "       %s\t-D [-g grupp] [-b bas] [-s skal]\n"
-+msgstr "            %s -D [-g grupp] [-b bas] [-s skal]\n"
+@@ -1987,9 +1986,8 @@
+ msgstr "            %s -D [-g grupp] [-b bas] [-s skal]\n"
  
- #: src/useradd.c:736
+ #: src/useradd.c:756
+-#, fuzzy
  msgid "\t\t[-f inactive] [-e expire ]\n"
--msgstr "\t\t[-f inaktiv] [-e utgång ]\n"
+-msgstr "\t\t    [-f inaktiv] [-e utgång]\n"
 +msgstr "\t\t    [-f inaktiv] [-e utgång ]\n"
  
- #: src/useradd.c:833 src/usermod.c:479
+ #: src/useradd.c:850 src/usermod.c:480
  #, c-format
-diff -ur shadow-4.0.0.orig/po/uk.po shadow-4.0.0/po/uk.po
---- shadow-4.0.0.orig/po/uk.po	Sat Oct  6 22:04:59 2001
-+++ shadow-4.0.0/po/uk.po	Fri Feb 22 23:29:22 2002
-@@ -2052,11 +2052,11 @@
- #: src/useradd.c:720 src/usermod.c:321
+diff -Nur shadow-4.0.3.orig/man/login.defs.5 shadow-4.0.3/man/login.defs.5
+--- shadow-4.0.3.orig/man/login.defs.5	2002-03-08 05:39:11.000000000 +0100
++++ shadow-4.0.3/man/login.defs.5	2003-06-20 19:41:39.000000000 +0200
+@@ -82,10 +82,6 @@
+ If not specified, only the superuser can make any changes.
+ The most restrictive setting is better achieved by not installing chfn SUID.
+ .\"
+-.IP "CREATE_HOME (boolean)"
+-This defines whether useradd should create home directories for users by
+-default.  This option is OR'ed with the -m flag on useradd command line.
+-.\"
+ .IP "GID_MAX (number)"
+ .IP "GID_MIN (number)"
+ Range of group IDs to choose from for the
+@@ -147,7 +143,6 @@
+ .IP pwconv 12
+ PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+ .IP useradd 12
+-CREATE_HOME
+ GID_MAX GID_MIN
+ PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+ UID_MAX UID_MIN
+--- shadow-4.0.3/po/de.po.orig	2003-06-20 19:51:01.000000000 +0200
++++ shadow-4.0.3/po/de.po	2003-06-20 19:53:18.000000000 +0200
+@@ -486,7 +486,7 @@
+ #: src/chfn.c:358 src/chsh.c:215
  #, c-format
- msgid "usage: %s\t[-u uid [-o]] [-g group] [-G group,...] \n"
--msgstr "×ÉËÏÒÉÓÔÏ×ÕÊÔÅ: %s\t[-u uid [-o]] [-g ÇÒÕÐÁ] [-G ÇÒÕÐÁ,...] \n"
-+msgstr "×ÉËÏÒÉÓÔÏ×ÕÊÔÅ:\n       %s\t[-u uid [-o]] [-g ÇÒÕÐÁ] [-G ÇÒÕÐÁ,...] \n"
+ msgid "%s: cannot change user `%s' on NIS client.\n"
+-msgstr "%s: Kann den Benutzer `%' nicht auf dem NIS-Client ändern.\n"
++msgstr "%s: Kann den Benutzer `%s' nicht auf dem NIS-Client ändern.\n"
  
- #: src/useradd.c:723
- msgid "\t\t[-d home] [-s shell] [-c comment] [-m [-k template]]\n"
--msgstr "\t\t[-d ÄÏÍÁÛÎÑ_ÔÅËÁ] [-s shell] [-c ËÏÍÅÎÔÁÒ] [-m [-k wzór]]\n"
-+msgstr "\t\t[-d ÄÏÍÁÛÎÑ_ÔÅËÁ] [-s shell] [-c ËÏÍÅÎÔÁÒ] [-m [-k ÛÁÂÌÏÎ]]\n"
+ #: src/chfn.c:366 src/chsh.c:223
+ #, c-format
+@@ -1547,7 +1547,7 @@
+ #, c-format
+ msgid "User %s has a TCFS key, his old password is required.\n"
+ msgstr ""
+-"Benutzer besitzt einen TCFS-Schlüssel, sein altes Kennwort wird benötigt.\n"
++"Benutzer %s besitzt einen TCFS-Schlüssel, sein altes Kennwort wird benötigt.\n"
  
- #: src/useradd.c:726 src/usermod.c:327
- msgid "[-f inactive] [-e expire ] "
+ #: src/passwd.c:286
+ msgid "You can use -t option to force the change.\n"
+--- shadow-4.0.3/po/el.po.orig	2003-06-20 19:51:01.000000000 +0200
++++ shadow-4.0.3/po/el.po	2003-06-20 19:55:28.000000000 +0200
+@@ -6,7 +6,7 @@
+ msgstr ""
+ "Project-Id-Version: Shadow 980726\n"
+ "POT-Creation-Date: 2002-03-12 12:16+0100\n"
+-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
++"PO-Revision-Date: 2003-06-20 19:55+0200\n"
+ "Last-Translator: Nikos Mavroyanopoulos <nmav@i-net.paiko.gr>\n"
+ "Language-Team: Hellenic <el@li.org>\n"
+ "MIME-Version: 1.0\n"
+@@ -832,7 +832,7 @@
+ "%s: Áäõíáìßá äçìéïõñãßáò êëåéäþìáôïò ôïõ áñ÷åßïõ óêéùäþí óõíèçìáôéêþí\n"
+ 
+ #: src/gpasswd.c:590
+-#, c-format
++#, fuzzy, c-format
+ msgid "%s: can't open file\n"
+ msgstr "%s: áäõíáìßá áíïßãìáôïò ôïõ áñ÷åßïõ %s\n"
+ 
+@@ -1776,7 +1776,7 @@
+ msgstr "%s: áäõíáìßá áíïßãìáôïò ôïõ áñ÷åßïõ óõíèçìáôéêþí\n"
+ 
+ #: src/pwconv.c:117
+-#, c-format
++#, fuzzy, c-format
+ msgid "%s: can't remove shadow entry for %s\n"
+ msgstr ""
+ "áäõíáìßá áöáßñåóçò êáôá÷þñçóçò ãéá ôïí %s, áðü ôï áñ÷åßï óêéùäþí "
+@@ -2044,7 +2044,7 @@
+ #: src/useradd.c:1039
+ #, c-format
+ msgid "%s: uid %u is not unique\n"
+-msgstr "%s: Ôï uid %ld äåí åßíáé ìïíáäéêü\n"
++msgstr "%s: Ôï uid %u äåí åßíáé ìïíáäéêü\n"
+ 
+ #: src/useradd.c:1069
+ #, c-format
+--- shadow-4.0.3/po/fr.po.orig	2003-06-20 19:51:01.000000000 +0200
++++ shadow-4.0.3/po/fr.po	2003-06-20 19:56:06.000000000 +0200
+@@ -1323,7 +1323,7 @@
+ "Login timed out after %d seconds.\n"
+ msgstr ""
+ "\n"
+-"Tentative de connexion: délai de %s secondes dépassé.\n"
++"Tentative de connexion: délai de %d secondes dépassé.\n"
+ 
+ #: src/login.c:689
+ #, c-format
+@@ -1342,7 +1342,7 @@
+ "%s login: "
+ msgstr ""
+ "\n"
+-"% login: "
++"%s login: "
+ 
+ #: src/login.c:855
+ msgid "login: "
+--- shadow-4.0.3/po/ja.po.orig	2003-06-20 19:51:01.000000000 +0200
++++ shadow-4.0.3/po/ja.po	2003-06-20 19:56:43.000000000 +0200
+@@ -885,7 +885,7 @@
+ #: src/groupadd.c:255 src/useradd.c:1034
+ #, c-format
+ msgid "%s: name %s is not unique\n"
+-msgstr "s: Ì¾Á° %s ¤Ï½ÅÊ£¤·¤Æ¤¤¤Þ¤¹\n"
++msgstr "%s: Ì¾Á° %s ¤Ï½ÅÊ£¤·¤Æ¤¤¤Þ¤¹\n"
+ 
+ #: src/groupadd.c:270
+ #, c-format
+@@ -1322,7 +1322,7 @@
+ "Login timed out after %d seconds.\n"
+ msgstr ""
+ "\n"
+-"%sÉÃ¸å¤Î¥í¥°¥¤¥ó¡¦¥¿¥¤¥àÀ©¸Â¤Ç¤¹.\n"
++"%dÉÃ¸å¤Î¥í¥°¥¤¥ó¡¦¥¿¥¤¥àÀ©¸Â¤Ç¤¹.\n"
+ 
+ #: src/login.c:689
+ #, c-format
+--- shadow-4.0.3/po/ko.po.orig	2003-06-20 19:51:01.000000000 +0200
++++ shadow-4.0.3/po/ko.po	2003-06-20 19:59:11.000000000 +0200
+@@ -346,17 +346,17 @@
+ #: src/chage.c:544 src/chpasswd.c:162
+ #, c-format
+ msgid "%s: can't open password file\n"
+-msgstr "ÆÐ½º¿öµå ÆÄÀÏÀ» ¿­¼ö°¡ ¾ø½À´Ï´Ù\n"
++msgstr "%s: ÆÐ½º¿öµå ÆÄÀÏÀ» ¿­¼ö°¡ ¾ø½À´Ï´Ù\n"
+ 
+ #: src/chage.c:552
+ #, c-format
+ msgid "%s: unknown user: %s\n"
+-msgstr "¾Ë¼ö¾ø´Â »ç¿ëÀÚ: %s\n"
++msgstr "%s: ¾Ë¼ö¾ø´Â »ç¿ëÀÚ: %s\n"
+ 
+ #: src/chage.c:571
+ #, c-format
+ msgid "%s: can't lock shadow password file"
+-msgstr "%"
++msgstr ""
+ 
+ #: src/chage.c:579
+ #, c-format
+@@ -366,7 +366,7 @@
+ #: src/chage.c:674
+ #, c-format
+ msgid "Changing the aging information for %s\n"
+-msgstr "%sÀÇ ¿¬·É¿¡ ´ëÇÑ Á¤º¸¸¦ °»½ÅÇÕ´Ï´Ù %s\n"
++msgstr "ÀÇ ¿¬·É¿¡ ´ëÇÑ Á¤º¸¸¦ °»½ÅÇÕ´Ï´Ù %s\n"
+ 
+ #: src/chage.c:677
+ #, c-format
+@@ -376,12 +376,12 @@
+ #: src/chage.c:705 src/chage.c:771 src/pwunconv.c:174
+ #, c-format
+ msgid "%s: can't update password file\n"
+-msgstr "ÆÐ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
++msgstr "%s: ÆÐ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
+ 
+ #: src/chage.c:737 src/pwunconv.c:168
+ #, c-format
+ msgid "%s: can't update shadow password file\n"
+-msgstr "½¦µµ¿ì ÆÐ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
++msgstr "%s: ½¦µµ¿ì ÆÐ½º¿öµå ÆÄÀÏÀ» ¾÷µ¥ÀÌÆ® ÇÒ ¼ö ¾ø½À´Ï´Ù\n"
+ 
+ #: src/chage.c:789 src/chage.c:805 src/chfn.c:570 src/chsh.c:382
+ #: src/passwd.c:747 src/passwd.c:859
+@@ -391,12 +391,12 @@
+ #: src/chage.c:823
+ #, c-format
+ msgid "%s: can't rewrite shadow password file\n"
+-msgstr "½¦µµ¿ì ÆÐ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
++msgstr "%s: ½¦µµ¿ì ÆÐ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
+ 
+ #: src/chage.c:838
+ #, c-format
+ msgid "%s: can't rewrite password file\n"
+-msgstr "ÆÐ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
++msgstr "%s: ÆÐ½º¿öµå ÆÄÀÏÀ» ´Ù½Ã ÀÛ¼ºÇÒ ¼ö ¾ø½À´Ï´Ù\n"
+ 
+ #: src/chage.c:857 src/chpasswd.c:343 src/groupadd.c:590 src/groupdel.c:409
+ #: src/groupmod.c:604 src/newusers.c:628 src/useradd.c:1869 src/userdel.c:849
+@@ -468,12 +468,12 @@
+ #: src/chfn.c:379 src/passwd.c:1115
+ #, c-format
+ msgid "%s: Permission denied.\n"
+-msgstr "Á¢±Ù±ÇÇÑ ¾øÀ½.\n"
++msgstr "%s: Á¢±Ù±ÇÇÑ ¾øÀ½.\n"
+ 
+ #: src/chfn.c:332 src/chsh.c:190 src/passwd.c:1165
+ #, c-format
+ msgid "%s: Unknown user %s\n"
+-msgstr "¾Ë¼ö¾ø´Â »ç¿ëÀÚ %s\n"
++msgstr "%s: ¾Ë¼ö¾ø´Â »ç¿ëÀÚ %s\n"
+ 
+ #: src/chfn.c:341 src/chsh.c:198 src/passwd.c:1096
+ #, c-format
+@@ -483,7 +483,7 @@
+ #: src/chfn.c:358 src/chsh.c:215
+ #, c-format
+ msgid "%s: cannot change user `%s' on NIS client.\n"
+-msgstr "NIS Å¬¶óÀÌ¾ðÆ®¿¡¼­ '%s'ÀÇ »ç¿ëÀÚ ÀÌ¸§À» º¯°æÇÒ ¼ö ¾ø½À´Ï´Ù.\n"
++msgstr "%s: NIS Å¬¶óÀÌ¾ðÆ®¿¡¼­ '%s'ÀÇ »ç¿ëÀÚ ÀÌ¸§À» º¯°æÇÒ ¼ö ¾ø½À´Ï´Ù.\n"
+ 
+ #: src/chfn.c:366 src/chsh.c:223
+ #, c-format
+@@ -503,12 +503,12 @@
+ #: src/chfn.c:456
+ #, c-format
+ msgid "%s: invalid room number: \"%s\"\n"
+-msgstr "À¯È¿ÇÏÁö ¾Ê´Â ¹æ ¹øÈ£: \"%s\"\n"
++msgstr "%s: À¯È¿ÇÏÁö ¾Ê´Â ¹æ ¹øÈ£: \"%s\"\n"
+ 
+ #: src/chfn.c:462
+ #, c-format
+ msgid "%s: invalid work phone: \"%s\"\n"
+-msgstr "À¯È¿ÇÏÁö ¾Ê´Â Á÷Àå ÀüÈ­¹øÈ£: \"%s\"\n"
++msgstr "%s: À¯È¿ÇÏÁö ¾Ê´Â Á÷Àå ÀüÈ­¹øÈ£: \"%s\"\n"
+ 
+ #: src/chfn.c:468
+ #, c-format
+@@ -2296,7 +2296,7 @@
+ #: src/usermod.c:1239
+ #, c-format
+ msgid "%s: uid %lu is not unique\n"
+-msgstr "%s: uid(»ç¿ëÀÚ ¾ÆÀÌµð) %u ´Â ÀûÀýÇÏÁö ¾Ê½À´Ï´Ù\n"
++msgstr "%s: uid(»ç¿ëÀÚ ¾ÆÀÌµð) %lu ´Â ÀûÀýÇÏÁö ¾Ê½À´Ï´Ù\n"
+ 
+ #: src/usermod.c:1392
+ #, c-format

@@ -1,11 +1,12 @@
-
-# _with_selinux
-
+#
+# Conditional build:
+# _with_selinux		- with SE-Linux support
+#
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux
-Summary(pl):	Narzêdzia do obs³ugi shadow password
+Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
@@ -26,9 +27,13 @@ Source7:	passwd.pamd
 Source8:	useradd.pamd
 Patch0:		%{name}-utmpx.patch
 Patch1:		%{name}-man_and_po.patch
-Patch2:		%{name}-pld.patch
-Patch3:		%{name}-chage_expdays.patch
-Patch4:		%{name}-selinux.patch
+Patch2:		%{name}-pl.po-update.patch
+Patch3:		%{name}-undoc-groupadd-f.patch
+Patch4:		%{name}-pld.patch
+Patch5:		%{name}-chage_expdays.patch
+Patch6:		%{name}-selinux.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	pam-devel
 %{?_with_selinux:BuildRequires: selinux-libs-devel}
@@ -68,10 +73,10 @@ padrón UNIX de contraseña al formato shadow.
    estos utilitarios y contraseñas shadow.
 
 %description -l pl
-Pakiet zawiera programy do obs³ugi shadow password. Zanjduj± siê w nim
-programy do konwersji standardowego pliku hase³ do wersji shadow
-password a tak¿e programy do zarz±dania kontami u¿ytkowników w
-systemie
+Pakiet zawiera programy do obs³ugi mechanizmu ukrytych hase³ (shadow
+password). Znajduj± siê w nim programy do konwersji standardowego
+pliku hase³ do wersji shadow password a tak¿e programy do zarz±dzania
+kontami u¿ytkowników w systemie:
  - pwconv - konwertuje do formatu shadow password
  - pwunconv - konwertuje z shadow password do formatu standardowego
    pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
@@ -83,8 +88,8 @@ systemie
 Ostrze¿enie:
 
 Programy znajduj±ce siê w tym pakiecie s± niezbêdne do prawid³owej
-pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
-- glibc nigdy nie powinien zostaæ odinstalowany!
+pracy systemu i podobnie jak pakiet z bibliotekami systemowymi (glibc)
+nigdy nie powinien zostaæ odinstalowany!
 
 %description -l pt_BR
 Este pacote inclui os programas necessários para converter
@@ -100,10 +105,10 @@ Várias páginas de manual estão também incluídas sobre estes
 utilitários e senhas shadow em geral.
 
 %package extras
-Summary:	shadow - not often used files
-Summary(pl):	shadow - pliki nieczêsto u¿ywane
+Summary:	shadow - not often used programs
+Summary(pl):	shadow - programy nieczêsto u¿ywane
 Group:		Applications/System
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description extras
 Programs for shadow not often used. If you have small system you may
@@ -115,12 +120,18 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %prep
 %setup -q
 %patch0 -p1
-#%%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%{?_with_selinux:%patch4 -p1}
+%patch4 -p1
+%patch5 -p1
+%{?_with_selinux:%patch6 -p1}
 
 %build
+%{__gettextize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
 %configure \
 	--disable-desrpc \
 	--with-libcrypt \
