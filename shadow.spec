@@ -37,6 +37,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	pam-devel
+BuildRequires:	libtool
 %{?with_selinux:BuildRequires:	libselinux-devel}
 Provides:	shadow-utils
 Provides:	passwd
