@@ -20,7 +20,6 @@ Patch3:		shadow-pam-userdb.patch
 Patch4:		shadow-manpl.patch
 BuildRequires:	pam-devel
 BuildRequires:	gettext-devel
-Requires:	pam
 Obsoletes:	shadow-utils
 Provides:	shadow-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -102,15 +101,13 @@ echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/pwunconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpconv.8
 echo .so pwconv.8 > $RPM_BUILD_ROOT%{_mandir}/man8/grpunconv.8
 
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man*/* \
-	$RPM_BUILD_ROOT%{_mandir}/pl/man*/* \
-	doc/ANNOUNCE doc/CHANGES doc/README doc/README.linux doc/HOWTO
+gzip -9nf doc/ANNOUNCE doc/CHANGES doc/README doc/README.linux doc/HOWTO
 
 %find_lang %{name}
 
 %post
 if [ ! -f /etc/shadow ]; then
-%{_sbindir}/pwconv
+	%{_sbindir}/pwconv
 fi
 
 %clean
@@ -118,7 +115,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-
 %doc doc/*.gz
 
 %attr(750,root,root) %dir /etc/default
