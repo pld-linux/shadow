@@ -7,7 +7,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	10
+Release:	11
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -27,6 +27,7 @@ Patch1:		%{name}-pld.patch
 Patch2:		%{name}-sort-SEGV.patch
 BuildRequires:	pam-devel
 Provides:	shadow-utils
+Provides:	passwd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	shadow-utils
 Obsoletes:	passwd
