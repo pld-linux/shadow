@@ -8,6 +8,7 @@ Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
 Release:	1
+Epoch:		1
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
