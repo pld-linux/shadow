@@ -207,13 +207,13 @@ fi
 %defattr(644,root,root,755)
 %doc ChangeLog NEWS TODO doc/{HOWTO,README,README.linux,README.pam,WISHLIST}
 %attr(750,root,root) %dir %{_sysconfdir}/default
-%attr(640,root,root) %config %verify(not md5 size mtime) %{_sysconfdir}/default/*
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chage
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/passwd
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/shadow
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/useradd
-%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/login.defs
-%attr(600,root,root) %config(noreplace) %verify(not md5 size mtime) %ghost %{_sysconfdir}/shadow
+%attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/passwd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/shadow
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/useradd
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/login.defs
+%attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
@@ -372,9 +372,10 @@ fi
 
 %files extras
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chfn
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chsh
-%attr(640,root,root) %config %verify(not md5 size mtime) /etc/security/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chfn
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chsh
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/chfn.allow
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/chsh.allow
 %attr(755,root,root) %{_bindir}/chage
 %attr(4755,root,root) %{_bindir}/chfn
 %attr(4755,root,root) %{_bindir}/chsh
