@@ -40,15 +40,15 @@ BuildRequires:	gettext-devel >= 0.12.1
 BuildRequires:	pam-devel
 BuildRequires:	libtool
 %{?with_selinux:BuildRequires:	libselinux-devel}
-Provides:	shadow-utils
-Provides:	passwd
 Requires:	pam >= 0.77.3
 # to force proper coreutils version, so "groups" command exists
 Requires:	/usr/bin/groups
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Provides:	passwd
+Provides:	shadow-utils
 Obsoletes:	passwd
-Obsoletes:	pwdutils
 Obsoletes:	shadow-utils
+Conflicts:	pwdutils
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This package includes the programs necessary to convert standard UNIX
@@ -116,6 +116,7 @@ Summary:	shadow - not often used programs
 Summary(pl):	shadow - programy nieczêsto u¿ywane
 Group:		Applications/System
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Obsoletes:	pwdutils
 Conflicts:	util-linux < 2.12-10
 
 %description extras
