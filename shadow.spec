@@ -36,7 +36,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	pam-devel
-%{?_with_selinux:BuildRequires: selinux-libs-devel}
+%{?_with_selinux:BuildRequires:	selinux-libs-devel}
 Provides:	shadow-utils
 Provides:	passwd
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
