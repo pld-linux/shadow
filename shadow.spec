@@ -5,7 +5,7 @@ Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	20001016
-Release:	1
+Release:	2
 License:	BSD
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -21,6 +21,9 @@ Source7:	passwd.pamd
 Patch1:		%{name}-pld.patch
 Patch2:		%{name}-utmpx.patch
 BuildRequires:	pam-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	gettext-devel
 Provides:	shadow-utils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	shadow-utils
@@ -67,10 +70,11 @@ pracy twojego systemu i podobnie jak pakiet z bibliotekami systemowymi
 %patch2 -p1 
 
 %build
-automake -a -c --foreign
+gettextize --copy --force
 aclocal
 autoheader
 autoconf
+automake -a -c --foreign
 %configure \
 	--disable-desrpc \
 	--with-libcrypt \
@@ -89,7 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d}
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,skel}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
@@ -130,6 +134,8 @@ fi
 
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
 %attr(400,root,root) %ghost %{_sysconfdir}/shadow
+
+%dir /etc/skel
 
 %{!?bcond_off_static:#}%attr(755,root,root) /lib/lib*.so.*.*.*
 %attr(755,root,root) %{_sbindir}/user*
