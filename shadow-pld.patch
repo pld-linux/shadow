@@ -1,0 +1,169 @@
+diff -Nur shadow-19990307/src/groupadd.c shadow-19990307.pld/src/groupadd.c
+--- shadow-19990307/src/groupadd.c	Sun Mar  7 20:14:54 1999
++++ shadow-19990307.pld/src/groupadd.c	Tue May 18 17:32:55 1999
+@@ -72,6 +72,8 @@
+ static int oflg = 0; /* permit non-unique group ID to be specified with -g */
+ static int gflg = 0; /* ID value for the new group */
+ static int fflg = 0; /* if group already exists, do nothing and exit(0) */
++static int rflg = 0; /* for adding system accounts */
++#define MIN_GID	10
+ 
+ #ifdef	NDBM
+ extern	int	gr_dbm_mode;
+@@ -103,7 +105,7 @@
+ static void
+ usage(void)
+ {
+-	fprintf(stderr, _("usage: groupadd [-g gid [-o]] group\n"));
++	fprintf(stderr, _("usage: groupadd [-g gid [-o]] [-r] [-f] group\n"));
+ 	exit(E_USAGE);
+ }
+ 
+@@ -228,9 +230,13 @@
+ 	const struct group *grp;
+ 	gid_t gid_min, gid_max;
+ 
+-	gid_min = getdef_num("GID_MIN", 100);
++	if (!rflg) {
++	gid_min = getdef_num("GID_MIN", 500);
+ 	gid_max = getdef_num("GID_MAX", 60000);
+-
++	} else {
++	gid_min = MIN_GID;
++	gid_max = getdef_num("GID_MIN", 499);
++	}
+ 	/*
+ 	 * Start with some GID value if the user didn't provide us with
+ 	 * one already.
+@@ -339,7 +345,7 @@
+ 	char *cp;
+ 	int arg;
+ 
+-	while ((arg = getopt(argc, argv, "og:O:f")) != EOF) {
++	while ((arg = getopt(argc, argv, "og:O:fr")) != EOF) {
+ 		switch (arg) {
+ 		case 'g':
+ 			gflg++;
+@@ -383,6 +389,12 @@
+ 			 * RedHat's patch from shadow-utils-970616-9.
+ 			 */
+ 			fflg++;
++			break;
++			case 'r':
++			/*
++			* create system group
++			*/
++			rflg++;
+ 			break;
+ 		default:
+ 			usage();
+diff -Nur shadow-19990307/src/useradd.c shadow-19990307.pld/src/useradd.c
+--- shadow-19990307/src/useradd.c	Sun Mar  7 20:15:05 1999
++++ shadow-19990307.pld/src/useradd.c	Tue May 18 17:33:18 1999
+@@ -74,8 +74,8 @@
+  */
+ static gid_t def_group = 100;
+ static const char *def_gname = "other";
+-static const char *def_home = "/home";
+-static const char *def_shell = "";
++static const char *def_home = "/home/users";
++static const char *def_shell = "/dev/null";
+ static const char *def_template = SKEL_DIR;
+ #ifdef SHADOWPWD
+ static long def_inactive = -1;
+@@ -87,7 +87,7 @@
+ #define	VALID(s)	(strcspn (s, ":\n") == strlen (s))
+ 
+ static const char *user_name = "";
+-static const char *user_pass = "!";
++static const char *user_pass = "!!";
+ static uid_t user_id;
+ static gid_t user_gid;
+ static const char *user_comment = "";
+@@ -115,10 +115,13 @@
+ 	sflg = 0, /* shell program for new account */
+ 	cflg = 0, /* comment (GECOS) field for new account */
+ 	mflg = 0, /* create user's home directory if it doesn't exist */
++	nflg = 0, /* no group for this user */
+ 	kflg = 0, /* specify a directory to fill new user directory */
++	Mflg = 0, /* don't crate user's home directory */
+ 	fflg = 0, /* days until account with expired password is locked */
+ 	eflg = 0, /* days since 1970-01-01 when account is locked */
+-	Dflg = 0; /* set/show new user default values */
++	Dflg = 0, /* set/show new user default values */
++	rflg = 0; /* system account */
+ 
+ #ifdef AUTH_METHODS
+ static int Aflg = 0; /* specify authentication method for user */
+@@ -171,6 +174,7 @@
+  * exit status values
+  */
+ #define E_SUCCESS	0	/* success */
++#define E_LOCKING	1	/* locking error */
+ #define E_PW_UPDATE	1	/* can't update password file */
+ #define E_USAGE		2	/* bad command syntax */
+ #define E_BAD_ARG	3	/* invalid argument to option */
+@@ -711,7 +715,7 @@
+ #ifdef AUTH_METHODS
+ 	fprintf(stderr, _("[-A program] "));
+ #endif
+-	fprintf(stderr, _("[-p passwd] name\n"));
++	fprintf(stderr, _("[-p passwd] [-n] [-r] name\n"));
+ 
+ 	fprintf(stderr, _("       %s\t-D [-g group] [-b base] [-s shell]\n"),
+ 		Prog);
+@@ -968,10 +972,13 @@
+ {
+ 	const struct passwd *pwd;
+ 	uid_t uid_min, uid_max;
+-
+-	uid_min = getdef_num("UID_MIN", 100);
++	if (!rflg) {
++	uid_min = getdef_num("UID_MIN", 500);
+ 	uid_max = getdef_num("UID_MAX", 60000);
+-
++	} else {
++	uid_min = 1;
++	uid_max = 949;
++	}
+ 	/*
+ 	 * Start with some UID value if the user didn't provide us with
+ 	 * one already.
+@@ -1126,9 +1133,9 @@
+ 	char *cp;
+ 
+ #ifdef SHADOWPWD
+-#define FLAGS "A:Du:og:G:d:s:c:mk:p:f:e:b:O:M"
++#define FLAGS "A:Du:og:G:d:s:c:mk:p:f:e:b:O:M:nr"
+ #else
+-#define FLAGS "A:Du:og:G:d:s:c:mk:p:b:O:M"
++#define FLAGS "A:Du:og:G:d:s:c:mk:p:b:O:M:nr"
+ #endif
+ 	while ((arg = getopt(argc, argv, FLAGS)) != EOF) {
+ #undef FLAGS
+@@ -1261,6 +1268,12 @@
+ 		case 'o':
+ 			oflg++;
+ 			break;
++		case 'n':
++			nflg++;
++			break;
++		case 'r':
++			rflg++;
++			break;
+ 		case 'O':
+ 			/*
+ 			 * override login.defs defaults (-O name=value)
+@@ -1312,9 +1325,10 @@
+ 	 * Certain options are only valid in combination with others.
+ 	 * Check it here so that they can be specified in any order.
+ 	 */
+-	if ((oflg && !uflg) || (kflg && !mflg))
++	if (kflg && !mflg)
++		usage();
++	if (mflg && Mflg)
+ 		usage();
+-
+ 	/*
+ 	 * Either -D or username is required.  Defaults can be set with -D
+ 	 * for the -b, -e, -f, -g, -s options only.
