@@ -99,7 +99,7 @@ gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man[1358]/* \
 
 %post
 if [ ! -f /etc/shadow ]; then
-/usr/sbin/pwconv
+%{_sbindir}/pwconv
 fi
 
 %clean
@@ -117,14 +117,14 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not size mtime md5) /etc/shells
 %attr(400,root,root) %config(noreplace) %verify(not size mtime md5) /etc/shadow
 
-%attr(755,root,root) /usr/sbin/user*
-%attr(755,root,root) /usr/sbin/group*
-%attr(755,root,root) /usr/sbin/grpck
-%attr(755,root,root) /usr/sbin/pwck
-%attr(755,root,root) /usr/sbin/*conv
-%attr(755,root,root) /usr/sbin/chpasswd
-%attr(755,root,root) /usr/sbin/newusers
-%attr(755,root,root) /usr/sbin/mkpasswd
+%attr(755,root,root) %{_sbindir}/user*
+%attr(755,root,root) %{_sbindir}/group*
+%attr(755,root,root) %{_sbindir}/grpck
+%attr(755,root,root) %{_sbindir}/pwck
+%attr(755,root,root) %{_sbindir}/*conv
+%attr(755,root,root) %{_sbindir}/chpasswd
+%attr(755,root,root) %{_sbindir}/newusers
+%attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_bindir}/chage
 %attr(755,root,root) %{_bindir}/gpasswd
 %attr(755,root,root) %{_bindir}/lastlog
@@ -173,8 +173,8 @@ rm -rf $RPM_BUILD_ROOT
 - update source URL
 
 * Fri Aug 21 1998 Jeff Johnson <jbj@redhat.com>
-- Note that /usr/sbin/mkpasswd conflicts with %{_bindir}/mkpasswd;
-  one of these (I think /usr/sbin/mkpasswd but other opinions are valid)
+- Note that %{_sbindir}/mkpasswd conflicts with %{_bindir}/mkpasswd;
+  one of these (I think %{_sbindir}/mkpasswd but other opinions are valid)
   should probably be renamed.  In any case, mkpasswd.8 from this package
   needs to be installed. (problem #823)
 
