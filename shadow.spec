@@ -1,13 +1,13 @@
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
+Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux
 Summary(pl):	Narzêdzia do obs³ugi shadow passwords
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
-Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Name:		shadow
 Version:	4.0.0
-Release:	9
+Release:	10
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -47,6 +47,19 @@ command-line management of the user's accounts.
 A number of man pages are also included that relate to these
 utilities, and shadow passwords in general.
 
+%description -l es
+Este paquete incluye los programas necesarios para convertir Archivos
+padrón UNIX de contraseña al formato shadow.
+ - pwconv5 - convierte todo al formato de contraseñas del shadow,
+ - pwunconv - deshace la conversión de contraseñas shadow, creando un
+   archivo en el directorio corriente llamado npasswd que es el archivo
+   padrón UNIX de contraseña,
+ - pwck - chequea la integridad de la contraseña y de los archivos
+   shadow,
+ - lastlog enseña el último momento de login de todos los usuarios.
+   Están también incluidas, en general, varias páginas de manual sobre
+   estos utilitarios y contraseñas shadow.
+
 %description -l pl
 Pakiet zawiera programy do obs³ugi shadow password. Zanjduj± siê w nim
 programy do konwersji standardowego pliku hase³ do wersji shadow
@@ -79,22 +92,9 @@ arquivos-padrão UNIX de senha para o formato shadow.
 Várias páginas de manual estão também incluídas sobre estes
 utilitários e senhas shadow em geral.
 
-%description -l es
-Este paquete incluye los programas necesarios para convertir Archivos
-padrón UNIX de contraseña al formato shadow.
- - pwconv5 - convierte todo al formato de contraseñas del shadow,
- - pwunconv - deshace la conversión de contraseñas shadow, creando un
-   archivo en el directorio corriente llamado npasswd que es el archivo
-   padrón UNIX de contraseña,
- - pwck - chequea la integridad de la contraseña y de los archivos
-   shadow,
- - lastlog enseña el último momento de login de todos los usuarios.
-   Están también incluidas, en general, varias páginas de manual sobre
-   estos utilitarios y contraseñas shadow.
-
 %package extras
 Summary:	shadow - not often used files
-Summary(pl):	shadow - pliki nie u¿ywane czêsto
+Summary(pl):	shadow - pliki nieczêsto u¿ywane
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
@@ -104,14 +104,14 @@ Requires:	%{name} = %{version}
 Programs for shadow often not used. If you have small system you may
 skip them.
 
-%description -l pl extras
+%description extras -l pl
 Programy nie u¿ywane czêsto. W ma³ych systemach mo¿na je pomin±æ.
 
 %prep
-%setup -q 
-%patch0 -p1 
-%patch1 -p1 
-%patch2 -p1 
+%setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %configure \
@@ -124,8 +124,8 @@ Programy nie u¿ywane czêsto. W ma³ych systemach mo¿na je pomin±æ.
 	--with-libpam \
 	--with-md5crypt \
 	--with-nls \
-	--without-included-gettext 
-%{__make}  
+	--without-included-gettext
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -185,30 +185,30 @@ fi
 %doc doc/*.gz
 
 %attr(750,root,root) %dir %{_sysconfdir}/default
-%attr(640,root,root) %config %verify(not size mtime md5) %{_sysconfdir}/default/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/chage
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/shadow
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/passwd
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/useradd
+%attr(640,root,root) %config %verify(not md5 size mtime) %{_sysconfdir}/default/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chage
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/passwd
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/shadow
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/useradd
 
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/login.defs
-%attr(400,root,root) %ghost %{_sysconfdir}/shadow
+%config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/login.defs
+%attr(600,root,root) %ghost %{_sysconfdir}/shadow
 
 %dir /etc/skel
 
 %{!?_without_static:#}%attr(755,root,root) %{_libdir}/lib*
-%attr(755,root,root) %{_sbindir}/user*
+%attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/group*
 %attr(755,root,root) %{_sbindir}/grpck
 %attr(755,root,root) %{_sbindir}/pwck
 %attr(755,root,root) %{_sbindir}/*conv
+%attr(755,root,root) %{_sbindir}/user*
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
-%attr(755,root,root) %{_sbindir}/chpasswd
-%attr(4755,root,root) %{_bindir}/passwd
 %attr(755,root,root) %{_bindir}/faillog
 %attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
+%attr(4755,root,root) %{_bindir}/passwd
 
 %{_mandir}/man1/groups.*
 %{_mandir}/man1/passwd.*
@@ -283,22 +283,22 @@ fi
 
 %files extras
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/chsh
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/chfn
-%attr(640,root,root) %config %verify(not size mtime md5) /etc/security/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/d_passwd
-%attr(644,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/dialups
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chfn
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/pam.d/chsh
+%attr(640,root,root) %config %verify(not md5 size mtime) /etc/security/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/d_passwd
+%attr(644,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/dialups
 %attr(755,root,root) %{_bindir}/chage
 %attr(4755,root,root) %{_bindir}/chfn
 %attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
 %attr(4755,root,root) %{_bindir}/newgrp
+%attr(755,root,root) %{_bindir}/sg
+#%attr(755,root,root) %{_bindir}/su
 %attr(755,root,root) %{_sbindir}/dpasswd
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
-%attr(755,root,root) %{_bindir}/sg
-#%attr(755,root,root) %{_bindir}/su
 
 %{_mandir}/man1/chage.*
 %{_mandir}/man1/chfn.*
