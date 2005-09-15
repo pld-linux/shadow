@@ -196,8 +196,8 @@ TTYPERM		0600
 #
 # Prefix these values with "0" to get octal, "0x" to get hexadecimal.
 #
-ERASECHAR	0177
-KILLCHAR	025
+#ERASECHAR	0177
+#KILLCHAR	025
 UMASK		022
 #ULIMIT		2097152
 
