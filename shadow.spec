@@ -186,10 +186,13 @@ echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/fr/man1/sg.1
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ko/man1/sg.1
 
-%if !%{with shared}
+%if %{without shared}
 # invalid static library
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %endif
+
+# included in glibc-devel
+rm -f $RPM_BUILD_ROOT%{_mandir}/man3/{getspnam,shadow}.3*
 
 # /bin/login already in login (from util-linux.spec)
 rm -f $RPM_BUILD_ROOT{%{_bindir}/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1*,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
