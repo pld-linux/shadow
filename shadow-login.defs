@@ -102,7 +102,7 @@ MOTD_FILE	/etc/motd
 # If defined, login failures will be logged here in a utmp format.
 # last, when invoked as lastb, will read /var/log/btmp, so...
 #
-FTMP_FILE	/var/log/btmp
+FTMP_FILE	/var/log/btmpx
 
 #
 # If defined, name of file whose presence which will inhibit non-root
@@ -126,7 +126,7 @@ SU_NAME		su
 #   QMAIL_DIR is for Qmail
 #
 #QMAIL_DIR	Maildir
-MAIL_DIR	/var/spool/mail
+MAIL_DIR	/var/mail
 #MAIL_FILE	.mail
 
 #
@@ -211,8 +211,8 @@ UMASK		022
 #
 PASS_MAX_DAYS	99999
 PASS_MIN_DAYS	0
-PASS_MIN_LEN	5
-PASS_WARN_AGE	7
+PASS_MIN_LEN	8
+PASS_WARN_AGE	5
 
 #
 # If "yes", the user must be listed as a member of the first gid 0 group
@@ -225,18 +225,18 @@ SU_WHEEL_ONLY	no
 #
 # If compiled with cracklib support, where are the dictionaries
 #
-CRACKLIB_DICTPATH	/var/cache/cracklib/cracklib_dict
+CRACKLIB_DICTPATH	/usr/share/dict
 
 #
 # Min/max values for automatic uid selection in useradd
 #
-UID_MIN			 1000
+UID_MIN			  500
 UID_MAX			60000
 
 #
 # Min/max values for automatic gid selection in groupadd
 #
-GID_MIN			  100
+GID_MIN			  500
 GID_MAX			60000
 
 #
@@ -277,7 +277,7 @@ CHFN_AUTH		yes
 # phone, home phone).  If not defined, no changes are allowed.
 # For backward compatibility, "yes" = "rwh" and "no" = "frwh".
 # 
-CHFN_RESTRICT		rwh
+CHFN_RESTRICT		yes
 
 #
 # Password prompt (%s will be replaced by user name).
@@ -294,7 +294,7 @@ CHFN_RESTRICT		rwh
 # Set to "no" if you need to copy encrypted passwords to other systems
 # which don't understand the new algorithm.  Default is "no".
 #
-#MD5_CRYPT_ENAB	no
+MD5_CRYPT_ENAB	yes
 
 #
 # List of groups to add to the user's supplementary group set
@@ -354,5 +354,5 @@ ENVIRON_FILE	/etc/environment
 #
 # This also enables userdel to remove user groups if no members exist.
 #
-USERGROUPS_ENAB yes
+#USERGROUPS_ENAB yes
 
