@@ -1,18 +1,23 @@
-diff -urN shadow-4.0.6.orig/lib/getdef.c shadow-4.0.6/lib/getdef.c
---- shadow-4.0.6.orig/lib/getdef.c	2004-11-18 15:47:10.965296168 +0100
-+++ shadow-4.0.6/lib/getdef.c	2004-11-18 21:45:00.695401080 +0100
-@@ -112,6 +112,10 @@
- 	{ "SYSLOG_SG_ENAB",		NULL },
- 	{ "SYSLOG_SU_ENAB",		NULL },
- #endif
-+        { "SYS_GID_MAX",                NULL },
-+        { "SYS_GID_MIN",                NULL },
-+        { "SYS_UID_MAX",                NULL },
-+        { "SYS_UID_MIN",                NULL },
- 	{ "TTYGROUP",			NULL },
- 	{ "TTYPERM",			NULL },
- 	{ "TTYTYPE_FILE",		NULL },
-diff -urN shadow-4.0.6.orig/man/groupadd.8 shadow-4.0.6/man/groupadd.8
+--- shadow-4.0.16/lib/getdef.c~	2006-06-08 00:19:27.452506888 +0300
++++ shadow-4.0.16/lib/getdef.c	2006-06-08 00:21:20.945057953 +0300
+@@ -59,6 +59,8 @@
+ 	{"FAKE_SHELL", NULL},
+ 	{"GID_MAX", NULL},
+ 	{"GID_MIN", NULL},
++	{"SYS_GID_MAX", NULL},
++	{"SYS_GID_MIN", NULL},
+ 	{"HUSHLOGIN_FILE", NULL},
+ 	{"KILLCHAR", NULL},
+ 	{"LOGIN_RETRIES", NULL},
+@@ -77,6 +79,8 @@
+ 	{"TTYTYPE_FILE", NULL},
+ 	{"UID_MAX", NULL},
+ 	{"UID_MIN", NULL},
++	{"SYS_UID_MAX", NULL},
++	{"SYS_UID_MIN", NULL},
+ 	{"UMASK", NULL},
+ 	{"USERDEL_CMD", NULL},
+ 	{"USERGROUPS_ENAB", NULL},
 --- shadow-4.0.6.orig/man/groupadd.8	2004-11-18 15:47:10.923302552 +0100
 +++ shadow-4.0.6/man/groupadd.8	2004-11-18 21:45:00.695401080 +0100
 @@ -30,7 +30,7 @@
@@ -34,7 +39,6 @@ diff -urN shadow-4.0.6.orig/man/groupadd.8 shadow-4.0.6/man/groupadd.8
  .IP "\fB-g\fR \fIgid\fR"
  The numerical value of the group's ID. This value must be unique, unless the
  \fB-o\fR option is used. The value must be non-negative. The default is to
-diff -urN shadow-4.0.6.orig/man/pl/groupadd.8 shadow-4.0.6/man/pl/groupadd.8
 --- shadow-4.0.6.orig/man/pl/groupadd.8	2004-11-18 15:47:10.946299056 +0100
 +++ shadow-4.0.6/man/pl/groupadd.8	2004-11-18 21:45:00.696400928 +0100
 @@ -30,7 +30,7 @@
@@ -57,7 +61,6 @@ diff -urN shadow-4.0.6.orig/man/pl/groupadd.8 shadow-4.0.6/man/pl/groupadd.8
  .BI -g " gid"
  Numeryczna warto¶æ identyfikatora grupy. Warto¶æ ta musi byæ niepowtarzalna,
  chyba ¿e u¿yto opcji \fB-o\fR. Warto¶æ ID grupy nie mo¿e byæ ujemna. Domy¶lnie
-diff -urN shadow-4.0.6.orig/man/pl/useradd.8 shadow-4.0.6/man/pl/useradd.8
 --- shadow-4.0.6.orig/man/pl/useradd.8	2004-11-18 15:47:10.949298600 +0100
 +++ shadow-4.0.6/man/pl/useradd.8	2004-11-18 21:45:00.697400776 +0100
 @@ -112,12 +112,9 @@
@@ -76,7 +79,6 @@ diff -urN shadow-4.0.6.orig/man/pl/useradd.8 shadow-4.0.6/man/pl/useradd.8
  .IP "\fB-s \fIpow³oka\fR"
  Nazwa pow³oki (shell) u¿ytkownika. Ustawienie tego pola na puste
  powoduje, ¿e system wybierze domy¶ln± pow³okê logowania.
-diff -urN shadow-4.0.6.orig/man/useradd.8 shadow-4.0.6/man/useradd.8
 --- shadow-4.0.6.orig/man/useradd.8	2004-11-18 15:47:10.926302096 +0100
 +++ shadow-4.0.6/man/useradd.8	2004-11-18 21:45:00.697400776 +0100
 @@ -38,7 +38,7 @@
@@ -122,7 +124,6 @@ diff -urN shadow-4.0.6.orig/man/useradd.8 shadow-4.0.6/man/useradd.8
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/cs.po shadow-4.0.6/po/cs.po
 --- shadow-4.0.6.orig/po/cs.po	2004-11-18 15:47:10.872310304 +0100
 +++ shadow-4.0.6/po/cs.po	2004-11-18 21:45:00.699400472 +0100
 @@ -793,8 +793,8 @@
@@ -171,7 +172,6 @@ diff -urN shadow-4.0.6.orig/po/cs.po shadow-4.0.6/po/cs.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/de.po shadow-4.0.6/po/de.po
 --- shadow-4.0.6.orig/po/de.po	2004-11-18 15:47:10.873310152 +0100
 +++ shadow-4.0.6/po/de.po	2004-11-18 21:45:00.700400320 +0100
 @@ -792,8 +792,8 @@
@@ -196,7 +196,6 @@ diff -urN shadow-4.0.6.orig/po/de.po shadow-4.0.6/po/de.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/el.po shadow-4.0.6/po/el.po
 --- shadow-4.0.6.orig/po/el.po	2004-11-18 15:47:10.874310000 +0100
 +++ shadow-4.0.6/po/el.po	2004-11-18 21:45:00.702400016 +0100
 @@ -800,8 +800,8 @@
@@ -293,7 +292,6 @@ diff -urN shadow-4.0.6.orig/po/el.po shadow-4.0.6/po/el.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/fr.po shadow-4.0.6/po/fr.po
 --- shadow-4.0.6.orig/po/fr.po	2004-11-18 15:47:10.877309544 +0100
 +++ shadow-4.0.6/po/fr.po	2004-11-18 21:45:00.703399864 +0100
 @@ -795,8 +795,8 @@
@@ -366,7 +364,6 @@ diff -urN shadow-4.0.6.orig/po/fr.po shadow-4.0.6/po/fr.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/ja.po shadow-4.0.6/po/ja.po
 --- shadow-4.0.6.orig/po/ja.po	2004-11-18 15:47:10.879309240 +0100
 +++ shadow-4.0.6/po/ja.po	2004-11-18 21:45:00.704399712 +0100
 @@ -794,8 +794,8 @@
@@ -391,7 +388,6 @@ diff -urN shadow-4.0.6.orig/po/ja.po shadow-4.0.6/po/ja.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/ko.po shadow-4.0.6/po/ko.po
 --- shadow-4.0.6.orig/po/ko.po	2004-11-18 15:47:10.880309088 +0100
 +++ shadow-4.0.6/po/ko.po	2004-11-18 21:45:00.706399408 +0100
 @@ -792,8 +792,8 @@
@@ -488,7 +484,6 @@ diff -urN shadow-4.0.6.orig/po/ko.po shadow-4.0.6/po/ko.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/pl.po shadow-4.0.6/po/pl.po
 --- shadow-4.0.6.orig/po/pl.po	2004-11-18 15:47:10.882308784 +0100
 +++ shadow-4.0.6/po/pl.po	2004-11-18 21:45:00.707399256 +0100
 @@ -795,8 +795,8 @@
@@ -589,7 +584,6 @@ diff -urN shadow-4.0.6.orig/po/pl.po shadow-4.0.6/po/pl.po
  
  #: src/useradd.c:730
  #, fuzzy, c-format
-diff -urN shadow-4.0.6.orig/po/ru.po shadow-4.0.6/po/ru.po
 --- shadow-4.0.6.orig/po/ru.po	2004-11-18 15:47:10.883308632 +0100
 +++ shadow-4.0.6/po/ru.po	2004-11-18 21:45:00.708399104 +0100
 @@ -786,8 +786,8 @@
@@ -638,7 +632,6 @@ diff -urN shadow-4.0.6.orig/po/ru.po shadow-4.0.6/po/ru.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/sv.po shadow-4.0.6/po/sv.po
 --- shadow-4.0.6.orig/po/sv.po	2004-11-18 15:47:10.884308480 +0100
 +++ shadow-4.0.6/po/sv.po	2004-11-18 21:45:00.710398800 +0100
 @@ -790,8 +790,8 @@
@@ -687,7 +680,6 @@ diff -urN shadow-4.0.6.orig/po/sv.po shadow-4.0.6/po/sv.po
  
  #: src/useradd.c:730
  #, c-format
-diff -urN shadow-4.0.6.orig/po/uk.po shadow-4.0.6/po/uk.po
 --- shadow-4.0.6.orig/po/uk.po	2004-11-18 15:47:10.886308176 +0100
 +++ shadow-4.0.6/po/uk.po	2004-11-18 21:45:00.711398648 +0100
 @@ -795,8 +795,8 @@
@@ -764,7 +756,6 @@ diff -urN shadow-4.0.6.orig/po/uk.po shadow-4.0.6/po/uk.po
  
  #: src/useradd.c:730
  #, fuzzy, c-format
-diff -urN shadow-4.0.6.orig/src/groupadd.c shadow-4.0.6/src/groupadd.c
 --- shadow-4.0.6.orig/src/groupadd.c	2004-11-18 15:47:10.972295104 +0100
 +++ shadow-4.0.6/src/groupadd.c	2004-11-18 21:45:59.462467128 +0100
 @@ -72,6 +72,7 @@
@@ -823,7 +814,6 @@ diff -urN shadow-4.0.6.orig/src/groupadd.c shadow-4.0.6/src/groupadd.c
  		case 'o':
  			oflg++;
  			break;
-diff -urN shadow-4.0.6.orig/src/useradd.c shadow-4.0.6/src/useradd.c
 --- shadow-4.0.6.orig/src/useradd.c	2004-11-18 15:47:10.975294648 +0100
 +++ shadow-4.0.6/src/useradd.c	2004-11-18 21:45:00.713398344 +0100
 @@ -72,10 +72,10 @@
