@@ -18,27 +18,165 @@
  	{"UMASK", NULL},
  	{"USERDEL_CMD", NULL},
  	{"USERGROUPS_ENAB", NULL},
---- shadow-4.0.6.orig/man/groupadd.8	2004-11-18 15:47:10.923302552 +0100
-+++ shadow-4.0.6/man/groupadd.8	2004-11-18 21:45:00.695401080 +0100
-@@ -30,7 +30,7 @@
- groupadd \- Create a new group
- .SH SYNOPSIS
- .TP 6
--\fBgroupadd\fR [\fB-g\fI gid \fR[\fB-o\fR]] [\fB-f\fR] \fIgroup\fR
-+\fBgroupadd\fR [\fB-g\fI gid \fR[\fB-o\fR]] [\fB-f\fR] [\fB-r\fR] \fIgroup\fR
- .SH DESCRIPTION
- The \fBgroupadd\fR command creates a new group account using the values
- specified on the command line and the default values from the system. The
-@@ -41,6 +41,9 @@
- This option causes to just exit with success status if the specified
- group already exists. With \fB-g\fR, if specified gid already exists,
- other (unique) gid is chosen (i.e. \fB-g\fR is turned off).
-+.IP "\fB-r\fR"
-+This flag is used to create a system group, with gid lower than usual
-+(chosen between SYS_GID_MIN and SYS_GID_MAX).
- .IP "\fB-g\fR \fIgid\fR"
- The numerical value of the group's ID. This value must be unique, unless the
- \fB-o\fR option is used. The value must be non-negative. The default is to
+--- shadow-4.0.6/src/useradd.c	2004-11-18 21:45:00.713398344 +0100
++++ shadow-4.0.16/src/useradd.c	2006-06-08 01:17:05.580340031 +0300
+@@ -72,10 +72,10 @@
+ /*
+  * These defaults are used if there is no defaults file.
+  */
+-static gid_t def_group = 100;
++static gid_t def_group = 1000;
+ static const char *def_gname = "other";
+-static const char *def_home = "/home";
+-static const char *def_shell = "";
++static const char *def_home = "/home/users";
++static const char *def_shell = "/dev/null";
+ static const char *def_template = SKEL_DIR;
+ static const char *def_create_mail_spool = "no";
+ 
+@@ -89,7 +89,7 @@
+ #define	VALID(s)	(strcspn (s, ":\n") == strlen (s))
+ 
+ static const char *user_name = "";
+-static const char *user_pass = "!";
++static const char *user_pass = "!!";
+ static uid_t user_id;
+ static gid_t user_gid;
+ static const char *user_comment = "";
+@@ -126,6 +126,7 @@
+     mflg = 0,			/* create user's home directory if it doesn't exist */
+     nflg = 0,			/* create a group having the same name as the user */
+     oflg = 0,			/* permit non-unique user ID to be specified with -u */
++	rflg = 0,			/* create system account (wuth lower uid) */
+     sflg = 0,			/* shell program for new account */
+     uflg = 0;			/* specify user ID for new account */
+ 
+@@ -632,6 +633,7 @@
+ 			   "				(non-unique) UID\n"
+ 			   "  -p, --password PASSWORD	use encrypted password for the new user\n"
+ 			   "				account\n"
++			   "  -r				create a system account, with uid lower than usual\n"
+ 			   "  -s, --shell SHELL		the login shell for the new user account\n"
+ 			   "  -u, --uid UID			force use the UID for the new user account\n"));
+ 	exit (E_USAGE);
+@@ -833,6 +835,13 @@
+ 
+ 	uid_min = getdef_unum ("UID_MIN", 1000);
+ 	uid_max = getdef_unum ("UID_MAX", 60000);
++	if (!rflg) {
++	    uid_min = getdef_unum ("UID_MIN", 500);
++	    uid_max = getdef_unum ("UID_MAX", 60000);
++	} else {
++	    uid_min = getdef_unum ("SYS_UID_MIN", 1);
++	    uid_max = getdef_unum ("SYS_UID_MAX", 499);
++	}	
+ 
+ 	/*
+ 	 * Start with some UID value if the user didn't provide us with
+@@ -1016,7 +1025,7 @@
+ 			{NULL, 0, NULL, '\0'}
+ 		};
+ 		while ((c =
+-			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:mMop:s:u:",
++			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:mMop:s:u:r",
+ 				     long_options, NULL)) != -1) {
+ 			switch (c) {
+ 			case 'b':
+@@ -1169,6 +1178,9 @@
+ 				}
+ 				user_pass = optarg;
+ 				break;
++			case 'r':	/* create system account */
++				rflg++;
++				break;
+ 			case 's':
+ 				if (!VALID (optarg)
+ 				    || (optarg[0]
+--- shadow-4.0.6.orig/src/groupadd.c	2004-11-18 15:47:10.972295104 +0100
++++ shadow-4.0.6/src/groupadd.c	2004-11-18 21:45:59.462467128 +0100
+@@ -72,6 +72,7 @@
+ static int oflg = 0;		/* permit non-unique group ID to be specified with -g */
+ static int gflg = 0;		/* ID value for the new group */
+ static int fflg = 0;		/* if group already exists, do nothing and exit(0) */
++static int rflg = 0;           /* add system group (with lower gid) */
+ 
+ #ifdef	NDBM
+ extern int gr_dbm_mode;
+@@ -99,7 +100,7 @@
+ 
+ static void usage (void)
+ {
+-	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] group\n"));
++	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"));
+ 	exit (E_USAGE);
+ }
+ 
+@@ -225,9 +226,13 @@
+ 	const struct group *grp;
+ 	gid_t gid_min, gid_max;
+ 
+-	gid_min = getdef_unum ("GID_MIN", 100);
+-	gid_max = getdef_unum ("GID_MAX", 60000);
+-
++        if (!rflg) {
++                gid_min = getdef_unum ("GID_MIN", 500);
++                gid_max = getdef_unum ("GID_MAX", 60000);
++        } else {
++                gid_min = getdef_unum ("SYS_GID_MIN", 10);
++                gid_max = getdef_unum ("SYS_GID_MAX", 499);
++       }
+ 	/*
+ 	 * Start with some GID value if the user didn't provide us with
+ 	 * one already.
+@@ -334,7 +339,7 @@
+ 	char *cp;
+ 	int arg;
+ 
+-	while ((arg = getopt (argc, argv, "og:O:f")) != EOF) {
++	while ((arg = getopt (argc, argv, "og:O:fr")) != EOF) {
+ 		switch (arg) {
+ 		case 'g':
+ 			gflg++;
+@@ -349,6 +354,12 @@
+ 				fail_exit (E_BAD_ARG);
+ 			}
+ 			break;
++		case 'r':
++                       /*
++                        * create system group
++                        */
++                        rflg++;
++                        break;			
+ 		case 'o':
+ 			oflg++;
+ 			break;
+--- shadow-4.0.16/man/groupadd.8.xml~	2006-06-08 01:07:41.447664461 +0300
++++ shadow-4.0.16/man/groupadd.8.xml	2006-06-08 01:07:45.947765703 +0300
+@@ -20,6 +20,7 @@
+       </arg>
+       <arg choice='opt'>-f </arg>
+       <arg choice='opt'>-K <replaceable>KEY</replaceable>=<replaceable>VALUE</replaceable></arg>
++      <arg choice='opt'>-r </arg>
+       <arg choice='plain'>
+ 	<replaceable>group</replaceable>
+       </arg>
+@@ -54,6 +55,16 @@
+ 	  </para>
+ 	</listitem>
+       </varlistentry>
++      <varlistentry>
++	<term>
++	  <option>-r</option>
++	</term>
++	<listitem>
++	  <para>This flag is used to create a system group, with gid lower than usual
++	    (chosen between SYS_GID_MIN and SYS_GID_MAX).
++	  </para>
++	</listitem>
++      </varlistentry>
+       <varlistentry>
+ 	<term>
+ 	  <option>-g</option> <replaceable>GID</replaceable>
 --- shadow-4.0.6.orig/man/pl/groupadd.8	2004-11-18 15:47:10.946299056 +0100
 +++ shadow-4.0.6/man/pl/groupadd.8	2004-11-18 21:45:00.696400928 +0100
 @@ -30,7 +30,7 @@
@@ -756,142 +894,3 @@
  
  #: src/useradd.c:730
  #, fuzzy, c-format
---- shadow-4.0.6.orig/src/groupadd.c	2004-11-18 15:47:10.972295104 +0100
-+++ shadow-4.0.6/src/groupadd.c	2004-11-18 21:45:59.462467128 +0100
-@@ -72,6 +72,7 @@
- static int oflg = 0;		/* permit non-unique group ID to be specified with -g */
- static int gflg = 0;		/* ID value for the new group */
- static int fflg = 0;		/* if group already exists, do nothing and exit(0) */
-+static int rflg = 0;           /* add system group (with lower gid) */
- 
- #ifdef	NDBM
- extern int gr_dbm_mode;
-@@ -99,7 +100,7 @@
- 
- static void usage (void)
- {
--	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] group\n"));
-+	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"));
- 	exit (E_USAGE);
- }
- 
-@@ -225,9 +226,13 @@
- 	const struct group *grp;
- 	gid_t gid_min, gid_max;
- 
--	gid_min = getdef_unum ("GID_MIN", 100);
--	gid_max = getdef_unum ("GID_MAX", 60000);
--
-+        if (!rflg) {
-+                gid_min = getdef_unum ("GID_MIN", 500);
-+                gid_max = getdef_unum ("GID_MAX", 60000);
-+        } else {
-+                gid_min = getdef_unum ("SYS_GID_MIN", 10);
-+                gid_max = getdef_unum ("SYS_GID_MAX", 499);
-+       }
- 	/*
- 	 * Start with some GID value if the user didn't provide us with
- 	 * one already.
-@@ -334,7 +339,7 @@
- 	char *cp;
- 	int arg;
- 
--	while ((arg = getopt (argc, argv, "og:O:f")) != EOF) {
-+	while ((arg = getopt (argc, argv, "og:O:fr")) != EOF) {
- 		switch (arg) {
- 		case 'g':
- 			gflg++;
-@@ -349,6 +354,12 @@
- 				fail_exit (E_BAD_ARG);
- 			}
- 			break;
-+		case 'r':
-+                       /*
-+                        * create system group
-+                        */
-+                        rflg++;
-+                        break;			
- 		case 'o':
- 			oflg++;
- 			break;
---- shadow-4.0.6.orig/src/useradd.c	2004-11-18 15:47:10.975294648 +0100
-+++ shadow-4.0.6/src/useradd.c	2004-11-18 21:45:00.713398344 +0100
-@@ -72,10 +72,10 @@
- /*
-  * These defaults are used if there is no defaults file.
-  */
--static gid_t def_group = 100;
-+static gid_t def_group = 1000;
- static const char *def_gname = "other";
--static const char *def_home = "/home";
--static const char *def_shell = "";
-+static const char *def_home = "/home/users";
-+static const char *def_shell = "/dev/null";
- static const char *def_template = SKEL_DIR;
- static const char *def_create_mail_spool = "no";
- 
-@@ -89,7 +89,7 @@
- #define	VALID(s)	(strcspn (s, ":\n") == strlen (s))
- 
- static const char *user_name = "";
--static const char *user_pass = "!";
-+static const char *user_pass = "!!";
- static uid_t user_id;
- static gid_t user_gid;
- static const char *user_comment = "";
-@@ -123,6 +123,7 @@
-  mflg = 0,			/* create user's home directory if it doesn't exist */
-  nflg = 0,			/* create a group having the same name as the user */
-  oflg = 0,			/* permit non-unique user ID to be specified with -u */
-+ rflg = 0,                     /* create system account (wuth lower uid) */
-  sflg = 0,			/* shell program for new account */
-  uflg = 0;			/* specify user ID for new account */
- 
-@@ -725,7 +726,7 @@
- #ifdef SHADOWPWD
- 	fprintf (stderr, _("               [-f inactive] [-e expire]\n"));
- #endif
--	fprintf (stderr, _("               [-p passwd] name\n"));
-+	fprintf (stderr, _("               [-p passwd] [-r] name\n"));
- 	fprintf (stderr,
- 		 _("       useradd -D [-g group] [-b base] [-s shell]\n"));
- #ifdef SHADOWPWD
-@@ -973,9 +974,13 @@
- 	const struct passwd *pwd;
- 	uid_t uid_min, uid_max;
- 
--	uid_min = getdef_unum ("UID_MIN", 100);
--	uid_max = getdef_unum ("UID_MAX", 60000);
--
-+        if (!rflg) {
-+                uid_min = getdef_unum ("UID_MIN", 500);
-+                uid_max = getdef_unum ("UID_MAX", 60000);
-+        } else {
-+                uid_min = getdef_unum ("SYS_UID_MIN", 1);
-+                uid_max = getdef_unum ("SYS_UID_MAX", 499);
-+        }	
- 	/*
- 	 * Start with some UID value if the user didn't provide us with
- 	 * one already.
-@@ -1056,9 +1061,9 @@
- 	char *cp;
- 
- #ifdef SHADOWPWD
--#define FLAGS "A:Du:og:G:d:s:c:mk:p:f:e:b:O:M"
-+#define FLAGS "A:Du:og:G:d:s:c:mk:p:f:e:b:O:Mr"
- #else
--#define FLAGS "A:Du:og:G:d:s:c:mk:p:b:O:M"
-+#define FLAGS "A:Du:og:G:d:s:c:mk:p:b:O:Mr"
- #endif
- 	while ((arg = getopt (argc, argv, FLAGS)) != EOF) {
- #undef FLAGS
-@@ -1077,6 +1082,9 @@
- 			def_home = optarg;
- 			bflg++;
- 			break;
-+		case 'r':	/* create system account */
-+                        rflg++;
-+                        break;
- 		case 'c':
- 			if (!VALID (optarg)) {
- 				fprintf (stderr,
