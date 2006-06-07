@@ -216,7 +216,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog NEWS TODO doc/{HOWTO,README,README.linux,README.pam,WISHLIST}
+%doc ChangeLog NEWS TODO doc/{HOWTO,WISHLIST}
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
@@ -253,7 +253,6 @@ fi
 %attr(4755,root,root) %{_bindir}/passwd
 %{_mandir}/man1/passwd.1*
 %{_mandir}/man5/faillog.5*
-%{_mandir}/man5/login.access.5*
 %{_mandir}/man5/login.defs.5*
 %{_mandir}/man5/passwd.5*
 %{_mandir}/man5/shadow.5*
@@ -318,7 +317,6 @@ fi
 
 %lang(ja) %{_mandir}/ja/man1/passwd.1*
 %lang(ja) %{_mandir}/ja/man5/faillog.5*
-%lang(ja) %{_mandir}/ja/man5/login.access.5*
 %lang(ja) %{_mandir}/ja/man5/login.defs.5*
 %lang(ja) %{_mandir}/ja/man5/passwd.5*
 %lang(ja) %{_mandir}/ja/man5/shadow.5*
@@ -344,7 +342,6 @@ fi
 
 %lang(pl) %{_mandir}/pl/man1/passwd.1*
 %lang(pl) %{_mandir}/pl/man5/faillog.5*
-%lang(pl) %{_mandir}/pl/man5/login.access.5*
 %lang(pl) %{_mandir}/pl/man5/login.defs.5*
 %lang(pl) %{_mandir}/pl/man5/passwd.5*
 %lang(pl) %{_mandir}/pl/man5/shadow.5*
@@ -401,7 +398,6 @@ fi
 %attr(4755,root,root) %{_bindir}/gpasswd
 %attr(755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/sg
-%attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
 
 %{_mandir}/man1/chage.1*
@@ -411,7 +407,6 @@ fi
 %{_mandir}/man1/gpasswd.1*
 %{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/sg.1*
-%{_mandir}/man8/mkpasswd.8*
 %{_mandir}/man8/newusers.8*
 
 %lang(de) %{_mandir}/de/man1/chfn.1*
@@ -444,12 +439,12 @@ fi
 %lang(ja) %{_mandir}/ja/man1/newgrp.1*
 %lang(ja) %{_mandir}/ja/man1/sg.1*
 %lang(ja) %{_mandir}/ja/man8/chpasswd.8*
-%lang(ja) %{_mandir}/ja/man8/mkpasswd.8*
 %lang(ja) %{_mandir}/ja/man8/newusers.8*
 
 %lang(ko) %{_mandir}/ko/man1/chfn.1*
 %lang(ko) %{_mandir}/ko/man1/chsh.1*
-%lang(ko) %{_mandir}/ko/man1/newgrp.1*
+# missing in tarball
+#%lang(ko) %{_mandir}/ko/man1/newgrp.1*
 %lang(ko) %{_mandir}/ko/man1/sg.1*
 
 %lang(pl) %{_mandir}/pl/man1/chage.1*
@@ -460,7 +455,6 @@ fi
 %lang(pl) %{_mandir}/pl/man1/newgrp.1*
 %lang(pl) %{_mandir}/pl/man1/sg.1*
 %lang(pl) %{_mandir}/pl/man8/chpasswd.8*
-%lang(pl) %{_mandir}/pl/man8/mkpasswd.8*
 %lang(pl) %{_mandir}/pl/man8/newusers.8*
 
 %lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.1*
