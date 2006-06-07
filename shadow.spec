@@ -11,13 +11,13 @@ Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
 Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
-Version:	4.0.7
-Release:	1
+Version:	4.0.16
+Release:	0.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-# Source0-md5:	89ebec0d1c0d861a5bd5c4c63e5cb0cc
+# Source0-md5:	1d91f7479143d1d705b94180c0d4874b
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -26,11 +26,9 @@ Source5:	chsh.pamd
 Source6:	chfn.pamd
 Source7:	passwd.pamd
 Source8:	useradd.pamd
-Patch0:		%{name}-utmpx.patch
-Patch1:		%{name}-man_and_po.patch
-Patch2:		%{name}-pld.patch
-Patch3:		%{name}-chage_expdays.patch
-Patch4:		%{name}-typo.patch
+Patch0:		%{name}-pld.patch
+Patch1:		%{name}-chage_expdays.patch
+Patch2:		%{name}-typo.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -125,11 +123,9 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+#%patch2 -p1
 
 # ugh, too populated to patch
 %{__perl} -pi -e 's/instead DES/instead of DES/' src/chpasswd.c po/*.po
