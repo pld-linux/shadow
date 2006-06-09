@@ -195,45 +195,30 @@
  .BI \-g " gid"
  Numeryczna warto≈õƒá identyfikatora grupy. Warto≈õƒá ta musi byƒá niepowtarzalna,
  chyba ≈ºe u≈ºyto opcji \fB\-o\fR. Warto≈õƒá ID grupy nie mo≈ºe byƒá ujemna. Domy≈õlnie
---- shadow-4.0.6.orig/man/pl/useradd.8	2004-11-18 15:47:10.949298600 +0100
-+++ shadow-4.0.6/man/pl/useradd.8	2004-11-18 21:45:00.697400776 +0100
-@@ -112,12 +112,9 @@
- .IP "\fB-p \fIpasswd\fR"
- Zakodowane has≥o w postaci zwracanej przez \fBcrypt\fR(3).
- Domy∂lnym dzia≥aniem jest blokowanie konta.
--.\" .IP \fB-r\fR
--.\" Tworzenie konta systemowego. Ta opcja pozwala na utworzenie konta o UID
--.\" niøszym niø UID_MIN zdefiniowane w fI/etc/login.defs\fR. O ile nie poda siÍ
--.\" dodatkowo opcji \fB-m\fR nie jest tworzony katalog domowy dla tak tworzonego
--.\" uøytkownika niezaleønie od tego czy tworzenie katalogu jest ustawione czy
--.\" nie w \fI/etc/login.defs\fR.
+--- shadow-4.0.16/man/pl/useradd.8~	2006-06-09 22:52:54.696249131 +0300
++++ shadow-4.0.16/man/pl/useradd.8	2006-06-09 23:00:57.427074349 +0300
+@@ -98,6 +98,9 @@
+ .IP "\fB\-p\fR \fIpasswd\fR"
+ Zakodowane has≈Ço w postaci zwracanej przez \fBcrypt\fR(3).
+ Domy≈õlnym dzia≈Çaniem jest blokowanie konta.
 +.IP \fB-r\fR
 +Tworzenie konta systemowego, z identyfikatorem niøszym niø zwykle
 +(wybieranym z przedzia≥u od SYS_UID_MIN do SYS_UID_MAX).
- .IP "\fB-s \fIpow≥oka\fR"
- Nazwa pow≥oki (shell) uøytkownika. Ustawienie tego pola na puste
- powoduje, øe system wybierze domy∂ln± pow≥okÍ logowania.
---- shadow-4.0.6.orig/man/useradd.8	2004-11-18 15:47:10.926302096 +0100
-+++ shadow-4.0.6/man/useradd.8	2004-11-18 21:45:00.697400776 +0100
-@@ -38,7 +38,7 @@
- .br
- [[\fB-M\fR] \fB-m\fR [\fB-k\fR \fIskeleton_dir\fR]] [\fB-o\fR] [\fB-p\fR \fIpasswd\fR]
- .br
--[\fB-s\fR \fIshell\fR] [\fB-u\fR \fIuid\fR] \fIlogin\fR
-+[\fB-r\fR] [\fB-s\fR \fIshell\fR] [\fB-u\fR \fIuid\fR] \fIlogin\fR
- .TP 8
- \fBuseradd\fR \fB-D\fR [\fB-g\fI default_group\fR] [\fB-b\fI default_home\fR]
- .br
-@@ -98,6 +98,9 @@
- .IP "\fB-p \fIpasswd\fR"
- The encrypted password, as returned by \fBcrypt\fR(3). The default is to
- disable the account.
-+.IP "\fB-r\fR"
-+This flag is used to create a system account, with uid lower than
-+usual (chosen between SYS_UID_MIN and SYS_UID_MAX).
- .IP "\fB-s\fR \fIshell\fR"
- The name of the user's login shell. The default is to leave this field
- blank, which causes the system to select the default login shell.
+ .IP "\fB\-s\fR \fIpow≈Çoka\fR"
+ Nazwa pow≈Çoki (shell) u≈ºytkownika. Ustawienie tego pola na puste
+ powoduje, ≈ºe system wybierze domy≈õlnƒÖ pow≈Çokƒô logowania.
+--- shadow-4.0.16/man/useradd.8~	2006-06-09 23:05:41.393444193 +0300
++++ shadow-4.0.16/man/useradd.8	2006-06-09 23:05:43.273486388 +0300
+@@ -118,6 +118,9 @@
+ The encrypted password, as returned by
+ \fBcrypt\fR(3). The default is to disable the account.
+ .TP 3n
++\fB-r\fR
++The number of days after a password has expired before the account will be disabled.
++.TP 3n
+ \fB\-s\fR, \fB\-\-shell\fR \fISHELL\fR
+ The name of the user's login shell. The default is to leave this field blank, which causes the system to select the default login shell.
+ .TP 3n
 --- shadow-4.0.7/po/ca.po.orig	2005-02-06 20:53:02.764551000 +0100
 +++ shadow-4.0.7/po/ca.po	2005-02-06 21:16:22.244798552 +0100
 @@ -764,8 +764,8 @@
