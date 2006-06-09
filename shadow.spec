@@ -8,6 +8,8 @@
 #   /usr/share/man/man5/gshadow.5.gz
 #   /usr/share/man/man8/chgpasswd.8.gz
 #   /usr/share/man/man8/nologin.8.gz
+# - check polish part in patch3
+# - update shadow-po-update.patch
 #
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
@@ -22,7 +24,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	4.0.16
-Release:	0.4
+Release:	0.8
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -38,7 +40,8 @@ Source7:	passwd.pamd
 Source8:	useradd.pamd
 Patch0:		%{name}-pld.patch
 Patch1:		%{name}-chage_expdays.patch
-Patch2:		%{name}-typo.patch
+Patch2:		%{name}-po-update.patch
+Patch3:		%{name}-typo.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -135,7 +138,8 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-#%patch2 -p1
+%patch2 -p1
+#%patch3 -p1
 
 # ugh, too populated to patch
 %{__sed} -i -e 's/instead DES/instead of DES/' src/chpasswd.c po/*.po
@@ -335,7 +339,6 @@ fi
 
 %lang(hu) %{_mandir}/hu/man1/passwd.1*
 
-# language missing in mandir (FHS pkg)
 %lang(id) %{_mandir}/id/man8/useradd.8*
 
 %lang(it) %{_mandir}/it/man1/passwd.1*
@@ -515,7 +518,6 @@ fi
 %lang(hu) %{_mandir}/hu/man5/passwd.5*
 %lang(hu) %{_mandir}/hu/man8/lastlog.8*
 
-# language missing in mandir (FHS pkg)
 %lang(id) %{_mandir}/id/man1/chsh.1*
 
 %lang(it) %{_mandir}/it/man1/chage.1*
