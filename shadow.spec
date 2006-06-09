@@ -1,3 +1,13 @@
+# TODO
+# - new files:
+#   /etc/pam.d/chgpasswd
+#   /etc/pam.d/chpasswd
+#   /etc/pam.d/newusers
+#   /usr/sbin/chgpasswd
+#   /usr/sbin/nologin
+#   /usr/share/man/man5/gshadow.5.gz
+#   /usr/share/man/man8/chgpasswd.8.gz
+#   /usr/share/man/man8/nologin.8.gz
 #
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
@@ -12,7 +22,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	4.0.16
-Release:	0.3
+Release:	0.4
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -128,7 +138,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 #%patch2 -p1
 
 # ugh, too populated to patch
-%{__perl} -pi -e 's/instead DES/instead of DES/' src/chpasswd.c po/*.po
+%{__sed} -i -e 's/instead DES/instead of DES/' src/chpasswd.c po/*.po
 
 rm -f po/stamp-po
 
@@ -186,15 +196,17 @@ echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %endif
 
+# no -devel, be gone
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+
 # included in glibc-devel
 rm -f $RPM_BUILD_ROOT%{_mandir}{,*/}/man3/{getspnam,shadow}.3
-
 # /bin/login already in login (from util-linux.spec)
-rm -f $RPM_BUILD_ROOT{%{_bindir}/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
+rm -f $RPM_BUILD_ROOT{%{_bindir}/login,/etc/pam.d/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
 # /bin/id already in coreutils
 rm -f $RPM_BUILD_ROOT%{_mandir}{,*/}/man1/id.1
 # /bin/su already in coreutils
-rm -f $RPM_BUILD_ROOT{%{_bindir}/su,%{_mandir}/{,*/}man1/su.1}
+rm -f $RPM_BUILD_ROOT{%{_bindir}/su,/etc/pam.d/su,%{_mandir}/{,*/}man1/su.1}
 # /usr/bin/groups already in coreutils
 rm -f $RPM_BUILD_ROOT{%{_bindir}/groups,%{_mandir}/{,*/}man1/groups.1}
 # /etc/limits not used with pam
