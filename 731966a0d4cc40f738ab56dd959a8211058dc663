@@ -1,0 +1,7 @@
+- upgraded to 19990827
+- added shadow-cvs.patch
+- added polish manuals
+- updated Source0 URL
+- removed version from shadow-*pld.patch
+- added new executable (logoutd, newgrp, sg, expiry)
+- updated list of manuals
