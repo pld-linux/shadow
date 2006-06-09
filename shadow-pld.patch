@@ -146,33 +146,40 @@
  			default:
  				usage ();
  			}
---- shadow-4.0.16/man/groupadd.8.xml~	2006-06-08 01:07:41.447664461 +0300
-+++ shadow-4.0.16/man/groupadd.8.xml	2006-06-08 01:07:45.947765703 +0300
-@@ -20,6 +20,7 @@
-       </arg>
-       <arg choice='opt'>-f </arg>
-       <arg choice='opt'>-K <replaceable>KEY</replaceable>=<replaceable>VALUE</replaceable></arg>
-+      <arg choice='opt'>-r </arg>
-       <arg choice='plain'>
- 	<replaceable>group</replaceable>
-       </arg>
-@@ -54,6 +55,16 @@
- 	  </para>
- 	</listitem>
-       </varlistentry>
-+      <varlistentry>
-+	<term>
-+	  <option>-r</option>
-+	</term>
-+	<listitem>
-+	  <para>This flag is used to create a system group, with gid lower than usual
-+	    (chosen between SYS_GID_MIN and SYS_GID_MAX).
-+	  </para>
-+	</listitem>
-+      </varlistentry>
-       <varlistentry>
- 	<term>
- 	  <option>-g</option> <replaceable>GID</replaceable>
+--- shadow-4.0.16/man/groupadd.8~	2006-06-09 23:20:28.053339201 +0300
++++ shadow-4.0.16/man/groupadd.8	2006-06-09 23:22:17.115785750 +0300
+@@ -14,7 +14,7 @@
+ groupadd \- create a new group
+ .SH "SYNOPSIS"
+ .HP 9
+-\fBgroupadd\fR [\-g\ \fIGID\fR\ [\-o]] [\-f] [\-K\ \fIKEY\fR=\fIVALUE\fR] \fIgroup\fR
++\fBgroupadd\fR [\-g\ \fIGID\fR\ [\-o]] [\-f] [\-r] [\-K\ \fIKEY\fR=\fIVALUE\fR] \fIgroup\fR
+ .SH "DESCRIPTION"
+ .PP
+ The
+@@ -58,6 +58,10 @@
+ .TP 3n
+ \fB\-o\fR
+ This option permits to add group with non\-unique GID.
++.TP 3n
++\fB-r\fR
++This flag is used to create a system group, with gid lower than usual
++(chosen between SYS_GID_MIN and SYS_GID_MAX).
+ .SH "FILES"
+ .TP 3n
+ \fI/etc/group\fR
+--- shadow-4.0.16/man/useradd.8~	2006-06-09 23:05:41.393444193 +0300
++++ shadow-4.0.16/man/useradd.8	2006-06-09 23:05:43.273486388 +0300
+@@ -118,6 +118,9 @@
+ The encrypted password, as returned by
+ \fBcrypt\fR(3). The default is to disable the account.
+ .TP 3n
++\fB-r\fR
++The number of days after a password has expired before the account will be disabled.
++.TP 3n
+ \fB\-s\fR, \fB\-\-shell\fR \fISHELL\fR
+ The name of the user's login shell. The default is to leave this field blank, which causes the system to select the default login shell.
+ .TP 3n
 --- shadow-4.0.16/man/pl/groupadd.8~	2006-06-09 21:27:27.071352380 +0300
 +++ shadow-4.0.16/man/pl/groupadd.8	2006-06-09 21:29:35.034218035 +0300
 @@ -29,7 +29,7 @@
@@ -207,15 +214,3 @@
  .IP "\fB\-s\fR \fIpowłoka\fR"
  Nazwa powłoki (shell) użytkownika. Ustawienie tego pola na puste
  powoduje, że system wybierze domyślną powłokę logowania.
---- shadow-4.0.16/man/useradd.8~	2006-06-09 23:05:41.393444193 +0300
-+++ shadow-4.0.16/man/useradd.8	2006-06-09 23:05:43.273486388 +0300
-@@ -118,6 +118,9 @@
- The encrypted password, as returned by
- \fBcrypt\fR(3). The default is to disable the account.
- .TP 3n
-+\fB-r\fR
-+The number of days after a password has expired before the account will be disabled.
-+.TP 3n
- \fB\-s\fR, \fB\-\-shell\fR \fISHELL\fR
- The name of the user's login shell. The default is to leave this field blank, which causes the system to select the default login shell.
- .TP 3n
