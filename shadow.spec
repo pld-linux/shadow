@@ -8,11 +8,11 @@ Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
 Summary(es):	Utilitarios para el archivo de contraseñas Shadow
 Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux
 Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
-Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
+Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	4.0.16
-Release:	0.1
+Release:	0.2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -32,9 +32,9 @@ Patch2:		%{name}-typo.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
-BuildRequires:	pam-devel
-BuildRequires:	libtool
 %{?with_selinux:BuildRequires:	libselinux-devel}
+BuildRequires:	libtool
+BuildRequires:	pam-devel
 Requires:	pam >= 0.77.3
 # to force proper coreutils version, so "groups" command exists
 Requires:	/usr/bin/groups
@@ -123,7 +123,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 
 %prep
 %setup -q
-#%patch0 -p1
+%patch0 -p1
 %patch1 -p1
 #%patch2 -p1
 
