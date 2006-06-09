@@ -178,9 +178,8 @@ install etc/pam.d/groupdel $RPM_BUILD_ROOT/etc/pam.d/groupdel
 # vigr symlink is created by make install, but in wrong dir
 ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
 
-echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/fr/man1/sg.1
+# what's this for?
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
-echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ko/man1/sg.1
 
 %if %{without shared}
 # invalid static library
@@ -188,12 +187,12 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %endif
 
 # included in glibc-devel
-rm -f $RPM_BUILD_ROOT%{_mandir}{,/*}/man3/{getspnam,shadow}.3*
+rm -f $RPM_BUILD_ROOT%{_mandir}{,*/}/man3/{getspnam,shadow}.3
 
 # /bin/login already in login (from util-linux.spec)
-rm -f $RPM_BUILD_ROOT{%{_bindir}/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1*,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
+rm -f $RPM_BUILD_ROOT{%{_bindir}/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
 # /bin/id already in coreutils
-rm -f $RPM_BUILD_ROOT%{_mandir}/cs/man1/id.1
+rm -f $RPM_BUILD_ROOT%{_mandir}{,*/}/man1/id.1
 # /bin/su already in coreutils
 rm -f $RPM_BUILD_ROOT{%{_bindir}/su,%{_mandir}/{,*/}man1/su.1}
 # /usr/bin/groups already in coreutils
@@ -534,7 +533,6 @@ fi
 %lang(ko) %{_mandir}/ko/man1/chsh.1*
 # missing in tarball
 #%lang(ko) %{_mandir}/ko/man1/newgrp.1*
-%lang(ko) %{_mandir}/ko/man1/sg.1*
 
 %lang(ru) %{_mandir}/ru/man1/chage.1*
 %lang(ru) %{_mandir}/ru/man1/chfn.1*
