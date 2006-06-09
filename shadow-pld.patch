@@ -92,8 +92,8 @@
  			case 's':
  				if (!VALID (optarg)
  				    || (optarg[0]
---- shadow-4.0.6.orig/src/groupadd.c	2004-11-18 15:47:10.972295104 +0100
-+++ shadow-4.0.6/src/groupadd.c	2004-11-18 21:45:59.462467128 +0100
+--- shadow-4.0.16/src/groupadd.c~	2006-06-09 21:23:35.786172809 +0300
++++ shadow-4.0.16/src/groupadd.c	2006-06-09 21:26:14.039716861 +0300
 @@ -72,6 +72,7 @@
  static int oflg = 0;		/* permit non-unique group ID to be specified with -g */
  static int gflg = 0;		/* ID value for the new group */
@@ -102,54 +102,50 @@
  
  #ifdef	NDBM
  extern int gr_dbm_mode;
-@@ -99,7 +100,7 @@
- 
- static void usage (void)
- {
--	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] group\n"));
-+	fprintf (stderr, _("Usage: groupadd [-g gid [-o]] [-f] [-r] group\n"));
+@@ -104,6 +104,7 @@
+ 			   "  -h, --help			display this help message and exit\n"
+ 			   "  -K, --key KEY=VALUE		overrides /etc/login.defs defaults\n"
+ 			   "  -o, --non-unique		allow create group with duplicate\n"
++			   "  -r				create a system account, with gid lower than usual\n"
+ 			   "				(non-unique) GID\n"));
  	exit (E_USAGE);
  }
- 
-@@ -225,9 +226,13 @@
+@@ -197,8 +198,13 @@
  	const struct group *grp;
  	gid_t gid_min, gid_max;
  
--	gid_min = getdef_unum ("GID_MIN", 100);
+-	gid_min = getdef_unum ("GID_MIN", 1000);
 -	gid_max = getdef_unum ("GID_MAX", 60000);
--
-+        if (!rflg) {
-+                gid_min = getdef_unum ("GID_MIN", 500);
-+                gid_max = getdef_unum ("GID_MAX", 60000);
-+        } else {
-+                gid_min = getdef_unum ("SYS_GID_MIN", 10);
-+                gid_max = getdef_unum ("SYS_GID_MAX", 499);
-+       }
++	if (!rflg) {
++		gid_min = getdef_unum ("GID_MIN", 500);
++		gid_max = getdef_unum ("GID_MAX", 60000);
++	} else {
++		gid_min = getdef_unum ("SYS_GID_MIN", 10);
++		gid_max = getdef_unum ("SYS_GID_MAX", 499);
++	}
+ 
  	/*
  	 * Start with some GID value if the user didn't provide us with
- 	 * one already.
-@@ -334,7 +339,7 @@
- 	char *cp;
- 	int arg;
+@@ -412,7 +418,7 @@
+ 		};
  
--	while ((arg = getopt (argc, argv, "og:O:f")) != EOF) {
-+	while ((arg = getopt (argc, argv, "og:O:fr")) != EOF) {
- 		switch (arg) {
- 		case 'g':
- 			gflg++;
-@@ -349,6 +354,12 @@
- 				fail_exit (E_BAD_ARG);
+ 		while ((c =
+-			getopt_long (argc, argv, "fg:hK:o", long_options,
++			getopt_long (argc, argv, "fg:hK:or", long_options,
+ 				     &option_index)) != -1) {
+ 			switch (c) {
+ 			case 'f':
+@@ -463,6 +469,10 @@
+ 			case 'o':
+ 				oflg++;
+ 				break;
++			case 'r':
++				/* create system group */
++				rflg++;
++				break;			
+ 			default:
+ 				usage ();
  			}
- 			break;
-+		case 'r':
-+                       /*
-+                        * create system group
-+                        */
-+                        rflg++;
-+                        break;			
- 		case 'o':
- 			oflg++;
- 			break;
 --- shadow-4.0.16/man/groupadd.8.xml~	2006-06-08 01:07:41.447664461 +0300
 +++ shadow-4.0.16/man/groupadd.8.xml	2006-06-08 01:07:45.947765703 +0300
 @@ -20,6 +20,7 @@
