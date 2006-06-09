@@ -173,28 +173,28 @@
        <varlistentry>
  	<term>
  	  <option>-g</option> <replaceable>GID</replaceable>
---- shadow-4.0.6.orig/man/pl/groupadd.8	2004-11-18 15:47:10.946299056 +0100
-+++ shadow-4.0.6/man/pl/groupadd.8	2004-11-18 21:45:00.696400928 +0100
-@@ -30,7 +30,7 @@
+--- shadow-4.0.16/man/pl/groupadd.8~	2006-06-09 21:27:27.071352380 +0300
++++ shadow-4.0.16/man/pl/groupadd.8	2006-06-09 21:29:35.034218035 +0300
+@@ -29,7 +29,7 @@
  .SH NAZWA
- groupadd - twÛrz now± grupÍ
- .SH SK£ADNIA
--\fBgroupadd\fR [\fB-g\fR \fIgid\fR [\fB-o\fR]] [\fB-f\fR] \fIgrupa\fR
-+\fBgroupadd\fR [\fB-g\fR \fIgid\fR [\fB-o\fR]] [\fB-f\fR] [\fB-r\fR] \fIgrupa\fR
+ groupadd \- tw√≥rz nowƒÖ grupƒô
+ .SH SK≈ÅADNIA
+-\fBgroupadd\fR [\fB\-g\fR \fIgid\fR [\fB\-o\fR]] [\fB\-f\fR] \fIgrupa\fR
++\fBgroupadd\fR [\fB\-g\fR \fIgid\fR [\fB\-o\fR]] [\fB\-f\fR] [\fB-r\fR] \fIgrupa\fR
  .SH OPIS
- Polecenie \fBgroupadd\fR tworzy nowe konto grupy pos≥uguj±c siÍ
- warto∂ciami podanymi w wierszu poleceÒ i domy∂lnymi warto∂ciami z systemu.
-@@ -43,6 +43,10 @@
- podana groupa juø istnieje. Z opcj± \fB-g\fR, je∂li podany gid juø istnieje,
- wybierany jest inny (unikalny) gid (czyli \fB-g\fR jest wy≥±czane).
+ Polecenie \fBgroupadd\fR tworzy nowe konto grupy pos≈ÇugujƒÖc siƒô
+ warto≈õciami podanymi w wierszu polece≈Ñ i domy≈õlnymi warto≈õciami z systemu.
+@@ -42,6 +42,10 @@
+ podana groupa ju≈º istnieje. Z opcjƒÖ \fB\-g\fR, je≈õli podany gid ju≈º istnieje,
+ wybierany jest inny (unikalny) gid (czyli \fB\-g\fR jest wy≈ÇƒÖczane).
  .TP
 +.BI -r
 +Ta opcja s≥uøy do zak≥adania grup systemowych, z identyfikatorami niøszymi
 +niø zwykle (wybieranymi z przedzia≥u od SYS_GID_MIN do SYS_GID_MAX).
 +.TP
- .BI -g " gid"
- Numeryczna warto∂Ê identyfikatora grupy. Warto∂Ê ta musi byÊ niepowtarzalna,
- chyba øe uøyto opcji \fB-o\fR. Warto∂Ê ID grupy nie moøe byÊ ujemna. Domy∂lnie
+ .BI \-g " gid"
+ Numeryczna warto≈õƒá identyfikatora grupy. Warto≈õƒá ta musi byƒá niepowtarzalna,
+ chyba ≈ºe u≈ºyto opcji \fB\-o\fR. Warto≈õƒá ID grupy nie mo≈ºe byƒá ujemna. Domy≈õlnie
 --- shadow-4.0.6.orig/man/pl/useradd.8	2004-11-18 15:47:10.949298600 +0100
 +++ shadow-4.0.6/man/pl/useradd.8	2004-11-18 21:45:00.697400776 +0100
 @@ -112,12 +112,9 @@
