@@ -1,0 +1,3 @@
+- version changed to 20000902
+- removed cvs patch
+- pld and utmpx patch applied clean but pam-userdb rejected. baggins please look.
