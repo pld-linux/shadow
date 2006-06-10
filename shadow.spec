@@ -13,7 +13,7 @@
 #
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
-%bcond_with	shared		# build with shared libshadow
+%bcond_with	shared		# build with shared libshadow (linking with selinux is broken)
 #
 Summary:	Shadow password file utilities for Linux
 Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
@@ -24,7 +24,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	4.0.16
-Release:	0.8
+Release:	0.10
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -41,7 +41,8 @@ Source8:	useradd.pamd
 Patch0:		%{name}-pld.patch
 Patch1:		%{name}-chage_expdays.patch
 Patch2:		%{name}-po-update.patch
-Patch3:		%{name}-typo.patch
+Patch3:		%{name}-removed-programs.patch
+Patch4:		%{name}-typo.patch
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -139,7 +140,8 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
+#%patch4 -p1
 
 # ugh, too populated to patch
 %{__sed} -i -e 's/instead DES/instead of DES/' src/chpasswd.c po/*.po
@@ -202,19 +204,6 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 
 # no -devel, be gone
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
-
-# included in glibc-devel
-rm -f $RPM_BUILD_ROOT%{_mandir}{,*/}/man3/{getspnam,shadow}.3
-# /bin/login already in login (from util-linux.spec)
-rm -f $RPM_BUILD_ROOT{%{_bindir}/login,/etc/pam.d/login,%{_sbindir}/logoutd,%{_mandir}/{,*/}man1/login.1,%{_mandir}/{,*/}man5/porttime.5,%{_mandir}/{,*/}man8/logoutd.8}
-# /bin/id already in coreutils
-rm -f $RPM_BUILD_ROOT%{_mandir}{,*/}/man1/id.1
-# /bin/su already in coreutils
-rm -f $RPM_BUILD_ROOT{%{_bindir}/su,/etc/pam.d/su,%{_mandir}/{,*/}man1/su.1}
-# /usr/bin/groups already in coreutils
-rm -f $RPM_BUILD_ROOT{%{_bindir}/groups,%{_mandir}/{,*/}man1/groups.1}
-# /etc/limits not used with pam
-rm -f $RPM_BUILD_ROOT%{_mandir}/{,*/}man5/limits.5
 
 %find_lang %{name}
 
