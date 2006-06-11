@@ -230,13 +230,13 @@ CRACKLIB_DICTPATH	/usr/share/dict
 #
 # Min/max values for automatic uid selection in useradd
 #
-UID_MIN			  500
+UID_MIN			 1000
 UID_MAX			60000
 
 #
 # Min/max values for automatic gid selection in groupadd
 #
-GID_MIN			  500
+GID_MIN			 1000
 GID_MAX			60000
 
 #
