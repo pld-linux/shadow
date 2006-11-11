@@ -10,6 +10,74 @@
 #   /usr/share/man/man8/nologin.8.gz
 # - check polish part in -typo.patch
 # - update shadow-po-update.patch
+# - package or remove:
+#   /etc/pam.d/chgpasswd
+#   /etc/pam.d/chpasswd
+#   /etc/pam.d/groupmems
+#   /etc/pam.d/newusers
+#   /usr/sbin/chgpasswd
+#   /usr/sbin/groupmems
+#   /usr/sbin/nologin
+#   /usr/share/man/cs/man5/gshadow.5.gz
+#   /usr/share/man/cs/man8/nologin.8.gz
+#   /usr/share/man/fr/man3/shadow.3.gz
+#   /usr/share/man/fr/man5/gshadow.5.gz
+#   /usr/share/man/man1/su.1.gz
+#   /usr/share/man/man3/shadow.3.gz
+#   /usr/share/man/man5/gshadow.5.gz
+#   /usr/share/man/man5/limits.5.gz
+#   /usr/share/man/man5/login.access.5.gz
+#   /usr/share/man/man5/porttime.5.gz
+#   /usr/share/man/man8/chgpasswd.8.gz
+#   /usr/share/man/man8/groupmems.8.gz
+#   /usr/share/man/man8/nologin.8.gz
+#   /usr/share/man/ru/man5/gshadow.5.gz
+#   /usr/share/man/ru/man5/limits.5.gz
+#   /usr/share/man/ru/man5/login.access.5.gz
+#   /usr/share/man/ru/man5/porttime.5.gz
+#   /usr/share/man/ru/man8/chgpasswd.8.gz
+#   /usr/share/man/ru/man8/nologin.8.gz
+#   /usr/share/man/sv/man1/chage.1.gz
+#   /usr/share/man/sv/man1/chfn.1.gz
+#   /usr/share/man/sv/man1/chsh.1.gz
+#   /usr/share/man/sv/man1/expiry.1.gz
+#   /usr/share/man/sv/man1/gpasswd.1.gz
+#   /usr/share/man/sv/man1/groups.1.gz
+#   /usr/share/man/sv/man1/login.1.gz
+#   /usr/share/man/sv/man1/newgrp.1.gz
+#   /usr/share/man/sv/man1/passwd.1.gz
+#   /usr/share/man/sv/man1/sg.1.gz
+#   /usr/share/man/sv/man1/su.1.gz
+#   /usr/share/man/sv/man3/getspnam.3
+#   /usr/share/man/sv/man3/shadow.3.gz
+#   /usr/share/man/sv/man5/faillog.5.gz
+#   /usr/share/man/sv/man5/gshadow.5.gz
+#   /usr/share/man/sv/man5/login.defs.5.gz
+#   /usr/share/man/sv/man5/passwd.5.gz
+#   /usr/share/man/sv/man5/shadow.5.gz
+#   /usr/share/man/sv/man5/suauth.5.gz
+#   /usr/share/man/sv/man8/chgpasswd.8.gz
+#   /usr/share/man/sv/man8/chpasswd.8.gz
+#   /usr/share/man/sv/man8/faillog.8.gz
+#   /usr/share/man/sv/man8/groupadd.8.gz
+#   /usr/share/man/sv/man8/groupdel.8.gz
+#   /usr/share/man/sv/man8/groupmems.8.gz
+#   /usr/share/man/sv/man8/groupmod.8.gz
+#   /usr/share/man/sv/man8/grpck.8.gz
+#   /usr/share/man/sv/man8/grpconv.8
+#   /usr/share/man/sv/man8/grpunconv.8
+#   /usr/share/man/sv/man8/lastlog.8.gz
+#   /usr/share/man/sv/man8/logoutd.8.gz
+#   /usr/share/man/sv/man8/newusers.8.gz
+#   /usr/share/man/sv/man8/nologin.8.gz
+#   /usr/share/man/sv/man8/pwck.8.gz
+#   /usr/share/man/sv/man8/pwconv.8.gz
+#   /usr/share/man/sv/man8/pwunconv.8
+#   /usr/share/man/sv/man8/useradd.8.gz
+#   /usr/share/man/sv/man8/userdel.8.gz
+#   /usr/share/man/sv/man8/usermod.8.gz
+#   /usr/share/man/sv/man8/vigr.8
+#   /usr/share/man/sv/man8/vipw.8.gz
 #
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
@@ -23,13 +91,13 @@ Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
-Version:	4.0.16
-Release:	0.11
+Version:	4.0.18.1
+Release:	0.12
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-# Source0-md5:	1d91f7479143d1d705b94180c0d4874b
+# Source0-md5:	e7751d46ecf219c07ae0b028ab3335c6
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -140,7 +208,7 @@ Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
 %{?with_shared:%patch4 -p1}
 #%patch5 -p1
