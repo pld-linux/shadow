@@ -92,8 +92,8 @@
  			case 's':
  				if (!VALID (optarg)
  				    || (optarg[0]
---- shadow-4.0.16/src/groupadd.c~	2006-06-09 21:23:35.786172809 +0300
-+++ shadow-4.0.16/src/groupadd.c	2006-06-09 21:26:14.039716861 +0300
+--- shadow-4.0.16/src/groupadd.c	2006-06-09 21:26:14.039716861 +0300
++++ shadow-4.0.18.1/src/groupadd.c	2006-11-11 18:38:27.453562057 +0200
 @@ -72,6 +72,7 @@
  static int oflg = 0;		/* permit non-unique group ID to be specified with -g */
  static int gflg = 0;		/* ID value for the new group */
@@ -102,15 +102,15 @@
  
  #ifdef	NDBM
  extern int gr_dbm_mode;
-@@ -104,6 +104,7 @@
- 			   "  -h, --help			display this help message and exit\n"
+@@ -105,6 +106,7 @@
  			   "  -K, --key KEY=VALUE		overrides /etc/login.defs defaults\n"
  			   "  -o, --non-unique		allow create group with duplicate\n"
+ 			   "				(non-unique) GID\n"
 +			   "  -r				create a system account, with gid lower than usual\n"
- 			   "				(non-unique) GID\n"));
+ 			   "\n"));
  	exit (E_USAGE);
  }
-@@ -197,8 +198,13 @@
+@@ -197,8 +199,13 @@
  	const struct group *grp;
  	gid_t gid_min, gid_max;
  
@@ -126,7 +126,7 @@
  
  	/*
  	 * Start with some GID value if the user didn't provide us with
-@@ -412,7 +418,7 @@
+@@ -412,7 +419,7 @@
  		};
  
  		while ((c =
@@ -135,7 +135,7 @@
  				     &option_index)) != -1) {
  			switch (c) {
  			case 'f':
-@@ -463,6 +469,10 @@
+@@ -463,6 +470,10 @@
  			case 'o':
  				oflg++;
  				break;
