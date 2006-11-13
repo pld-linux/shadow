@@ -267,7 +267,7 @@ ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
 # what's this for?
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
 
-%if %{without shared}
+%if !%{with shared}
 # invalid static library
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %endif
