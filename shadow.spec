@@ -92,7 +92,7 @@ Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Summary(tr):	Gölge parola dosyasý araçlarý
 Name:		shadow
 Version:	4.0.18.1
-Release:	0.12
+Release:	0.13
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -118,7 +118,7 @@ BuildRequires:	gettext-devel >= 0.12.1
 %{?with_selinux:BuildRequires:	libselinux-devel}
 BuildRequires:	libtool
 BuildRequires:	pam-devel
-Requires:	pam >= 0.77.3
+Requires:	pam >= 0.99.7.1
 # to force proper coreutils version, so "groups" command exists
 Requires:	/usr/bin/groups
 Provides:	passwd
