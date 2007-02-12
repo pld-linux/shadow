@@ -84,12 +84,12 @@
 %bcond_with	shared		# build with shared libshadow (linking with selinux is broken)
 #
 Summary:	Shadow password file utilities for Linux
-Summary(de.UTF-8):   Shadow-Paßwortdatei-Dienstprogramme für Linux
-Summary(es.UTF-8):   Utilitarios para el archivo de contraseñas Shadow
-Summary(fr.UTF-8):   Fichiers utilitaires pour Shadow password pour Linux
-Summary(pl.UTF-8):   Narzędzia do obsługi mechanizmu ukrytych haseł
-Summary(pt_BR.UTF-8):   Utilitários para o arquivo de senhas Shadow
-Summary(tr.UTF-8):   Gölge parola dosyası araçları
+Summary(de.UTF-8):	Shadow-Paßwortdatei-Dienstprogramme für Linux
+Summary(es.UTF-8):	Utilitarios para el archivo de contraseñas Shadow
+Summary(fr.UTF-8):	Fichiers utilitaires pour Shadow password pour Linux
+Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
+Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
+Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
 Version:	4.0.18.1
 Release:	0.13
@@ -191,7 +191,7 @@ utilitários e senhas shadow em geral.
 
 %package extras
 Summary:	shadow - not often used programs
-Summary(pl.UTF-8):   shadow - programy nieczęsto używane
+Summary(pl.UTF-8):	shadow - programy nieczęsto używane
 Group:		Applications/System
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	pwdutils
