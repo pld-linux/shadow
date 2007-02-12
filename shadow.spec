@@ -84,12 +84,12 @@
 %bcond_with	shared		# build with shared libshadow (linking with selinux is broken)
 #
 Summary:	Shadow password file utilities for Linux
-Summary(de):	Shadow-Paßwortdatei-Dienstprogramme für Linux
-Summary(es):	Utilitarios para el archivo de contraseñas Shadow
-Summary(fr):	Fichiers utilitaires pour Shadow password pour Linux
-Summary(pl):	Narzêdzia do obs³ugi mechanizmu ukrytych hase³
-Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
-Summary(tr):	Gölge parola dosyası araçları
+Summary(de.UTF-8):   Shadow-PaÃŸwortdatei-Dienstprogramme fÃ¼r Linux
+Summary(es.UTF-8):   Utilitarios para el archivo de contraseÃ±as Shadow
+Summary(fr.UTF-8):   Fichiers utilitaires pour Shadow password pour Linux
+Summary(pl.UTF-8):   NarzÄ™dzia do obsÅ‚ugi mechanizmu ukrytych haseÅ‚
+Summary(pt_BR.UTF-8):   UtilitÃ¡rios para o arquivo de senhas Shadow
+Summary(tr.UTF-8):   GÃ¶lge parola dosyasÄ± araÃ§larÄ±
 Name:		shadow
 Version:	4.0.18.1
 Release:	0.13
@@ -144,54 +144,54 @@ command-line management of the user's accounts.
 A number of man pages are also included that relate to these
 utilities, and shadow passwords in general.
 
-%description -l es
+%description -l es.UTF-8
 Este paquete incluye los programas necesarios para convertir Archivos
-padrón UNIX de contraseña al formato shadow.
-- pwconv5 - convierte todo al formato de contraseñas del shadow,
-- pwunconv - deshace la conversión de contraseñas shadow, creando un
+padrÃ³n UNIX de contraseÃ±a al formato shadow.
+- pwconv5 - convierte todo al formato de contraseÃ±as del shadow,
+- pwunconv - deshace la conversiÃ³n de contraseÃ±as shadow, creando un
   archivo en el directorio corriente llamado npasswd que es el archivo
-  padrón UNIX de contraseña,
-- pwck - chequea la integridad de la contraseña y de los archivos
+  padrÃ³n UNIX de contraseÃ±a,
+- pwck - chequea la integridad de la contraseÃ±a y de los archivos
   shadow,
-- lastlog enseña el último momento de login de todos los usuarios.
-  Están también incluidas, en general, varias páginas de manual sobre
-  estos utilitarios y contraseñas shadow.
+- lastlog enseÃ±a el Ãºltimo momento de login de todos los usuarios.
+  EstÃ¡n tambiÃ©n incluidas, en general, varias pÃ¡ginas de manual sobre
+  estos utilitarios y contraseÃ±as shadow.
 
-%description -l pl
-Pakiet zawiera programy do obs³ugi mechanizmu ukrytych hase³ (shadow
-password). Znajduj± siê w nim programy do konwersji standardowego
-pliku hase³ do wersji shadow password a tak¿e programy do zarz±dzania
-kontami u¿ytkowników w systemie:
+%description -l pl.UTF-8
+Pakiet zawiera programy do obsÅ‚ugi mechanizmu ukrytych haseÅ‚ (shadow
+password). ZnajdujÄ… siÄ™ w nim programy do konwersji standardowego
+pliku haseÅ‚ do wersji shadow password a takÅ¼e programy do zarzÄ…dzania
+kontami uÅ¼ytkownikÃ³w w systemie:
 - pwconv - konwertuje do formatu shadow password
 - pwunconv - konwertuje z shadow password do formatu standardowego
-  pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
-  standardowym plikiem z has³ami,
-- lastlog - wy¶wietla czas logowania u¿ytkowników,
-- useradd, userdel, usermod - do zarz±dzania kontami u¿ytkowników,
-- groupadd, groupdel, groupmod - do zarz±dzania grupami.
+  pliku haseÅ‚. W bieÅ¼Ä…cym katalogu tworzy plik npasswd bÄ™dÄ…cy
+  standardowym plikiem z hasÅ‚ami,
+- lastlog - wyÅ›wietla czas logowania uÅ¼ytkownikÃ³w,
+- useradd, userdel, usermod - do zarzÄ…dzania kontami uÅ¼ytkownikÃ³w,
+- groupadd, groupdel, groupmod - do zarzÄ…dzania grupami.
 
-Ostrze¿enie:
+OstrzeÅ¼enie:
 
-Programy znajduj±ce siê w tym pakiecie s± niezbêdne do prawid³owej
+Programy znajdujÄ…ce siÄ™ w tym pakiecie sÄ… niezbÄ™dne do prawidÅ‚owej
 pracy systemu i podobnie jak pakiet z bibliotekami systemowymi (glibc)
-nigdy nie powinien zostaæ odinstalowany!
+nigdy nie powinien zostaÄ‡ odinstalowany!
 
-%description -l pt_BR
-Este pacote inclui os programas necessários para converter
-arquivos-padrão UNIX de senha para o formato shadow.
+%description -l pt_BR.UTF-8
+Este pacote inclui os programas necessÃ¡rios para converter
+arquivos-padrÃ£o UNIX de senha para o formato shadow.
 - pwconv - converte tudo para o formato de senhas do shadow,
 - pwunconv - desconverte senhas shadow, gerando um arquivo no
-  diretório corrente chamado npasswd que é o arquivo-padrão UNIX de
+  diretÃ³rio corrente chamado npasswd que Ã© o arquivo-padrÃ£o UNIX de
   senha,
 - pwck - checa a integridade da senha e dos arquivos shadow,
-- lastlog - mostra o último momento de login de todos os usuários.
+- lastlog - mostra o Ãºltimo momento de login de todos os usuÃ¡rios.
 
-Várias páginas de manual estão também incluídas sobre estes
-utilitários e senhas shadow em geral.
+VÃ¡rias pÃ¡ginas de manual estÃ£o tambÃ©m incluÃ­das sobre estes
+utilitÃ¡rios e senhas shadow em geral.
 
 %package extras
 Summary:	shadow - not often used programs
-Summary(pl):	shadow - programy nieczêsto u¿ywane
+Summary(pl.UTF-8):   shadow - programy nieczÄ™sto uÅ¼ywane
 Group:		Applications/System
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Obsoletes:	pwdutils
@@ -201,8 +201,8 @@ Conflicts:	util-linux < 2.12-10
 Programs for shadow not often used. If you have small system you may
 skip them.
 
-%description extras -l pl
-Programy nieczêsto u¿ywane. W ma³ych systemach mo¿na je pomin±æ.
+%description extras -l pl.UTF-8
+Programy nieczÄ™sto uÅ¼ywane. W maÅ‚ych systemach moÅ¼na je pominÄ…Ä‡.
 
 %prep
 %setup -q
