@@ -1,7 +1,6 @@
 # TODO
 # - new files:
 #   /etc/pam.d/chgpasswd
-#   /etc/pam.d/chpasswd
 #   /etc/pam.d/newusers
 #   /usr/sbin/chgpasswd
 #   /usr/sbin/nologin
@@ -12,7 +11,6 @@
 # - update shadow-po-update.patch
 # - package or remove:
 #   /etc/pam.d/chgpasswd
-#   /etc/pam.d/chpasswd
 #   /etc/pam.d/groupmems
 #   /etc/pam.d/newusers
 #   /usr/sbin/chgpasswd
@@ -108,6 +106,7 @@ Source5:	chsh.pamd
 Source6:	chfn.pamd
 Source7:	passwd.pamd
 Source8:	useradd.pamd
+Source9:	chpasswd.pamd
 Patch0:		%{name}-pld.patch
 Patch1:		%{name}-chage_expdays.patch
 Patch2:		%{name}-po-update.patch
@@ -253,6 +252,7 @@ install %{SOURCE5} $RPM_BUILD_ROOT/etc/pam.d/chsh
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
 install %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/useradd
+install %{SOURCE9} $RPM_BUILD_ROOT/etc/pam.d/chpasswd
 sed -e 's/usermod/userdel/' etc/pam.d/usermod > $RPM_BUILD_ROOT/etc/pam.d/userdel
 install etc/pam.d/usermod $RPM_BUILD_ROOT/etc/pam.d/usermod
 install etc/pam.d/groupadd $RPM_BUILD_ROOT/etc/pam.d/groupadd
@@ -296,6 +296,7 @@ fi
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chpasswd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/passwd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/shadow
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/useradd
