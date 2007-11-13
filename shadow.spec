@@ -12,7 +12,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.4.1
-Release:	4
+Release:	5
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -48,6 +48,7 @@ Provides:	passwd
 Provides:	shadow-utils
 Obsoletes:	passwd
 Obsoletes:	shadow-utils
+Conflicts:	SysVinit < 2.86-10
 Conflicts:	pwdutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -60,7 +61,6 @@ command-line management of the user's accounts.
    current directory called npasswd that is a standard UNIX password
    file,
  - pwck - checks the integrity of the password and shadow files,
- - lastlog - prints out the last login times of all users,
  - useradd, userdel, usermod - for accounts management,
  - groupadd, groupdel, groupmod - for group management.
 
@@ -76,9 +76,9 @@ padrón UNIX de contraseña al formato shadow.
    padrón UNIX de contraseña,
  - pwck - chequea la integridad de la contraseña y de los archivos
    shadow,
- - lastlog enseña el último momento de login de todos los usuarios.
-   Están también incluidas, en general, varias páginas de manual sobre
-   estos utilitarios y contraseñas shadow.
+
+Están también incluidas, en general, varias páginas de manual sobre estos
+utilitarios y contraseñas shadow.
 
 %description -l pl
 Pakiet zawiera programy do obs³ugi mechanizmu ukrytych hase³ (shadow
@@ -89,7 +89,6 @@ kontami u¿ytkowników w systemie:
  - pwunconv - konwertuje z shadow password do formatu standardowego
    pliku hase³. W bie¿±cym katalogu tworzy plik npasswd bêd±cy
    standardowym plikiem z has³ami,
- - lastlog - wy¶wietla czas logowania u¿ytkowników,
  - useradd, userdel, usermod - do zarz±dzania kontami u¿ytkowników,
  - groupadd, groupdel, groupmod - do zarz±dzania grupami.
 
@@ -107,7 +106,6 @@ arquivos-padrão UNIX de senha para o formato shadow.
    diretório corrente chamado npasswd que é o arquivo-padrão UNIX de
    senha,
  - pwck - checa a integridade da senha e dos arquivos shadow,
- - lastlog - mostra o último momento de login de todos os usuários.
 
 Várias páginas de manual estão também incluídas sobre estes
 utilitários e senhas shadow em geral.
@@ -184,6 +182,9 @@ echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/fr/man1/sg.1
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/ko/man1/sg.1
 
+# lastlog now in SysVinit
+rm -f $RPM_BUILD_ROOT{%{_mandir}/{,pl,ja,it}/man8/lastlog.8,%{_bindir}/lastlog}
+
 %find_lang %{name}
 
 %clean
@@ -227,7 +228,6 @@ fi
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
 %attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/lastlog
 %attr(4755,root,root) %{_bindir}/passwd
 %{_mandir}/man1/passwd.1*
 %{_mandir}/man5/faillog.5*
@@ -243,7 +243,6 @@ fi
 %{_mandir}/man8/grpck.8*
 %{_mandir}/man8/grpconv.8*
 %{_mandir}/man8/grpunconv.8*
-%{_mandir}/man8/lastlog.8*
 %{_mandir}/man8/pwck.8*
 %{_mandir}/man8/pwconv.8*
 %{_mandir}/man8/pwunconv.8*
@@ -284,7 +283,6 @@ fi
 %lang(it) %{_mandir}/it/man8/grpck.8*
 %lang(it) %{_mandir}/it/man8/grpconv.8*
 %lang(it) %{_mandir}/it/man8/grpunconv.8*
-%lang(it) %{_mandir}/it/man8/lastlog.8*
 %lang(it) %{_mandir}/it/man8/pwconv.8*
 %lang(it) %{_mandir}/it/man8/pwunconv.8*
 %lang(it) %{_mandir}/it/man8/useradd.8*
@@ -307,7 +305,6 @@ fi
 %lang(ja) %{_mandir}/ja/man8/grpck.8*
 %lang(ja) %{_mandir}/ja/man8/grpconv.8*
 %lang(ja) %{_mandir}/ja/man8/grpunconv.8*
-%lang(ja) %{_mandir}/ja/man8/lastlog.8*
 %lang(ja) %{_mandir}/ja/man8/pwck.8*
 %lang(ja) %{_mandir}/ja/man8/pwconv.8*
 %lang(ja) %{_mandir}/ja/man8/pwunconv.8*
@@ -333,7 +330,6 @@ fi
 %lang(pl) %{_mandir}/pl/man8/grpck.8*
 %lang(pl) %{_mandir}/pl/man8/grpconv.8*
 %lang(pl) %{_mandir}/pl/man8/grpunconv.8*
-%lang(pl) %{_mandir}/pl/man8/lastlog.8*
 %lang(pl) %{_mandir}/pl/man8/pwck.8*
 %lang(pl) %{_mandir}/pl/man8/pwconv.8*
 %lang(pl) %{_mandir}/pl/man8/pwunconv.8*
