@@ -12,7 +12,7 @@ Summary(tr):	Gölge parola dosyasý araçlarý
 Summary(pt_BR):	Utilitários para o arquivo de senhas Shadow
 Name:		shadow
 Version:	4.0.4.1
-Release:	5
+Release:	6
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -371,8 +371,8 @@ fi
 %attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
-%attr(755,root,root) %{_bindir}/newgrp
-%attr(755,root,root) %{_bindir}/sg
+%attr(4755,root,root) %{_bindir}/newgrp
+%attr(4755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_sbindir}/mkpasswd
 %attr(755,root,root) %{_sbindir}/newusers
 
