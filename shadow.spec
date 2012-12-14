@@ -98,17 +98,24 @@ License:	BSD
 Group:		Applications/System
 Source0:	http://pkg-shadow.alioth.debian.org/releases/shadow-%{version}.tar.bz2
 # Source0-md5:	a00449aa439c69287b6d472191dc2247
-Source10:	http://pkg-shadow.alioth.debian.org/releases/shadow-%{version}.tar.bz2.sig
-# Source10-md5:	f16f31f6f5a607b1ffb1aa1aac4c37f2
-Source1:	%{name}-login.defs
-Source2:	%{name}.useradd
-Source3:	chage.pamd
-Source4:	userdb.pamd
-Source5:	chsh.pamd
-Source6:	chfn.pamd
-Source7:	passwd.pamd
-Source8:	useradd.pamd
-#Source9:	chpasswd.pamd
+Source1:	http://pkg-shadow.alioth.debian.org/releases/shadow-%{version}.tar.bz2.sig
+# Source1-md5:	f16f31f6f5a607b1ffb1aa1aac4c37f2
+Source2:	%{name}-login.defs
+Source3:	%{name}.useradd
+Source10:	chage.pamd
+Source11:	chfn.pamd
+Source12:	chgpasswd.pamd
+Source13:	chpasswd.pamd
+Source14:	chsh.pamd
+Source15:	groupadd.pamd
+Source16:	groupdel.pamd
+Source17:	groupmems.pamd
+Source18:	groupmod.pamd
+Source19:	newusers.pamd
+Source20:	passwd.pamd
+Source21:	useradd.pamd
+Source22:	userdel.pamd
+Source23:	usermod.pamd
 Patch0:		%{name}-pld.patch
 URL:		http://pkg-shadow.alioth.debian.org/
 BuildRequires:	autoconf
@@ -235,20 +242,23 @@ install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{default,pam.d,security,skel/tmp
 # move nologin "shell" where useradd specifies it
 %{__mv} $RPM_BUILD_ROOT%{_sbindir}/nologin $RPM_BUILD_ROOT/sbin
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/chage
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/pam.d/shadow
-install %{SOURCE5} $RPM_BUILD_ROOT/etc/pam.d/chsh
-install %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/chfn
-install %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/passwd
-install %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/useradd
-install %{SOURCE9} $RPM_BUILD_ROOT/etc/pam.d/chpasswd
-sed -e 's/usermod/userdel/' etc/pam.d/usermod > $RPM_BUILD_ROOT/etc/pam.d/userdel
-install etc/pam.d/usermod $RPM_BUILD_ROOT/etc/pam.d/usermod
-install etc/pam.d/groupadd $RPM_BUILD_ROOT/etc/pam.d/groupadd
-install etc/pam.d/groupmod $RPM_BUILD_ROOT/etc/pam.d/groupmod
-install etc/pam.d/groupdel $RPM_BUILD_ROOT/etc/pam.d/groupdel
+install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
+install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
+
+install %{SOURCE10} $RPM_BUILD_ROOT/etc/pam.d/chage
+install %{SOURCE11} $RPM_BUILD_ROOT/etc/pam.d/chfn
+install %{SOURCE12} $RPM_BUILD_ROOT/etc/pam.d/chgpasswd
+install %{SOURCE13} $RPM_BUILD_ROOT/etc/pam.d/chpasswd
+install %{SOURCE14} $RPM_BUILD_ROOT/etc/pam.d/chsh
+install %{SOURCE15} $RPM_BUILD_ROOT/etc/pam.d/groupadd
+install %{SOURCE16} $RPM_BUILD_ROOT/etc/pam.d/groupdel
+install %{SOURCE17} $RPM_BUILD_ROOT/etc/pam.d/groupmems
+install %{SOURCE18} $RPM_BUILD_ROOT/etc/pam.d/groupmod
+install %{SOURCE19} $RPM_BUILD_ROOT/etc/pam.d/newusers
+install %{SOURCE20} $RPM_BUILD_ROOT/etc/pam.d/passwd
+install %{SOURCE21} $RPM_BUILD_ROOT/etc/pam.d/useradd
+install %{SOURCE22} $RPM_BUILD_ROOT/etc/pam.d/userdel
+install %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 
 > $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
@@ -273,18 +283,17 @@ fi
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chpasswd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chgpasswd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chpasswd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupadd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupdel
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupmems
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupmod
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newusers
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/passwd
-#%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/shadow
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/useradd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/usermod
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/userdel
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupadd
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupdel
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupmod
 
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/login.defs
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %ghost %{_sysconfdir}/shadow
