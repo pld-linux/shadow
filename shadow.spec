@@ -216,6 +216,8 @@ Programy nieczęsto używane. W małych systemach można je pominąć.
 
 %build
 %configure \
+	--bindir=/bin \
+	--sbindir=/sbin \
 	%{?with_shared:--enable-shared --disable-static} \
 	--without-libcrack \
 	--without-tcb \
@@ -239,9 +241,6 @@ install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{default,pam.d,security,skel/tmp
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# move nologin "shell" where useradd specifies it
-%{__mv} $RPM_BUILD_ROOT%{_sbindir}/nologin $RPM_BUILD_ROOT/sbin
-
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
 install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
 
@@ -264,7 +263,7 @@ install %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
 > $RPM_BUILD_ROOT/etc/security/chsh.allow
 
-%{__rm} $RPM_BUILD_ROOT{/etc/pam.d,%{_bindir}}/{login,su}
+%{__rm} $RPM_BUILD_ROOT/{etc/pam.d,bin}/{login,su}
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/{login,su}.1*
 
 %find_lang %{name}
@@ -303,6 +302,7 @@ fi
 %dir /etc/skel
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
+%attr(755,root,root) /bin/groups
 %attr(755,root,root) /sbin/nologin
 %attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/chgpasswd
@@ -323,7 +323,6 @@ fi
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
 %attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(4755,root,root) %{_bindir}/passwd
 %{_mandir}/man1/passwd.1*
