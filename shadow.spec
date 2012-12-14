@@ -1,81 +1,3 @@
-# TODO
-# - new files:
-#   /etc/pam.d/chgpasswd
-#   /etc/pam.d/newusers
-#   /usr/sbin/chgpasswd
-#   /usr/sbin/nologin
-#   /usr/share/man/man5/gshadow.5.gz
-#   /usr/share/man/man8/chgpasswd.8.gz
-#   /usr/share/man/man8/nologin.8.gz
-# - check polish part in -typo.patch
-# - update shadow-po-update.patch
-# - package or remove:
-#   /etc/pam.d/chgpasswd
-#   /etc/pam.d/groupmems
-#   /etc/pam.d/newusers
-#   /usr/sbin/chgpasswd
-#   /usr/sbin/groupmems
-#   /usr/sbin/nologin
-#   /usr/share/man/cs/man5/gshadow.5.gz
-#   /usr/share/man/cs/man8/nologin.8.gz
-#   /usr/share/man/fr/man3/shadow.3.gz
-#   /usr/share/man/fr/man5/gshadow.5.gz
-#   /usr/share/man/man1/su.1.gz
-#   /usr/share/man/man3/shadow.3.gz
-#   /usr/share/man/man5/gshadow.5.gz
-#   /usr/share/man/man5/limits.5.gz
-#   /usr/share/man/man5/login.access.5.gz
-#   /usr/share/man/man5/porttime.5.gz
-#   /usr/share/man/man8/chgpasswd.8.gz
-#   /usr/share/man/man8/groupmems.8.gz
-#   /usr/share/man/man8/nologin.8.gz
-#   /usr/share/man/ru/man5/gshadow.5.gz
-#   /usr/share/man/ru/man5/limits.5.gz
-#   /usr/share/man/ru/man5/login.access.5.gz
-#   /usr/share/man/ru/man5/porttime.5.gz
-#   /usr/share/man/ru/man8/chgpasswd.8.gz
-#   /usr/share/man/ru/man8/nologin.8.gz
-#   /usr/share/man/sv/man1/chage.1.gz
-#   /usr/share/man/sv/man1/chfn.1.gz
-#   /usr/share/man/sv/man1/chsh.1.gz
-#   /usr/share/man/sv/man1/expiry.1.gz
-#   /usr/share/man/sv/man1/gpasswd.1.gz
-#   /usr/share/man/sv/man1/groups.1.gz
-#   /usr/share/man/sv/man1/login.1.gz
-#   /usr/share/man/sv/man1/newgrp.1.gz
-#   /usr/share/man/sv/man1/passwd.1.gz
-#   /usr/share/man/sv/man1/sg.1.gz
-#   /usr/share/man/sv/man1/su.1.gz
-#   /usr/share/man/sv/man3/getspnam.3
-#   /usr/share/man/sv/man3/shadow.3.gz
-#   /usr/share/man/sv/man5/faillog.5.gz
-#   /usr/share/man/sv/man5/gshadow.5.gz
-#   /usr/share/man/sv/man5/login.defs.5.gz
-#   /usr/share/man/sv/man5/passwd.5.gz
-#   /usr/share/man/sv/man5/shadow.5.gz
-#   /usr/share/man/sv/man5/suauth.5.gz
-#   /usr/share/man/sv/man8/chgpasswd.8.gz
-#   /usr/share/man/sv/man8/chpasswd.8.gz
-#   /usr/share/man/sv/man8/faillog.8.gz
-#   /usr/share/man/sv/man8/groupadd.8.gz
-#   /usr/share/man/sv/man8/groupdel.8.gz
-#   /usr/share/man/sv/man8/groupmems.8.gz
-#   /usr/share/man/sv/man8/groupmod.8.gz
-#   /usr/share/man/sv/man8/grpck.8.gz
-#   /usr/share/man/sv/man8/grpconv.8
-#   /usr/share/man/sv/man8/grpunconv.8
-#   /usr/share/man/sv/man8/lastlog.8.gz
-#   /usr/share/man/sv/man8/logoutd.8.gz
-#   /usr/share/man/sv/man8/newusers.8.gz
-#   /usr/share/man/sv/man8/nologin.8.gz
-#   /usr/share/man/sv/man8/pwck.8.gz
-#   /usr/share/man/sv/man8/pwconv.8.gz
-#   /usr/share/man/sv/man8/pwunconv.8
-#   /usr/share/man/sv/man8/useradd.8.gz
-#   /usr/share/man/sv/man8/userdel.8.gz
-#   /usr/share/man/sv/man8/usermod.8.gz
-#   /usr/share/man/sv/man8/vigr.8
-#   /usr/share/man/sv/man8/vipw.8.gz
 #
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
@@ -130,8 +52,10 @@ Requires:	/usr/bin/groups
 Provides:	passwd
 Provides:	shadow-utils
 Obsoletes:	passwd
+Obsoletes:	shadow-extras
 Obsoletes:	shadow-utils
-Conflicts:	pwdutils
+Obsoletes:	pwdutils
+Conflicts:	util-linux < 2.12-10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -195,21 +119,6 @@ arquivos-padrão UNIX de senha para o formato shadow.
 Várias páginas de manual estão também incluídas sobre estes
 utilitários e senhas shadow em geral.
 
-%package extras
-Summary:	shadow - not often used programs
-Summary(pl.UTF-8):	shadow - programy nieczęsto używane
-Group:		Applications/System
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-Obsoletes:	pwdutils
-Conflicts:	util-linux < 2.12-10
-
-%description extras
-Programs for shadow not often used. If you have small system you may
-skip them.
-
-%description extras -l pl.UTF-8
-Programy nieczęsto używane. W małych systemach można je pominąć.
-
 %prep
 %setup -q
 %patch0 -p1
@@ -265,6 +174,7 @@ install %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 
 %{__rm} $RPM_BUILD_ROOT/{etc/pam.d,bin}/{login,su}
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/{login,su}.1*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man3/*.3*
 
 %find_lang %{name}
 
@@ -285,8 +195,10 @@ fi
 %attr(750,root,root) %dir %{_sysconfdir}/default
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chfn
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chgpasswd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chpasswd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chsh
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupadd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupdel
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupmems
@@ -294,9 +206,11 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newusers
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/passwd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/useradd
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/usermod
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/userdel
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/usermod
 
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/chfn.allow
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/chsh.allow
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/login.defs
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel
@@ -304,8 +218,18 @@ fi
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
 %attr(755,root,root) /bin/groups
 %attr(755,root,root) /sbin/nologin
-%attr(755,root,root) %{_sbindir}/chpasswd
+%attr(755,root,root) %{_bindir}/chage
+%attr(4755,root,root) %{_bindir}/chfn
+%attr(4755,root,root) %{_bindir}/chsh
+%attr(4755,root,root) %{_bindir}/expiry
+%attr(755,root,root) %{_bindir}/faillog
+%attr(4755,root,root) %{_bindir}/gpasswd
+%attr(755,root,root) %{_bindir}/lastlog
+%attr(755,root,root) %{_bindir}/newgrp
+%attr(4755,root,root) %{_bindir}/passwd
+%attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_sbindir}/chgpasswd
+%attr(755,root,root) %{_sbindir}/chpasswd
 %attr(755,root,root) %{_sbindir}/groupadd
 %attr(755,root,root) %{_sbindir}/groupdel
 %attr(755,root,root) %{_sbindir}/groupmems
@@ -314,6 +238,7 @@ fi
 %attr(755,root,root) %{_sbindir}/grpconv
 %attr(755,root,root) %{_sbindir}/grpunconv
 %attr(755,root,root) %{_sbindir}/logoutd
+%attr(755,root,root) %{_sbindir}/newusers
 %attr(755,root,root) %{_sbindir}/pwck
 %attr(755,root,root) %{_sbindir}/pwconv
 %attr(755,root,root) %{_sbindir}/pwunconv
@@ -322,23 +247,35 @@ fi
 %attr(755,root,root) %{_sbindir}/usermod
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
-%attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/lastlog
-%attr(4755,root,root) %{_bindir}/passwd
+%{_mandir}/man1/chage.1*
+%{_mandir}/man1/chfn.1*
+%{_mandir}/man1/chsh.1*
+%{_mandir}/man1/expiry.1*
+%{_mandir}/man1/gpasswd.1*
+%{_mandir}/man1/groups.1*
+%{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/passwd.1*
+%{_mandir}/man1/sg.1*
 %{_mandir}/man5/faillog.5*
+%{_mandir}/man5/gshadow.5*
 %{_mandir}/man5/login.defs.5*
 %{_mandir}/man5/passwd.5*
 %{_mandir}/man5/shadow.5*
 %{_mandir}/man5/suauth.5*
+%{_mandir}/man8/chgpasswd.8*
+%{_mandir}/man8/chpasswd.8*
 %{_mandir}/man8/faillog.8*
 %{_mandir}/man8/groupadd.8*
 %{_mandir}/man8/groupdel.8*
+%{_mandir}/man8/groupmems.8*
 %{_mandir}/man8/groupmod.8*
 %{_mandir}/man8/grpck.8*
 %{_mandir}/man8/grpconv.8*
 %{_mandir}/man8/grpunconv.8*
 %{_mandir}/man8/lastlog.8*
+%{_mandir}/man8/logoutd.8*
+%{_mandir}/man8/newusers.8*
+%{_mandir}/man8/nologin.8*
 %{_mandir}/man8/pwck.8*
 %{_mandir}/man8/pwconv.8*
 %{_mandir}/man8/pwunconv.8*
@@ -347,39 +284,104 @@ fi
 %{_mandir}/man8/usermod.8*
 %{_mandir}/man8/vigr.8*
 %{_mandir}/man8/vipw.8*
-%{_mandir}/man8/chpasswd.8*
 
+%lang(cs) %{_mandir}/cs/man1/expiry.1*
+%lang(cs) %{_mandir}/cs/man1/gpasswd.1*
+%lang(cs) %{_mandir}/cs/man1/groups.1*
+%lang(cs) %{_mandir}/cs/man5/faillog.5*
+%lang(cs) %{_mandir}/cs/man5/gshadow.5*
 %lang(cs) %{_mandir}/cs/man5/passwd.5*
 %lang(cs) %{_mandir}/cs/man5/shadow.5*
-%lang(cs) %{_mandir}/cs/man5/faillog.5*
 %lang(cs) %{_mandir}/cs/man8/faillog.8*
 %lang(cs) %{_mandir}/cs/man8/groupadd.8*
 %lang(cs) %{_mandir}/cs/man8/groupdel.8*
 %lang(cs) %{_mandir}/cs/man8/groupmod.8*
 %lang(cs) %{_mandir}/cs/man8/grpck.8*
 %lang(cs) %{_mandir}/cs/man8/lastlog.8*
+%lang(cs) %{_mandir}/cs/man8/nologin.8*
 %lang(cs) %{_mandir}/cs/man8/vipw.8*
 
+%lang(da) %{_mandir}/da/man1/chfn.1*
+%lang(da) %{_mandir}/da/man1/groups.1*
+%lang(da) %{_mandir}/da/man1/newgrp.1*
+%lang(da) %{_mandir}/da/man1/sg.1*
+%lang(da) %{_mandir}/da/man5/gshadow.5*
+%lang(da) %{_mandir}/da/man8/groupdel.8*
+%lang(da) %{_mandir}/da/man8/logoutd.8*
+%lang(da) %{_mandir}/da/man8/nologin.8*
+%lang(da) %{_mandir}/da/man8/vigr.8
+%lang(da) %{_mandir}/da/man8/vipw.8*
+
+%lang(de) %{_mandir}/de/man1/chage.1*
+%lang(de) %{_mandir}/de/man1/chfn.1*
+%lang(de) %{_mandir}/de/man1/chsh.1*
+%lang(de) %{_mandir}/de/man1/expiry.1*
+%lang(de) %{_mandir}/de/man1/gpasswd.1*
+%lang(de) %{_mandir}/de/man1/groups.1*
+%lang(de) %{_mandir}/de/man1/newgrp.1*
 %lang(de) %{_mandir}/de/man1/passwd.1*
+%lang(de) %{_mandir}/de/man1/sg.1*
+%lang(de) %{_mandir}/de/man5/faillog.5*
+%lang(de) %{_mandir}/de/man5/gshadow.5*
+%lang(de) %{_mandir}/de/man5/login.defs.5*
+%lang(de) %{_mandir}/de/man5/passwd.5*
+%lang(de) %{_mandir}/de/man5/shadow.5*
+%lang(de) %{_mandir}/de/man5/suauth.5*
+%lang(de) %{_mandir}/de/man8/chgpasswd.8*
+%lang(de) %{_mandir}/de/man8/chpasswd.8*
+%lang(de) %{_mandir}/de/man8/faillog.8*
+%lang(de) %{_mandir}/de/man8/groupadd.8*
+%lang(de) %{_mandir}/de/man8/groupdel.8*
+%lang(de) %{_mandir}/de/man8/groupmems.8*
+%lang(de) %{_mandir}/de/man8/groupmod.8*
+%lang(de) %{_mandir}/de/man8/grpck.8*
+%lang(de) %{_mandir}/de/man8/grpconv.8*
+%lang(de) %{_mandir}/de/man8/grpunconv.8*
+%lang(de) %{_mandir}/de/man8/lastlog.8*
+%lang(de) %{_mandir}/de/man8/logoutd.8*
+%lang(de) %{_mandir}/de/man8/newusers.8*
+%lang(de) %{_mandir}/de/man8/nologin.8*
+%lang(de) %{_mandir}/de/man8/pwck.8*
+%lang(de) %{_mandir}/de/man8/pwconv.8*
+%lang(de) %{_mandir}/de/man8/pwunconv.8*
+%lang(de) %{_mandir}/de/man8/useradd.8*
+%lang(de) %{_mandir}/de/man8/userdel.8*
+%lang(de) %{_mandir}/de/man8/usermod.8*
 %lang(de) %{_mandir}/de/man8/vigr.8*
 %lang(de) %{_mandir}/de/man8/vipw.8*
-%lang(de) %{_mandir}/de/man5/passwd.5*
 
+%lang(fi) %{_mandir}/fi/man1/chfn.1*
+%lang(fi) %{_mandir}/fi/man1/chsh.1*
+
+%lang(fr) %{_mandir}/fr/man1/chage.1*
+%lang(fr) %{_mandir}/fr/man1/chfn.1*
+%lang(fr) %{_mandir}/fr/man1/chsh.1*
+%lang(fr) %{_mandir}/fr/man1/expiry.1*
+%lang(fr) %{_mandir}/fr/man1/gpasswd.1*
+%lang(fr) %{_mandir}/fr/man1/groups.1*
+%lang(fr) %{_mandir}/fr/man1/newgrp.1*
 %lang(fr) %{_mandir}/fr/man1/passwd.1*
+%lang(fr) %{_mandir}/fr/man1/sg.1*
 %lang(fr) %{_mandir}/fr/man5/faillog.5*
+%lang(fr) %{_mandir}/fr/man5/gshadow.5*
 %lang(fr) %{_mandir}/fr/man5/login.defs.5*
 %lang(fr) %{_mandir}/fr/man5/passwd.5*
 %lang(fr) %{_mandir}/fr/man5/shadow.5*
 %lang(fr) %{_mandir}/fr/man5/suauth.5*
+%lang(fr) %{_mandir}/fr/man8/chgpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/chpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/faillog.8*
 %lang(fr) %{_mandir}/fr/man8/groupadd.8*
 %lang(fr) %{_mandir}/fr/man8/groupdel.8*
+%lang(fr) %{_mandir}/fr/man8/groupmems.8*
 %lang(fr) %{_mandir}/fr/man8/groupmod.8*
 %lang(fr) %{_mandir}/fr/man8/grpck.8*
 %lang(fr) %{_mandir}/fr/man8/grpconv.8*
 %lang(fr) %{_mandir}/fr/man8/grpunconv.8*
 %lang(fr) %{_mandir}/fr/man8/lastlog.8*
+%lang(fr) %{_mandir}/fr/man8/logoutd.8*
+%lang(fr) %{_mandir}/fr/man8/newusers.8*
+%lang(fr) %{_mandir}/fr/man8/nologin.8*
 %lang(fr) %{_mandir}/fr/man8/pwck.8*
 %lang(fr) %{_mandir}/fr/man8/pwconv.8*
 %lang(fr) %{_mandir}/fr/man8/pwunconv.8*
@@ -390,19 +392,47 @@ fi
 %lang(fr) %{_mandir}/fr/man8/vipw.8*
 
 %lang(hu) %{_mandir}/hu/man1/passwd.1*
+%lang(hu) %{_mandir}/hu/man1/chsh.1*
+%lang(hu) %{_mandir}/hu/man1/gpasswd.1*
+%lang(hu) %{_mandir}/hu/man1/newgrp.1*
+%lang(hu) %{_mandir}/hu/man1/sg.1*
+%lang(hu) %{_mandir}/hu/man5/passwd.5*
+%lang(hu) %{_mandir}/hu/man8/lastlog.8*
+%lang(hu) %{_mandir}/hu/man1/groups.1*
 
+%lang(id) %{_mandir}/id/man1/chsh.1*
 %lang(id) %{_mandir}/id/man8/useradd.8*
 
+%lang(it) %{_mandir}/it/man1/chage.1*
+%lang(it) %{_mandir}/it/man1/chfn.1*
+%lang(it) %{_mandir}/it/man1/chsh.1*
+%lang(it) %{_mandir}/it/man1/expiry.1*
+%lang(it) %{_mandir}/it/man1/gpasswd.1*
+%lang(it) %{_mandir}/it/man1/groups.1*
+%lang(it) %{_mandir}/it/man1/newgrp.1*
 %lang(it) %{_mandir}/it/man1/passwd.1*
+%lang(it) %{_mandir}/it/man1/sg.1*
+%lang(it) %{_mandir}/it/man5/faillog.5*
+%lang(it) %{_mandir}/it/man5/gshadow.5*
+%lang(it) %{_mandir}/it/man5/login.defs.5*
 %lang(it) %{_mandir}/it/man5/passwd.5*
 %lang(it) %{_mandir}/it/man5/shadow.5*
+%lang(it) %{_mandir}/it/man5/suauth.5*
+%lang(it) %{_mandir}/it/man8/chgpasswd.8*
+%lang(it) %{_mandir}/it/man8/chpasswd.8*
+%lang(it) %{_mandir}/it/man8/faillog.8*
 %lang(it) %{_mandir}/it/man8/groupadd.8*
 %lang(it) %{_mandir}/it/man8/groupdel.8*
+%lang(it) %{_mandir}/it/man8/groupmems.8*
 %lang(it) %{_mandir}/it/man8/groupmod.8*
 %lang(it) %{_mandir}/it/man8/grpck.8*
 %lang(it) %{_mandir}/it/man8/grpconv.8*
 %lang(it) %{_mandir}/it/man8/grpunconv.8*
 %lang(it) %{_mandir}/it/man8/lastlog.8*
+%lang(it) %{_mandir}/it/man8/logoutd.8*
+%lang(it) %{_mandir}/it/man8/newusers.8*
+%lang(it) %{_mandir}/it/man8/nologin.8*
+%lang(it) %{_mandir}/it/man8/pwck.8*
 %lang(it) %{_mandir}/it/man8/pwconv.8*
 %lang(it) %{_mandir}/it/man8/pwunconv.8*
 %lang(it) %{_mandir}/it/man8/useradd.8*
@@ -411,12 +441,21 @@ fi
 %lang(it) %{_mandir}/it/man8/vigr.8*
 %lang(it) %{_mandir}/it/man8/vipw.8*
 
+%lang(ja) %{_mandir}/ja/man1/chage.1*
+%lang(ja) %{_mandir}/ja/man1/chfn.1*
+%lang(ja) %{_mandir}/ja/man1/chsh.1*
+%lang(ja) %{_mandir}/ja/man1/expiry.1*
+%lang(ja) %{_mandir}/ja/man1/gpasswd.1*
+%lang(ja) %{_mandir}/ja/man1/groups.1*
+%lang(ja) %{_mandir}/ja/man1/newgrp.1*
 %lang(ja) %{_mandir}/ja/man1/passwd.1*
+%lang(ja) %{_mandir}/ja/man1/sg.1*
 %lang(ja) %{_mandir}/ja/man5/faillog.5*
 %lang(ja) %{_mandir}/ja/man5/login.defs.5*
 %lang(ja) %{_mandir}/ja/man5/passwd.5*
 %lang(ja) %{_mandir}/ja/man5/shadow.5*
 %lang(ja) %{_mandir}/ja/man5/suauth.5*
+%lang(ja) %{_mandir}/ja/man8/chpasswd.8*
 %lang(ja) %{_mandir}/ja/man8/faillog.8*
 %lang(ja) %{_mandir}/ja/man8/groupadd.8*
 %lang(ja) %{_mandir}/ja/man8/groupdel.8*
@@ -425,6 +464,8 @@ fi
 %lang(ja) %{_mandir}/ja/man8/grpconv.8*
 %lang(ja) %{_mandir}/ja/man8/grpunconv.8*
 %lang(ja) %{_mandir}/ja/man8/lastlog.8*
+%lang(ja) %{_mandir}/ja/man8/logoutd.8*
+%lang(ja) %{_mandir}/ja/man8/newusers.8*
 %lang(ja) %{_mandir}/ja/man8/pwck.8*
 %lang(ja) %{_mandir}/ja/man8/pwconv.8*
 %lang(ja) %{_mandir}/ja/man8/pwunconv.8*
@@ -434,11 +475,19 @@ fi
 %lang(ja) %{_mandir}/ja/man8/vigr.8*
 %lang(ja) %{_mandir}/ja/man8/vipw.8*
 
+%lang(ko) %{_mandir}/ko/man1/chfn.1*
+%lang(ko) %{_mandir}/ko/man1/chsh.1*
+%lang(ko) %{_mandir}/ko/man1/groups.1*
 %lang(ko) %{_mandir}/ko/man5/passwd.5*
 %lang(ko) %{_mandir}/ko/man8/vigr.8*
 %lang(ko) %{_mandir}/ko/man8/vipw.8*
 
+%lang(pl) %{_mandir}/pl/man1/chage.1*
+%lang(pl) %{_mandir}/pl/man1/chsh.1*
+%lang(pl) %{_mandir}/pl/man1/expiry.1*
 %lang(pl) %{_mandir}/pl/man1/groups.1*
+%lang(pl) %{_mandir}/pl/man1/newgrp.1*
+%lang(pl) %{_mandir}/pl/man1/sg.1*
 %lang(pl) %{_mandir}/pl/man5/faillog.5*
 %lang(pl) %{_mandir}/pl/man8/faillog.8*
 %lang(pl) %{_mandir}/pl/man8/groupadd.8*
@@ -453,18 +502,29 @@ fi
 %lang(pl) %{_mandir}/pl/man8/vigr.8*
 %lang(pl) %{_mandir}/pl/man8/vipw.8*
 
+%lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.1*
 %lang(pt_BR) %{_mandir}/pt_BR/man5/passwd.5*
 %lang(pt_BR) %{_mandir}/pt_BR/man5/shadow.5*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupadd.8*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupdel.8*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupmod.8*
 
+%lang(ru) %{_mandir}/ru/man1/chage.1*
+%lang(ru) %{_mandir}/ru/man1/chfn.1*
+%lang(ru) %{_mandir}/ru/man1/chsh.1*
+%lang(ru) %{_mandir}/ru/man1/expiry.1*
+%lang(ru) %{_mandir}/ru/man1/gpasswd.1*
+%lang(ru) %{_mandir}/ru/man1/groups.1*
+%lang(ru) %{_mandir}/ru/man1/newgrp.1*
 %lang(ru) %{_mandir}/ru/man1/passwd.1*
+%lang(ru) %{_mandir}/ru/man1/sg.1*
 %lang(ru) %{_mandir}/ru/man5/faillog.5*
+%lang(ru) %{_mandir}/ru/man5/gshadow.5*
 %lang(ru) %{_mandir}/ru/man5/login.defs.5*
 %lang(ru) %{_mandir}/ru/man5/passwd.5*
 %lang(ru) %{_mandir}/ru/man5/shadow.5*
 %lang(ru) %{_mandir}/ru/man5/suauth.5*
+%lang(ru) %{_mandir}/ru/man8/chgpasswd.8*
 %lang(ru) %{_mandir}/ru/man8/chpasswd.8*
 %lang(ru) %{_mandir}/ru/man8/faillog.8*
 %lang(ru) %{_mandir}/ru/man8/groupadd.8*
@@ -475,6 +535,9 @@ fi
 %lang(ru) %{_mandir}/ru/man8/grpconv.8*
 %lang(ru) %{_mandir}/ru/man8/grpunconv.8*
 %lang(ru) %{_mandir}/ru/man8/lastlog.8*
+%lang(ru) %{_mandir}/ru/man8/logoutd.8*
+%lang(ru) %{_mandir}/ru/man8/newusers.8*
+%lang(ru) %{_mandir}/ru/man8/nologin.8*
 %lang(ru) %{_mandir}/ru/man8/pwck.8*
 %lang(ru) %{_mandir}/ru/man8/pwconv.8*
 %lang(ru) %{_mandir}/ru/man8/pwunconv.8*
@@ -484,6 +547,33 @@ fi
 %lang(ru) %{_mandir}/ru/man8/vigr.8*
 %lang(ru) %{_mandir}/ru/man8/vipw.8*
 
+%lang(sv) %{_mandir}/sv/man1/chage.1*
+%lang(sv) %{_mandir}/sv/man1/chsh.1*
+%lang(sv) %{_mandir}/sv/man1/expiry.1*
+%lang(sv) %{_mandir}/sv/man1/groups.1*
+%lang(sv) %{_mandir}/sv/man1/newgrp.1*
+%lang(sv) %{_mandir}/sv/man1/passwd.1*
+%lang(sv) %{_mandir}/sv/man1/sg.1*
+%lang(sv) %{_mandir}/sv/man5/faillog.5*
+%lang(sv) %{_mandir}/sv/man5/gshadow.5*
+%lang(sv) %{_mandir}/sv/man5/passwd.5*
+%lang(sv) %{_mandir}/sv/man5/suauth.5*
+%lang(sv) %{_mandir}/sv/man8/faillog.8*
+%lang(sv) %{_mandir}/sv/man8/groupadd.8*
+%lang(sv) %{_mandir}/sv/man8/groupdel.8*
+%lang(sv) %{_mandir}/sv/man8/groupmems.8*
+%lang(sv) %{_mandir}/sv/man8/groupmod.8*
+%lang(sv) %{_mandir}/sv/man8/grpck.8*
+%lang(sv) %{_mandir}/sv/man8/lastlog.8*
+%lang(sv) %{_mandir}/sv/man8/logoutd.8*
+%lang(sv) %{_mandir}/sv/man8/nologin.8*
+%lang(sv) %{_mandir}/sv/man8/pwck.8*
+%lang(sv) %{_mandir}/sv/man8/userdel.8*
+%lang(sv) %{_mandir}/sv/man8/vigr.8*
+%lang(sv) %{_mandir}/sv/man8/vipw.8*
+
+%lang(tr) %{_mandir}/tr/man1/chage.1*
+%lang(tr) %{_mandir}/tr/man1/chfn.1*
 %lang(tr) %{_mandir}/tr/man1/passwd.1*
 %lang(tr) %{_mandir}/tr/man5/passwd.5*
 %lang(tr) %{_mandir}/tr/man5/shadow.5*
@@ -494,128 +584,52 @@ fi
 %lang(tr) %{_mandir}/tr/man8/userdel.8*
 %lang(tr) %{_mandir}/tr/man8/usermod.8*
 
+%lang(zh_CN) %{_mandir}/zh_CN/man1/chage.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/chfn.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/chsh.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/expiry.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/gpasswd.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/groups.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/newgrp.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/passwd.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man1/sg.1*
+%lang(zh_CN) %{_mandir}/zh_CN/man5/faillog.5*
+%lang(zh_CN) %{_mandir}/zh_CN/man5/gshadow.5*
+%lang(zh_CN) %{_mandir}/zh_CN/man5/login.defs.5*
+%lang(zh_CN) %{_mandir}/zh_CN/man5/passwd.5*
+%lang(zh_CN) %{_mandir}/zh_CN/man5/shadow.5*
+%lang(zh_CN) %{_mandir}/zh_CN/man5/suauth.5*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/chgpasswd.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/chpasswd.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/faillog.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/groupadd.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/groupdel.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/groupmems.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/groupmod.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/grpck.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/grpconv.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/grpunconv.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/lastlog.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/logoutd.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/newusers.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/nologin.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/pwck.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/pwconv.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/pwunconv.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/useradd.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/userdel.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/usermod.8*
-
-%lang(zh_TW) %{_mandir}/zh_TW/man8/groupadd.8*
-%lang(zh_TW) %{_mandir}/zh_TW/man8/groupdel.8*
-%lang(zh_TW) %{_mandir}/zh_TW/man8/groupmod.8*
-%lang(zh_TW) %{_mandir}/zh_TW/man8/useradd.8*
-%lang(zh_TW) %{_mandir}/zh_TW/man8/userdel.8*
-%lang(zh_TW) %{_mandir}/zh_TW/man8/usermod.8*
-
-%files extras
-%defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chfn
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chsh
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/chfn.allow
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/chsh.allow
-%attr(755,root,root) %{_bindir}/chage
-%attr(4755,root,root) %{_bindir}/chfn
-%attr(4755,root,root) %{_bindir}/chsh
-%attr(4755,root,root) %{_bindir}/expiry
-%attr(4755,root,root) %{_bindir}/gpasswd
-%attr(755,root,root) %{_bindir}/newgrp
-%attr(755,root,root) %{_bindir}/sg
-%attr(755,root,root) %{_sbindir}/newusers
-
-%{_mandir}/man1/chage.1*
-%{_mandir}/man1/chfn.1*
-%{_mandir}/man1/chsh.1*
-%{_mandir}/man1/expiry.1*
-%{_mandir}/man1/gpasswd.1*
-%{_mandir}/man1/newgrp.1*
-%{_mandir}/man1/sg.1*
-%{_mandir}/man8/newusers.8*
-
-%lang(cs) %{_mandir}/cs/man1/expiry.1*
-%lang(cs) %{_mandir}/cs/man1/gpasswd.1*
-
-%lang(de) %{_mandir}/de/man1/chfn.1*
-%lang(de) %{_mandir}/de/man1/chsh.1*
-%lang(de) %{_mandir}/de/man1/newgrp.1*
-
-%lang(fi) %{_mandir}/fi/man1/chfn.1*
-%lang(fi) %{_mandir}/fi/man1/chsh.1*
-
-%lang(fr) %{_mandir}/fr/man1/chage.1*
-%lang(fr) %{_mandir}/fr/man1/chfn.1*
-%lang(fr) %{_mandir}/fr/man1/chsh.1*
-%lang(fr) %{_mandir}/fr/man1/expiry.1*
-%lang(fr) %{_mandir}/fr/man1/gpasswd.1*
-%lang(fr) %{_mandir}/fr/man1/newgrp.1*
-%lang(fr) %{_mandir}/fr/man1/sg.1*
-%lang(fr) %{_mandir}/fr/man8/newusers.8*
-
-%lang(hu) %{_mandir}/hu/man1/chsh.1*
-%lang(hu) %{_mandir}/hu/man1/gpasswd.1*
-%lang(hu) %{_mandir}/hu/man1/newgrp.1*
-%lang(hu) %{_mandir}/hu/man1/sg.1*
-%lang(hu) %{_mandir}/hu/man5/passwd.5*
-%lang(hu) %{_mandir}/hu/man8/lastlog.8*
-
-%lang(id) %{_mandir}/id/man1/chsh.1*
-
-%lang(it) %{_mandir}/it/man1/chage.1*
-%lang(it) %{_mandir}/it/man1/chfn.1*
-%lang(it) %{_mandir}/it/man1/chsh.1*
-%lang(it) %{_mandir}/it/man1/expiry.1*
-%lang(it) %{_mandir}/it/man1/gpasswd.1*
-%lang(it) %{_mandir}/it/man1/newgrp.1*
-%lang(it) %{_mandir}/it/man1/sg.1*
-%lang(it) %{_mandir}/it/man5/faillog.5*
-%lang(it) %{_mandir}/it/man8/chpasswd.8*
-%lang(it) %{_mandir}/it/man8/faillog.8*
-%lang(it) %{_mandir}/it/man8/newusers.8*
-%lang(it) %{_mandir}/it/man8/pwck.8*
-
-%lang(ja) %{_mandir}/ja/man1/chage.1*
-%lang(ja) %{_mandir}/ja/man1/chfn.1*
-%lang(ja) %{_mandir}/ja/man1/chsh.1*
-%lang(ja) %{_mandir}/ja/man1/expiry.1*
-%lang(ja) %{_mandir}/ja/man1/gpasswd.1*
-%lang(ja) %{_mandir}/ja/man1/newgrp.1*
-%lang(ja) %{_mandir}/ja/man1/sg.1*
-%lang(ja) %{_mandir}/ja/man8/chpasswd.8*
-%lang(ja) %{_mandir}/ja/man8/newusers.8*
-
-%lang(ko) %{_mandir}/ko/man1/chfn.1*
-%lang(ko) %{_mandir}/ko/man1/chsh.1*
-# missing in tarball
-#%lang(ko) %{_mandir}/ko/man1/newgrp.1*
-
-%lang(ru) %{_mandir}/ru/man1/chage.1*
-%lang(ru) %{_mandir}/ru/man1/chfn.1*
-%lang(ru) %{_mandir}/ru/man1/chsh.1*
-%lang(ru) %{_mandir}/ru/man1/expiry.1*
-%lang(ru) %{_mandir}/ru/man1/gpasswd.1*
-%lang(ru) %{_mandir}/ru/man1/newgrp.1*
-%lang(ru) %{_mandir}/ru/man1/sg.1*
-%lang(ru) %{_mandir}/ru/man8/newusers.8*
-
-%lang(pl) %{_mandir}/pl/man1/chage.1*
-%lang(pl) %{_mandir}/pl/man1/chsh.1*
-%lang(pl) %{_mandir}/pl/man1/expiry.1*
-%lang(pl) %{_mandir}/pl/man1/newgrp.1*
-%lang(pl) %{_mandir}/pl/man1/sg.1*
-
-%lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.1*
-
-%lang(tr) %{_mandir}/tr/man1/chage.1*
-%lang(tr) %{_mandir}/tr/man1/chfn.1*
-
-%lang(zh_CN) %{_mandir}/zh_CN/man1/chfn.1*
-%lang(zh_CN) %{_mandir}/zh_CN/man1/chsh.1*
-%lang(zh_CN) %{_mandir}/zh_CN/man1/newgrp.1*
-%lang(zh_CN) %{_mandir}/zh_CN/man5/passwd.5*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/vigr.8*
+%lang(zh_CN) %{_mandir}/zh_CN/man8/vipw.8*
 
 %lang(zh_TW) %{_mandir}/zh_TW/man1/chfn.1*
 %lang(zh_TW) %{_mandir}/zh_TW/man1/chsh.1*
 %lang(zh_TW) %{_mandir}/zh_TW/man1/newgrp.1*
 %lang(zh_TW) %{_mandir}/zh_TW/man5/passwd.5*
 %lang(zh_TW) %{_mandir}/zh_TW/man8/chpasswd.8*
+%lang(zh_TW) %{_mandir}/zh_TW/man8/groupadd.8*
+%lang(zh_TW) %{_mandir}/zh_TW/man8/groupdel.8*
+%lang(zh_TW) %{_mandir}/zh_TW/man8/groupmod.8*
+%lang(zh_TW) %{_mandir}/zh_TW/man8/useradd.8*
+%lang(zh_TW) %{_mandir}/zh_TW/man8/userdel.8*
+%lang(zh_TW) %{_mandir}/zh_TW/man8/usermod.8*
