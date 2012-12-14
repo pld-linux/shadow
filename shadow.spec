@@ -89,15 +89,17 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.0.18.1
-BuildRequires:	useradd -g is broken, use pwdutils, or fix it:
+Version:	4.1.5.1
+#BuildRequires:	useradd -g is broken, use pwdutils, or fix it:
 # http://zie.pg.gda.pl/mailman/pipermail/shadow/2006-September/000395.html
-Release:	0.13
+Release:	0.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	ftp://ftp.pld.org.pl/software/shadow/%{name}-%{version}.tar.bz2
-# Source0-md5:	e7751d46ecf219c07ae0b028ab3335c6
+Source0:	http://pkg-shadow.alioth.debian.org/releases/shadow-%{version}.tar.bz2
+# Source0-md5:	a00449aa439c69287b6d472191dc2247
+Source10:	http://pkg-shadow.alioth.debian.org/releases/shadow-%{version}.tar.bz2.sig
+# Source10-md5:	f16f31f6f5a607b1ffb1aa1aac4c37f2
 Source1:	%{name}-login.defs
 Source2:	%{name}.useradd
 Source3:	chage.pamd
@@ -113,6 +115,7 @@ Patch2:		%{name}-po-update.patch
 Patch3:		%{name}-removed-programs.patch
 Patch4:		%{name}-shared.patch
 Patch5:		%{name}-typo.patch
+URL:		http://pkg-shadow.alioth.debian.org/
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
