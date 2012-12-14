@@ -1,23 +1,3 @@
---- shadow-4.0.16/lib/getdef.c~	2006-06-08 00:19:27.452506888 +0300
-+++ shadow-4.0.16/lib/getdef.c	2006-06-08 00:21:20.945057953 +0300
-@@ -59,6 +59,8 @@
- 	{"FAKE_SHELL", NULL},
- 	{"GID_MAX", NULL},
- 	{"GID_MIN", NULL},
-+	{"SYS_GID_MAX", NULL},
-+	{"SYS_GID_MIN", NULL},
- 	{"HUSHLOGIN_FILE", NULL},
- 	{"KILLCHAR", NULL},
- 	{"LOGIN_RETRIES", NULL},
-@@ -77,6 +79,8 @@
- 	{"TTYTYPE_FILE", NULL},
- 	{"UID_MAX", NULL},
- 	{"UID_MIN", NULL},
-+	{"SYS_UID_MAX", NULL},
-+	{"SYS_UID_MIN", NULL},
- 	{"UMASK", NULL},
- 	{"USERDEL_CMD", NULL},
- 	{"USERGROUPS_ENAB", NULL},
 --- shadow-4.0.6/src/useradd.c	2004-11-18 21:45:00.713398344 +0100
 +++ shadow-4.0.16/src/useradd.c	2006-06-08 01:17:05.580340031 +0300
 @@ -72,10 +72,10 @@
@@ -30,7 +10,7 @@
 -static const char *def_home = "/home";
 -static const char *def_shell = "";
 +static const char *def_home = "/home/users";
-+static const char *def_shell = "/dev/null";
++static const char *def_shell = "/sbin/nologin";
  static const char *def_template = SKEL_DIR;
  static const char *def_create_mail_spool = "no";
  
@@ -43,174 +23,25 @@
  static uid_t user_id;
  static gid_t user_gid;
  static const char *user_comment = "";
-@@ -126,6 +126,7 @@
-     mflg = 0,			/* create user's home directory if it doesn't exist */
-     nflg = 0,			/* create a group having the same name as the user */
-     oflg = 0,			/* permit non-unique user ID to be specified with -u */
-+	rflg = 0,			/* create system account (wuth lower uid) */
-     sflg = 0,			/* shell program for new account */
-     uflg = 0;			/* specify user ID for new account */
- 
-@@ -632,6 +633,7 @@
- 			   "				(non-unique) UID\n"
- 			   "  -p, --password PASSWORD	use encrypted password for the new user\n"
- 			   "				account\n"
-+			   "  -r				create a system account, with uid lower than usual\n"
- 			   "  -s, --shell SHELL		the login shell for the new user account\n"
- 			   "  -u, --uid UID			force use the UID for the new user account\n"));
- 	exit (E_USAGE);
-@@ -833,6 +835,13 @@
- 
- 	uid_min = getdef_unum ("UID_MIN", 1000);
- 	uid_max = getdef_unum ("UID_MAX", 60000);
-+	if (!rflg) {
-+	    uid_min = getdef_unum ("UID_MIN", 500);
-+	    uid_max = getdef_unum ("UID_MAX", 60000);
-+	} else {
-+	    uid_min = getdef_unum ("SYS_UID_MIN", 1);
-+	    uid_max = getdef_unum ("SYS_UID_MAX", 499);
-+	}	
- 
- 	/*
- 	 * Start with some UID value if the user didn't provide us with
-@@ -1016,7 +1025,7 @@
- 			{NULL, 0, NULL, '\0'}
- 		};
- 		while ((c =
--			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:mMop:s:u:",
-+			getopt_long (argc, argv, "b:c:d:De:f:g:G:k:K:mMop:s:u:r",
- 				     long_options, NULL)) != -1) {
- 			switch (c) {
- 			case 'b':
-@@ -1169,6 +1178,9 @@
- 				}
- 				user_pass = optarg;
- 				break;
-+			case 'r':	/* create system account */
-+				rflg++;
-+				break;
- 			case 's':
- 				if (!VALID (optarg)
- 				    || (optarg[0]
---- shadow-4.0.16/src/groupadd.c	2006-06-09 21:26:14.039716861 +0300
-+++ shadow-4.0.18.1/src/groupadd.c	2006-11-11 18:38:27.453562057 +0200
-@@ -72,6 +72,7 @@
- static int oflg = 0;		/* permit non-unique group ID to be specified with -g */
- static int gflg = 0;		/* ID value for the new group */
- static int fflg = 0;		/* if group already exists, do nothing and exit(0) */
-+static int rflg = 0;           /* add system group (with lower gid) */
- 
- #ifdef	NDBM
- extern int gr_dbm_mode;
-@@ -105,6 +106,7 @@
- 			   "  -K, --key KEY=VALUE		overrides /etc/login.defs defaults\n"
- 			   "  -o, --non-unique		allow create group with duplicate\n"
- 			   "				(non-unique) GID\n"
-+			   "  -r				create a system account, with gid lower than usual\n"
- 			   "\n"));
- 	exit (E_USAGE);
- }
-@@ -197,8 +199,13 @@
- 	const struct group *grp;
- 	gid_t gid_min, gid_max;
- 
--	gid_min = getdef_unum ("GID_MIN", 1000);
--	gid_max = getdef_unum ("GID_MAX", 60000);
-+	if (!rflg) {
-+		gid_min = getdef_unum ("GID_MIN", 500);
-+		gid_max = getdef_unum ("GID_MAX", 60000);
-+	} else {
-+		gid_min = getdef_unum ("SYS_GID_MIN", 10);
-+		gid_max = getdef_unum ("SYS_GID_MAX", 499);
-+	}
- 
- 	/*
- 	 * Start with some GID value if the user didn't provide us with
-@@ -412,7 +419,7 @@
- 		};
- 
- 		while ((c =
--			getopt_long (argc, argv, "fg:hK:o", long_options,
-+			getopt_long (argc, argv, "fg:hK:or", long_options,
- 				     &option_index)) != -1) {
- 			switch (c) {
- 			case 'f':
-@@ -463,6 +470,10 @@
- 			case 'o':
- 				oflg++;
- 				break;
-+			case 'r':
-+				/* create system group */
-+				rflg++;
-+				break;			
- 			default:
- 				usage ();
- 			}
---- shadow-4.0.16/man/groupadd.8~	2006-06-09 23:20:28.053339201 +0300
-+++ shadow-4.0.16/man/groupadd.8	2006-06-09 23:22:17.115785750 +0300
-@@ -14,7 +14,7 @@
- groupadd \- create a new group
- .SH "SYNOPSIS"
- .HP 9
--\fBgroupadd\fR [\-g\ \fIGID\fR\ [\-o]] [\-f] [\-K\ \fIKEY\fR=\fIVALUE\fR] \fIgroup\fR
-+\fBgroupadd\fR [\-g\ \fIGID\fR\ [\-o]] [\-f] [\-r] [\-K\ \fIKEY\fR=\fIVALUE\fR] \fIgroup\fR
- .SH "DESCRIPTION"
- .PP
- The
-@@ -58,6 +58,10 @@
- .TP 3n
- \fB\-o\fR
- This option permits to add group with non\-unique GID.
-+.TP 3n
-+\fB-r\fR
-+This flag is used to create a system group, with gid lower than usual
-+(chosen between SYS_GID_MIN and SYS_GID_MAX).
- .SH "FILES"
- .TP 3n
- \fI/etc/group\fR
---- shadow-4.0.16/man/useradd.8~	2006-06-09 23:05:41.393444193 +0300
-+++ shadow-4.0.16/man/useradd.8	2006-06-09 23:05:43.273486388 +0300
-@@ -118,6 +118,9 @@
- The encrypted password, as returned by
- \fBcrypt\fR(3). The default is to disable the account.
- .TP 3n
-+\fB-r\fR
-+The number of days after a password has expired before the account will be disabled.
-+.TP 3n
- \fB\-s\fR, \fB\-\-shell\fR \fISHELL\fR
- The name of the user's login shell. The default is to leave this field blank, which causes the system to select the default login shell.
- .TP 3n
---- shadow-4.0.16/man/pl/groupadd.8~	2006-06-09 21:27:27.071352380 +0300
-+++ shadow-4.0.16/man/pl/groupadd.8	2006-06-09 21:29:35.034218035 +0300
-@@ -29,7 +29,7 @@
- .SH NAZWA
- groupadd \- twórz nową grupę
- .SH SKŁADNIA
--\fBgroupadd\fR [\fB\-g\fR \fIgid\fR [\fB\-o\fR]] [\fB\-f\fR] \fIgrupa\fR
-+\fBgroupadd\fR [\fB\-g\fR \fIgid\fR [\fB\-o\fR]] [\fB\-f\fR] [\fB-r\fR] \fIgrupa\fR
- .SH OPIS
- Polecenie \fBgroupadd\fR tworzy nowe konto grupy posługując się
- wartościami podanymi w wierszu poleceń i domyślnymi wartościami z systemu.
-@@ -42,6 +42,10 @@
- podana groupa już istnieje. Z opcją \fB\-g\fR, jeśli podany gid już istnieje,
- wybierany jest inny (unikalny) gid (czyli \fB\-g\fR jest wyłączane).
- .TP
-+.BI -r
-+Ta opcja s�u�y do zak�adania grup systemowych, z identyfikatorami ni�szymi
-+ni� zwykle (wybieranymi z przedzia�u od SYS_GID_MIN do SYS_GID_MAX).
-+.TP
- .BI \-g " gid"
- Numeryczna wartość identyfikatora grupy. Wartość ta musi być niepowtarzalna,
- chyba że użyto opcji \fB\-o\fR. Wartość ID grupy nie może być ujemna. Domyślnie
---- shadow-4.0.16/man/pl/useradd.8~	2006-06-09 22:52:54.696249131 +0300
-+++ shadow-4.0.16/man/pl/useradd.8	2006-06-09 23:00:57.427074349 +0300
-@@ -98,6 +98,9 @@
- .IP "\fB\-p\fR \fIpasswd\fR"
- Zakodowane hasło w postaci zwracanej przez \fBcrypt\fR(3).
- Domyślnym działaniem jest blokowanie konta.
-+.IP \fB-r\fR
-+Tworzenie konta systemowego, z identyfikatorem ni�szym ni� zwykle
-+(wybieranym z przedzia�u od SYS_UID_MIN do SYS_UID_MAX).
- .IP "\fB\-s\fR \fIpowłoka\fR"
- Nazwa powłoki (shell) użytkownika. Ustawienie tego pola na puste
- powoduje, że system wybierze domyślną powłokę logowania.
+--- shadow-4.1.5.1/libmisc/find_new_gid.c~	2011-07-29 17:38:23.000000000 +0200
++++ shadow-4.1.5.1/libmisc/find_new_gid.c	2012-12-14 14:03:45.355638812 +0100
+@@ -68,7 +68,7 @@
+ 			return -1;
+ 		}
+ 	} else {
+-		gid_min = (gid_t) getdef_ulong ("SYS_GID_MIN", 101UL);
++		gid_min = (gid_t) getdef_ulong ("SYS_GID_MIN", 10UL);
+ 		gid_max = (gid_t) getdef_ulong ("GID_MIN", 1000UL) - 1;
+ 		gid_max = (gid_t) getdef_ulong ("SYS_GID_MAX", (unsigned long) gid_max);
+ 		if (gid_max < gid_min) {
+--- shadow-4.1.5.1/libmisc/find_new_uid.c~	2011-07-29 17:39:16.000000000 +0200
++++ shadow-4.1.5.1/libmisc/find_new_uid.c	2012-12-14 14:03:29.645639367 +0100
+@@ -68,7 +68,7 @@
+ 			return -1;
+ 		}
+ 	} else {
+-		uid_min = (uid_t) getdef_ulong ("SYS_UID_MIN", 101UL);
++		uid_min = (uid_t) getdef_ulong ("SYS_UID_MIN", 1UL);
+ 		uid_max = (uid_t) getdef_ulong ("UID_MIN", 1000UL) - 1;
+ 		uid_max = (uid_t) getdef_ulong ("SYS_UID_MAX", (unsigned long) uid_max);
+ 		if (uid_max < uid_min) {

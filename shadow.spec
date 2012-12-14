@@ -108,13 +108,8 @@ Source5:	chsh.pamd
 Source6:	chfn.pamd
 Source7:	passwd.pamd
 Source8:	useradd.pamd
-Source9:	chpasswd.pamd
+#Source9:	chpasswd.pamd
 Patch0:		%{name}-pld.patch
-Patch1:		%{name}-chage_expdays.patch
-Patch2:		%{name}-po-update.patch
-Patch3:		%{name}-removed-programs.patch
-Patch4:		%{name}-shared.patch
-Patch5:		%{name}-typo.patch
 URL:		http://pkg-shadow.alioth.debian.org/
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
@@ -211,41 +206,34 @@ Programy nieczęsto używane. W małych systemach można je pominąć.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-#%patch2 -p1
-%patch3 -p1
-%{?with_shared:%patch4 -p1}
-#%patch5 -p1
-
-# ugh, too populated to patch
-%{__sed} -i -e 's/instead DES/instead of DES/' src/chpasswd.c po/*.po
-
-rm -f po/stamp-po
 
 %build
-%{__autoheader}
-%{__gettextize}
-%{__aclocal}
-%{__autoconf}
-%{__automake}
 %configure \
-	--disable-desrpc \
 	%{?with_shared:--enable-shared --disable-static} \
 	--without-libcrack \
-	--with-libcrypt \
+	--without-tcb \
+	--with-sha-crypt \
+	--with-nscd \
+	--with-audit \
+	--with-acl \
+	--with-attr \
 	--with-libpam \
-	--with-md5crypt \
-	--with-nls \
+	--enable-nls \
+	--enable-shadowgrp \
 	%{?with_selinux:--with-selinux} \
-	--without-included-gettext
+	--with-group-name-max-length=32
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{default,pam.d,security,skel/tmp}
+install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{default,pam.d,security,skel/tmp}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# move nologin "shell" where useradd specifies it
+%{__mv} $RPM_BUILD_ROOT%{_sbindir}/nologin $RPM_BUILD_ROOT/sbin
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
@@ -265,20 +253,6 @@ install etc/pam.d/groupdel $RPM_BUILD_ROOT/etc/pam.d/groupdel
 > $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
 > $RPM_BUILD_ROOT/etc/security/chsh.allow
-
-# vigr symlink is created by make install, but in wrong dir
-ln -sf vipw $RPM_BUILD_ROOT%{_sbindir}/vigr
-
-# what's this for?
-echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/it/man1/sg.1
-
-%if !%{with shared}
-# invalid static library
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
-%endif
-
-# no -devel, be gone
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name}
 
@@ -300,26 +274,34 @@ fi
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chpasswd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chgpasswd
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupmems
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/newusers
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/passwd
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/shadow
+#%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/shadow
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/useradd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/usermod
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/userdel
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupadd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupdel
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/groupmod
+
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/login.defs
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
+%attr(755,root,root) /sbin/nologin
 %attr(755,root,root) %{_sbindir}/chpasswd
+%attr(755,root,root) %{_sbindir}/chgpasswd
 %attr(755,root,root) %{_sbindir}/groupadd
 %attr(755,root,root) %{_sbindir}/groupdel
+%attr(755,root,root) %{_sbindir}/groupmems
 %attr(755,root,root) %{_sbindir}/groupmod
 %attr(755,root,root) %{_sbindir}/grpck
 %attr(755,root,root) %{_sbindir}/grpconv
 %attr(755,root,root) %{_sbindir}/grpunconv
+%attr(755,root,root) %{_sbindir}/logoutd
 %attr(755,root,root) %{_sbindir}/pwck
 %attr(755,root,root) %{_sbindir}/pwconv
 %attr(755,root,root) %{_sbindir}/pwunconv
@@ -329,6 +311,7 @@ fi
 %attr(755,root,root) %{_sbindir}/vigr
 %attr(755,root,root) %{_sbindir}/vipw
 %attr(755,root,root) %{_bindir}/faillog
+%attr(755,root,root) %{_bindir}/groups
 %attr(755,root,root) %{_bindir}/lastlog
 %attr(4755,root,root) %{_bindir}/passwd
 %{_mandir}/man1/passwd.1*
@@ -370,13 +353,6 @@ fi
 %lang(de) %{_mandir}/de/man8/vigr.8*
 %lang(de) %{_mandir}/de/man8/vipw.8*
 %lang(de) %{_mandir}/de/man5/passwd.5*
-
-%lang(es) %{_mandir}/es/man1/passwd.1*
-%lang(es) %{_mandir}/es/man5/passwd.5*
-%lang(es) %{_mandir}/es/man8/vigr.8*
-%lang(es) %{_mandir}/es/man8/vipw.8*
-
-%lang(fi) %{_mandir}/fi/man1/passwd.1*
 
 %lang(fr) %{_mandir}/fr/man1/passwd.1*
 %lang(fr) %{_mandir}/fr/man5/faillog.5*
@@ -451,30 +427,21 @@ fi
 %lang(ko) %{_mandir}/ko/man8/vigr.8*
 %lang(ko) %{_mandir}/ko/man8/vipw.8*
 
-%lang(pl) %{_mandir}/pl/man1/passwd.1*
+%lang(pl) %{_mandir}/pl/man1/groups.1*
 %lang(pl) %{_mandir}/pl/man5/faillog.5*
-%lang(pl) %{_mandir}/pl/man5/login.defs.5*
-%lang(pl) %{_mandir}/pl/man5/passwd.5*
-%lang(pl) %{_mandir}/pl/man5/shadow.5*
-%lang(pl) %{_mandir}/pl/man5/suauth.5*
 %lang(pl) %{_mandir}/pl/man8/faillog.8*
 %lang(pl) %{_mandir}/pl/man8/groupadd.8*
 %lang(pl) %{_mandir}/pl/man8/groupdel.8*
+%lang(pl) %{_mandir}/pl/man8/groupmems.8*
 %lang(pl) %{_mandir}/pl/man8/groupmod.8*
 %lang(pl) %{_mandir}/pl/man8/grpck.8*
-%lang(pl) %{_mandir}/pl/man8/grpconv.8*
-%lang(pl) %{_mandir}/pl/man8/grpunconv.8*
 %lang(pl) %{_mandir}/pl/man8/lastlog.8*
-%lang(pl) %{_mandir}/pl/man8/pwck.8*
-%lang(pl) %{_mandir}/pl/man8/pwconv.8*
-%lang(pl) %{_mandir}/pl/man8/pwunconv.8*
-%lang(pl) %{_mandir}/pl/man8/useradd.8*
+%lang(pl) %{_mandir}/pl/man8/logoutd.8*
 %lang(pl) %{_mandir}/pl/man8/userdel.8*
 %lang(pl) %{_mandir}/pl/man8/usermod.8*
 %lang(pl) %{_mandir}/pl/man8/vigr.8*
 %lang(pl) %{_mandir}/pl/man8/vipw.8*
 
-# FIXME change to -> pt?
 %lang(pt_BR) %{_mandir}/pt_BR/man5/passwd.5*
 %lang(pt_BR) %{_mandir}/pt_BR/man5/shadow.5*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/groupadd.8*
@@ -562,8 +529,6 @@ fi
 %lang(de) %{_mandir}/de/man1/chsh.1*
 %lang(de) %{_mandir}/de/man1/newgrp.1*
 
-%lang(es) %{_mandir}/es/man1/newgrp.1*
-
 %lang(fi) %{_mandir}/fi/man1/chfn.1*
 %lang(fi) %{_mandir}/fi/man1/chsh.1*
 
@@ -623,14 +588,10 @@ fi
 %lang(ru) %{_mandir}/ru/man8/newusers.8*
 
 %lang(pl) %{_mandir}/pl/man1/chage.1*
-%lang(pl) %{_mandir}/pl/man1/chfn.1*
 %lang(pl) %{_mandir}/pl/man1/chsh.1*
 %lang(pl) %{_mandir}/pl/man1/expiry.1*
-%lang(pl) %{_mandir}/pl/man1/gpasswd.1*
 %lang(pl) %{_mandir}/pl/man1/newgrp.1*
 %lang(pl) %{_mandir}/pl/man1/sg.1*
-%lang(pl) %{_mandir}/pl/man8/chpasswd.8*
-%lang(pl) %{_mandir}/pl/man8/newusers.8*
 
 %lang(pt_BR) %{_mandir}/pt_BR/man1/gpasswd.1*
 
