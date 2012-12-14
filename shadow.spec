@@ -264,6 +264,9 @@ install %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
 > $RPM_BUILD_ROOT/etc/security/chsh.allow
 
+%{__rm} $RPM_BUILD_ROOT{/etc/pam.d,%{_bindir}}/{login,su}
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/{login,su}.1*
+
 %find_lang %{name}
 
 %clean
