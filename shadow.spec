@@ -40,6 +40,9 @@ Source22:	userdel.pamd
 Source23:	usermod.pamd
 Patch0:		%{name}-pld.patch
 URL:		http://pkg-shadow.alioth.debian.org/
+BuildRequires:	acl-devel
+BuildRequires:	attr-devel
+BuildRequires:	audit-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
