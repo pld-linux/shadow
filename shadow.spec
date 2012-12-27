@@ -39,10 +39,11 @@ Source21:	useradd.pamd
 Source22:	userdel.pamd
 Source23:	usermod.pamd
 Patch0:		%{name}-pld.patch
+Patch1:		%{name}-goodname.patch
 URL:		http://pkg-shadow.alioth.debian.org/
 BuildRequires:	acl-devel
 BuildRequires:	attr-devel
-BuildRequires:	audit-devel
+BuildRequires:	audit-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
 BuildRequires:	gettext-devel >= 0.12.1
@@ -125,6 +126,7 @@ utilitários e senhas shadow em geral.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
