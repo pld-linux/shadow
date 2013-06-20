@@ -1,4 +1,27 @@
 #
+# TODO
+# - handle conflicting files:
+#error: Install/Erase problems:
+#        file /usr/share/man/cs/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /usr/share/man/de/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /usr/share/man/fr/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /usr/share/man/it/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /usr/share/man/ja/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /usr/share/man/ko/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /usr/share/man/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /usr/share/man/pl/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
+#        file /sbin/nologin from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package util-linux-2.22.2-4.x86_64
+#        file /usr/share/man/man8/nologin.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package util-linux-2.22.2-4.x86_64
+#        file /usr/share/man/cs/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/fr/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/hu/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/it/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/ja/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/pl/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/ru/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/sv/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-13.x86_64
+#        file /usr/share/man/man8/lastlog.8.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package SysVinit-2.88-13.x86_64
+
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
 %bcond_with	shared		# build with shared libshadow (linking with selinux is broken)
