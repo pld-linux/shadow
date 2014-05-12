@@ -1,6 +1,4 @@
-#
 # TODO
-# - 4.2: --enable-subordinate-ids
 # - handle conflicting files:
 #error: Install/Erase problems:
 #        file /usr/share/man/cs/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
@@ -46,6 +44,7 @@
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
 %bcond_with	shared		# build with shared libshadow (linking with selinux is broken)
+#
 #
 Summary:	Shadow password file utilities for Linux
 Summary(de.UTF-8):	Shadow-Paßwortdatei-Dienstprogramme für Linux
@@ -190,6 +189,7 @@ utilitários e senhas shadow em geral.
 	--enable-nls \
 	--enable-shadowgrp \
 	%{?with_selinux:--with-selinux} \
+	--enable-subordinate-ids \
 	--with-group-name-max-length=32
 
 %{__make}
@@ -269,15 +269,17 @@ fi
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
 %attr(755,root,root) /bin/groups
 %attr(755,root,root) /sbin/nologin
-%attr(755,root,root) %{_bindir}/chage
 %attr(4755,root,root) %{_bindir}/chfn
 %attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
-%attr(755,root,root) %{_bindir}/faillog
 %attr(4755,root,root) %{_bindir}/gpasswd
-%attr(755,root,root) %{_bindir}/lastlog
-%attr(755,root,root) %{_bindir}/newgrp
 %attr(4755,root,root) %{_bindir}/passwd
+%attr(755,root,root) %{_bindir}/chage
+%attr(755,root,root) %{_bindir}/faillog
+%attr(755,root,root) %{_bindir}/lastlog
+%attr(755,root,root) %{_bindir}/newgidmap
+%attr(755,root,root) %{_bindir}/newgrp
+%attr(755,root,root) %{_bindir}/newuidmap
 %attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_sbindir}/chgpasswd
 %attr(755,root,root) %{_sbindir}/chpasswd
@@ -304,7 +306,9 @@ fi
 %{_mandir}/man1/expiry.1*
 %{_mandir}/man1/gpasswd.1*
 %{_mandir}/man1/groups.1*
+%{_mandir}/man1/newgidmap.1*
 %{_mandir}/man1/newgrp.1*
+%{_mandir}/man1/newuidmap.1*
 %{_mandir}/man1/passwd.1*
 %{_mandir}/man1/sg.1*
 %{_mandir}/man5/faillog.5*
@@ -313,6 +317,8 @@ fi
 %{_mandir}/man5/passwd.5*
 %{_mandir}/man5/shadow.5*
 %{_mandir}/man5/suauth.5*
+%{_mandir}/man5/subgid.5*
+%{_mandir}/man5/subuid.5*
 %{_mandir}/man8/chgpasswd.8*
 %{_mandir}/man8/chpasswd.8*
 %{_mandir}/man8/faillog.8*
@@ -410,7 +416,9 @@ fi
 %lang(fr) %{_mandir}/fr/man1/expiry.1*
 %lang(fr) %{_mandir}/fr/man1/gpasswd.1*
 %lang(fr) %{_mandir}/fr/man1/groups.1*
+%lang(fr) %{_mandir}/fr/man1/newgidmap.1*
 %lang(fr) %{_mandir}/fr/man1/newgrp.1*
+%lang(fr) %{_mandir}/fr/man1/newuidmap.1*
 %lang(fr) %{_mandir}/fr/man1/passwd.1*
 %lang(fr) %{_mandir}/fr/man1/sg.1*
 %lang(fr) %{_mandir}/fr/man5/faillog.5*
@@ -419,6 +427,8 @@ fi
 %lang(fr) %{_mandir}/fr/man5/passwd.5*
 %lang(fr) %{_mandir}/fr/man5/shadow.5*
 %lang(fr) %{_mandir}/fr/man5/suauth.5*
+%lang(fr) %{_mandir}/fr/man5/subgid.5*
+%lang(fr) %{_mandir}/fr/man5/subuid.5*
 %lang(fr) %{_mandir}/fr/man8/chgpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/chpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/faillog.8*
