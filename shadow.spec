@@ -1,5 +1,6 @@
 #
 # TODO
+# - 4.2: --enable-subordinate-ids
 # - handle conflicting files:
 #error: Install/Erase problems:
 #        file /usr/share/man/cs/man1/groups.1.gz from install of shadow-4.1.5.1-0.1.x86_64 conflicts with file from package coreutils-8.20-2.x86_64
@@ -54,17 +55,17 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.1.5.1
+Version:	4.2
 #BuildRequires:	useradd -g is broken, use pwdutils, or fix it:
 # http://zie.pg.gda.pl/mailman/pipermail/shadow/2006-September/000395.html
 Release:	0.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	http://pkg-shadow.alioth.debian.org/releases/shadow-%{version}.tar.bz2
-# Source0-md5:	a00449aa439c69287b6d472191dc2247
-Source1:	http://pkg-shadow.alioth.debian.org/releases/shadow-%{version}.tar.bz2.sig
-# Source1-md5:	f16f31f6f5a607b1ffb1aa1aac4c37f2
+Source0:	http://pkg-shadow.alioth.debian.org/releases/%{name}-%{version}.tar.xz
+# Source0-md5:	912a5957c1471acccedbc2a635e36f5e
+Source1:	http://pkg-shadow.alioth.debian.org/releases/%{name}-%{version}.tar.xz.sig
+# Source1-md5:	c345642a3a3daf3ff96b7542590f7706
 Source2:	%{name}-login.defs
 Source3:	%{name}.useradd
 Source10:	chage.pamd
@@ -93,15 +94,17 @@ BuildRequires:	gettext-devel >= 0.12.1
 %{?with_selinux:BuildRequires:	libselinux-devel}
 BuildRequires:	libtool
 BuildRequires:	pam-devel
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	pam >= 0.99.7.1
 # to force proper coreutils version, so "groups" command exists
 Requires:	/usr/bin/groups
 Provides:	passwd
 Provides:	shadow-utils
 Obsoletes:	passwd
+Obsoletes:	pwdutils
 Obsoletes:	shadow-extras
 Obsoletes:	shadow-utils
-Obsoletes:	pwdutils
 Conflicts:	util-linux < 2.12-10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -169,7 +172,7 @@ utilitários e senhas shadow em geral.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1 CHECK
 
 %build
 %configure \
@@ -198,23 +201,23 @@ install -d $RPM_BUILD_ROOT{/sbin,%{_sysconfdir}/{default,pam.d,security,skel/tmp
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/login.defs
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/default/useradd
 
-install %{SOURCE10} $RPM_BUILD_ROOT/etc/pam.d/chage
-install %{SOURCE11} $RPM_BUILD_ROOT/etc/pam.d/chfn
-install %{SOURCE12} $RPM_BUILD_ROOT/etc/pam.d/chgpasswd
-install %{SOURCE13} $RPM_BUILD_ROOT/etc/pam.d/chpasswd
-install %{SOURCE14} $RPM_BUILD_ROOT/etc/pam.d/chsh
-install %{SOURCE15} $RPM_BUILD_ROOT/etc/pam.d/groupadd
-install %{SOURCE16} $RPM_BUILD_ROOT/etc/pam.d/groupdel
-install %{SOURCE17} $RPM_BUILD_ROOT/etc/pam.d/groupmems
-install %{SOURCE18} $RPM_BUILD_ROOT/etc/pam.d/groupmod
-install %{SOURCE19} $RPM_BUILD_ROOT/etc/pam.d/newusers
-install %{SOURCE20} $RPM_BUILD_ROOT/etc/pam.d/passwd
-install %{SOURCE21} $RPM_BUILD_ROOT/etc/pam.d/useradd
-install %{SOURCE22} $RPM_BUILD_ROOT/etc/pam.d/userdel
-install %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
+cp -p %{SOURCE10} $RPM_BUILD_ROOT/etc/pam.d/chage
+cp -p %{SOURCE11} $RPM_BUILD_ROOT/etc/pam.d/chfn
+cp -p %{SOURCE12} $RPM_BUILD_ROOT/etc/pam.d/chgpasswd
+cp -p %{SOURCE13} $RPM_BUILD_ROOT/etc/pam.d/chpasswd
+cp -p %{SOURCE14} $RPM_BUILD_ROOT/etc/pam.d/chsh
+cp -p %{SOURCE15} $RPM_BUILD_ROOT/etc/pam.d/groupadd
+cp -p %{SOURCE16} $RPM_BUILD_ROOT/etc/pam.d/groupdel
+cp -p %{SOURCE17} $RPM_BUILD_ROOT/etc/pam.d/groupmems
+cp -p %{SOURCE18} $RPM_BUILD_ROOT/etc/pam.d/groupmod
+cp -p %{SOURCE19} $RPM_BUILD_ROOT/etc/pam.d/newusers
+cp -p %{SOURCE20} $RPM_BUILD_ROOT/etc/pam.d/passwd
+cp -p %{SOURCE21} $RPM_BUILD_ROOT/etc/pam.d/useradd
+cp -p %{SOURCE22} $RPM_BUILD_ROOT/etc/pam.d/userdel
+cp -p %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 
 > $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
