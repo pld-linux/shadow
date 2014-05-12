@@ -1,22 +1,4 @@
 # TODO
-# - handle conflicting files:
-#error: Install/Erase problems:
-#        file /usr/share/man/fr/man8/lastlog.8.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-17.x86_64
-#        file /usr/share/man/it/man8/lastlog.8.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-17.x86_64
-#        file /usr/share/man/man8/lastlog.8.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-17.x86_64
-#        file /usr/share/man/pl/man8/lastlog.8.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-17.x86_64
-#        file /usr/share/man/ru/man8/lastlog.8.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-17.x86_64
-#        file /usr/share/man/sv/man8/lastlog.8.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package SysVinit-tools-2.88-17.x86_64
-#        file /sbin/nologin from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package util-linux-2.24.1-1.x86_64
-#        file /usr/share/man/man8/nologin.8.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package util-linux-2.24.1-1.x86_64
-#        file /usr/share/man/cs/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
-#        file /usr/share/man/de/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
-#        file /usr/share/man/fr/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
-#        file /usr/share/man/it/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
-#        file /usr/share/man/ja/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
-#        file /usr/share/man/ko/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
-#        file /usr/share/man/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
-#        file /usr/share/man/pl/man1/groups.1.gz from install of shadow-4.2.1-0.1.x86_64 conflicts with file from package coreutils-8.22-2.x86_64
 # - /etc/default/useradd is very outdated:
 # gpasswd -M chef_server chef_server
 #configuration error - unknown item 'FAILLOG_ENAB' (notify administrator)
@@ -93,8 +75,6 @@ BuildRequires:	pam-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	pam >= 0.99.7.1
-# to force proper coreutils version, so "groups" command exists
-Requires:	/usr/bin/groups
 Provides:	passwd
 Provides:	shadow-utils
 Obsoletes:	passwd
@@ -113,7 +93,6 @@ command-line management of the user's accounts.
   current directory called npasswd that is a standard UNIX password
   file,
 - pwck - checks the integrity of the password and shadow files,
-- lastlog - prints out the last login times of all users,
 - useradd, userdel, usermod - for accounts management,
 - groupadd, groupdel, groupmod - for group management.
 
@@ -129,9 +108,9 @@ padrón UNIX de contraseña al formato shadow.
   padrón UNIX de contraseña,
 - pwck - chequea la integridad de la contraseña y de los archivos
   shadow,
-- lastlog enseña el último momento de login de todos los usuarios.
-  Están también incluidas, en general, varias páginas de manual sobre
-  estos utilitarios y contraseñas shadow.
+
+Están también incluidas, en general, varias páginas de manual sobre estos
+utilitarios y contraseñas shadow.
 
 %description -l pl.UTF-8
 Pakiet zawiera programy do obsługi mechanizmu ukrytych haseł (shadow
@@ -142,7 +121,6 @@ kontami użytkowników w systemie:
 - pwunconv - konwertuje z shadow password do formatu standardowego
   pliku haseł. W bieżącym katalogu tworzy plik npasswd będący
   standardowym plikiem z hasłami,
-- lastlog - wyświetla czas logowania użytkowników,
 - useradd, userdel, usermod - do zarządzania kontami użytkowników,
 - groupadd, groupdel, groupmod - do zarządzania grupami.
 
@@ -160,7 +138,6 @@ arquivos-padrão UNIX de senha para o formato shadow.
   diretório corrente chamado npasswd que é o arquivo-padrão UNIX de
   senha,
 - pwck - checa a integridade da senha e dos arquivos shadow,
-- lastlog - mostra o último momento de login de todos os usuários.
 
 Várias páginas de manual estão também incluídas sobre estes
 utilitários e senhas shadow em geral.
@@ -224,6 +201,16 @@ cp -p %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/{login,su}.1*
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man3/*.3*
 
+# packaged in SysVinit-tools
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/lastlog
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/lastlog.8*
+# packaged in coreutils
+%{__rm} $RPM_BUILD_ROOT/bin/groups
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/groups.1*
+# packaged in util-linux
+%{__rm} $RPM_BUILD_ROOT/sbin/nologin
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/nologin.8*
+
 %find_lang %{name}
 
 %clean
@@ -264,8 +251,6 @@ fi
 %dir /etc/skel
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
-%attr(755,root,root) /bin/groups
-%attr(755,root,root) /sbin/nologin
 %attr(4755,root,root) %{_bindir}/chfn
 %attr(4755,root,root) %{_bindir}/chsh
 %attr(4755,root,root) %{_bindir}/expiry
@@ -273,7 +258,6 @@ fi
 %attr(4755,root,root) %{_bindir}/passwd
 %attr(755,root,root) %{_bindir}/chage
 %attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/lastlog
 %attr(755,root,root) %{_bindir}/newgidmap
 %attr(755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/newuidmap
@@ -302,7 +286,6 @@ fi
 %{_mandir}/man1/chsh.1*
 %{_mandir}/man1/expiry.1*
 %{_mandir}/man1/gpasswd.1*
-%{_mandir}/man1/groups.1*
 %{_mandir}/man1/newgidmap.1*
 %{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/newuidmap.1*
@@ -326,10 +309,8 @@ fi
 %{_mandir}/man8/grpck.8*
 %{_mandir}/man8/grpconv.8*
 %{_mandir}/man8/grpunconv.8*
-%{_mandir}/man8/lastlog.8*
 %{_mandir}/man8/logoutd.8*
 %{_mandir}/man8/newusers.8*
-%{_mandir}/man8/nologin.8*
 %{_mandir}/man8/pwck.8*
 %{_mandir}/man8/pwconv.8*
 %{_mandir}/man8/pwunconv.8*
@@ -341,7 +322,6 @@ fi
 
 %lang(cs) %{_mandir}/cs/man1/expiry.1*
 %lang(cs) %{_mandir}/cs/man1/gpasswd.1*
-%lang(cs) %{_mandir}/cs/man1/groups.1*
 %lang(cs) %{_mandir}/cs/man5/faillog.5*
 %lang(cs) %{_mandir}/cs/man5/gshadow.5*
 %lang(cs) %{_mandir}/cs/man5/passwd.5*
@@ -351,18 +331,14 @@ fi
 %lang(cs) %{_mandir}/cs/man8/groupdel.8*
 %lang(cs) %{_mandir}/cs/man8/groupmod.8*
 %lang(cs) %{_mandir}/cs/man8/grpck.8*
-%lang(cs) %{_mandir}/cs/man8/lastlog.8*
-%lang(cs) %{_mandir}/cs/man8/nologin.8*
 %lang(cs) %{_mandir}/cs/man8/vipw.8*
 
 %lang(da) %{_mandir}/da/man1/chfn.1*
-%lang(da) %{_mandir}/da/man1/groups.1*
 %lang(da) %{_mandir}/da/man1/newgrp.1*
 %lang(da) %{_mandir}/da/man1/sg.1*
 %lang(da) %{_mandir}/da/man5/gshadow.5*
 %lang(da) %{_mandir}/da/man8/groupdel.8*
 %lang(da) %{_mandir}/da/man8/logoutd.8*
-%lang(da) %{_mandir}/da/man8/nologin.8*
 %lang(da) %{_mandir}/da/man8/vigr.8
 %lang(da) %{_mandir}/da/man8/vipw.8*
 
@@ -371,7 +347,6 @@ fi
 %lang(de) %{_mandir}/de/man1/chsh.1*
 %lang(de) %{_mandir}/de/man1/expiry.1*
 %lang(de) %{_mandir}/de/man1/gpasswd.1*
-%lang(de) %{_mandir}/de/man1/groups.1*
 %lang(de) %{_mandir}/de/man1/newgrp.1*
 %lang(de) %{_mandir}/de/man1/passwd.1*
 %lang(de) %{_mandir}/de/man1/sg.1*
@@ -391,10 +366,8 @@ fi
 %lang(de) %{_mandir}/de/man8/grpck.8*
 %lang(de) %{_mandir}/de/man8/grpconv.8*
 %lang(de) %{_mandir}/de/man8/grpunconv.8*
-%lang(de) %{_mandir}/de/man8/lastlog.8*
 %lang(de) %{_mandir}/de/man8/logoutd.8*
 %lang(de) %{_mandir}/de/man8/newusers.8*
-%lang(de) %{_mandir}/de/man8/nologin.8*
 %lang(de) %{_mandir}/de/man8/pwck.8*
 %lang(de) %{_mandir}/de/man8/pwconv.8*
 %lang(de) %{_mandir}/de/man8/pwunconv.8*
@@ -412,7 +385,6 @@ fi
 %lang(fr) %{_mandir}/fr/man1/chsh.1*
 %lang(fr) %{_mandir}/fr/man1/expiry.1*
 %lang(fr) %{_mandir}/fr/man1/gpasswd.1*
-%lang(fr) %{_mandir}/fr/man1/groups.1*
 %lang(fr) %{_mandir}/fr/man1/newgidmap.1*
 %lang(fr) %{_mandir}/fr/man1/newgrp.1*
 %lang(fr) %{_mandir}/fr/man1/newuidmap.1*
@@ -436,10 +408,8 @@ fi
 %lang(fr) %{_mandir}/fr/man8/grpck.8*
 %lang(fr) %{_mandir}/fr/man8/grpconv.8*
 %lang(fr) %{_mandir}/fr/man8/grpunconv.8*
-%lang(fr) %{_mandir}/fr/man8/lastlog.8*
 %lang(fr) %{_mandir}/fr/man8/logoutd.8*
 %lang(fr) %{_mandir}/fr/man8/newusers.8*
-%lang(fr) %{_mandir}/fr/man8/nologin.8*
 %lang(fr) %{_mandir}/fr/man8/pwck.8*
 %lang(fr) %{_mandir}/fr/man8/pwconv.8*
 %lang(fr) %{_mandir}/fr/man8/pwunconv.8*
@@ -455,8 +425,6 @@ fi
 %lang(hu) %{_mandir}/hu/man1/newgrp.1*
 %lang(hu) %{_mandir}/hu/man1/sg.1*
 %lang(hu) %{_mandir}/hu/man5/passwd.5*
-%lang(hu) %{_mandir}/hu/man8/lastlog.8*
-%lang(hu) %{_mandir}/hu/man1/groups.1*
 
 %lang(id) %{_mandir}/id/man1/chsh.1*
 %lang(id) %{_mandir}/id/man8/useradd.8*
@@ -466,7 +434,6 @@ fi
 %lang(it) %{_mandir}/it/man1/chsh.1*
 %lang(it) %{_mandir}/it/man1/expiry.1*
 %lang(it) %{_mandir}/it/man1/gpasswd.1*
-%lang(it) %{_mandir}/it/man1/groups.1*
 %lang(it) %{_mandir}/it/man1/newgrp.1*
 %lang(it) %{_mandir}/it/man1/passwd.1*
 %lang(it) %{_mandir}/it/man1/sg.1*
@@ -486,10 +453,8 @@ fi
 %lang(it) %{_mandir}/it/man8/grpck.8*
 %lang(it) %{_mandir}/it/man8/grpconv.8*
 %lang(it) %{_mandir}/it/man8/grpunconv.8*
-%lang(it) %{_mandir}/it/man8/lastlog.8*
 %lang(it) %{_mandir}/it/man8/logoutd.8*
 %lang(it) %{_mandir}/it/man8/newusers.8*
-%lang(it) %{_mandir}/it/man8/nologin.8*
 %lang(it) %{_mandir}/it/man8/pwck.8*
 %lang(it) %{_mandir}/it/man8/pwconv.8*
 %lang(it) %{_mandir}/it/man8/pwunconv.8*
@@ -504,7 +469,6 @@ fi
 %lang(ja) %{_mandir}/ja/man1/chsh.1*
 %lang(ja) %{_mandir}/ja/man1/expiry.1*
 %lang(ja) %{_mandir}/ja/man1/gpasswd.1*
-%lang(ja) %{_mandir}/ja/man1/groups.1*
 %lang(ja) %{_mandir}/ja/man1/newgrp.1*
 %lang(ja) %{_mandir}/ja/man1/passwd.1*
 %lang(ja) %{_mandir}/ja/man1/sg.1*
@@ -521,7 +485,6 @@ fi
 %lang(ja) %{_mandir}/ja/man8/grpck.8*
 %lang(ja) %{_mandir}/ja/man8/grpconv.8*
 %lang(ja) %{_mandir}/ja/man8/grpunconv.8*
-%lang(ja) %{_mandir}/ja/man8/lastlog.8*
 %lang(ja) %{_mandir}/ja/man8/logoutd.8*
 %lang(ja) %{_mandir}/ja/man8/newusers.8*
 %lang(ja) %{_mandir}/ja/man8/pwck.8*
@@ -535,7 +498,6 @@ fi
 
 %lang(ko) %{_mandir}/ko/man1/chfn.1*
 %lang(ko) %{_mandir}/ko/man1/chsh.1*
-%lang(ko) %{_mandir}/ko/man1/groups.1*
 %lang(ko) %{_mandir}/ko/man5/passwd.5*
 %lang(ko) %{_mandir}/ko/man8/vigr.8*
 %lang(ko) %{_mandir}/ko/man8/vipw.8*
@@ -543,7 +505,6 @@ fi
 %lang(pl) %{_mandir}/pl/man1/chage.1*
 %lang(pl) %{_mandir}/pl/man1/chsh.1*
 %lang(pl) %{_mandir}/pl/man1/expiry.1*
-%lang(pl) %{_mandir}/pl/man1/groups.1*
 %lang(pl) %{_mandir}/pl/man1/newgrp.1*
 %lang(pl) %{_mandir}/pl/man1/sg.1*
 %lang(pl) %{_mandir}/pl/man5/faillog.5*
@@ -553,7 +514,6 @@ fi
 %lang(pl) %{_mandir}/pl/man8/groupmems.8*
 %lang(pl) %{_mandir}/pl/man8/groupmod.8*
 %lang(pl) %{_mandir}/pl/man8/grpck.8*
-%lang(pl) %{_mandir}/pl/man8/lastlog.8*
 %lang(pl) %{_mandir}/pl/man8/logoutd.8*
 %lang(pl) %{_mandir}/pl/man8/userdel.8*
 %lang(pl) %{_mandir}/pl/man8/usermod.8*
@@ -572,7 +532,6 @@ fi
 %lang(ru) %{_mandir}/ru/man1/chsh.1*
 %lang(ru) %{_mandir}/ru/man1/expiry.1*
 %lang(ru) %{_mandir}/ru/man1/gpasswd.1*
-%lang(ru) %{_mandir}/ru/man1/groups.1*
 %lang(ru) %{_mandir}/ru/man1/newgrp.1*
 %lang(ru) %{_mandir}/ru/man1/passwd.1*
 %lang(ru) %{_mandir}/ru/man1/sg.1*
@@ -592,10 +551,8 @@ fi
 %lang(ru) %{_mandir}/ru/man8/grpck.8*
 %lang(ru) %{_mandir}/ru/man8/grpconv.8*
 %lang(ru) %{_mandir}/ru/man8/grpunconv.8*
-%lang(ru) %{_mandir}/ru/man8/lastlog.8*
 %lang(ru) %{_mandir}/ru/man8/logoutd.8*
 %lang(ru) %{_mandir}/ru/man8/newusers.8*
-%lang(ru) %{_mandir}/ru/man8/nologin.8*
 %lang(ru) %{_mandir}/ru/man8/pwck.8*
 %lang(ru) %{_mandir}/ru/man8/pwconv.8*
 %lang(ru) %{_mandir}/ru/man8/pwunconv.8*
@@ -608,7 +565,6 @@ fi
 %lang(sv) %{_mandir}/sv/man1/chage.1*
 %lang(sv) %{_mandir}/sv/man1/chsh.1*
 %lang(sv) %{_mandir}/sv/man1/expiry.1*
-%lang(sv) %{_mandir}/sv/man1/groups.1*
 %lang(sv) %{_mandir}/sv/man1/newgrp.1*
 %lang(sv) %{_mandir}/sv/man1/passwd.1*
 %lang(sv) %{_mandir}/sv/man1/sg.1*
@@ -622,9 +578,7 @@ fi
 %lang(sv) %{_mandir}/sv/man8/groupmems.8*
 %lang(sv) %{_mandir}/sv/man8/groupmod.8*
 %lang(sv) %{_mandir}/sv/man8/grpck.8*
-%lang(sv) %{_mandir}/sv/man8/lastlog.8*
 %lang(sv) %{_mandir}/sv/man8/logoutd.8*
-%lang(sv) %{_mandir}/sv/man8/nologin.8*
 %lang(sv) %{_mandir}/sv/man8/pwck.8*
 %lang(sv) %{_mandir}/sv/man8/userdel.8*
 %lang(sv) %{_mandir}/sv/man8/vigr.8*
@@ -647,7 +601,6 @@ fi
 %lang(zh_CN) %{_mandir}/zh_CN/man1/chsh.1*
 %lang(zh_CN) %{_mandir}/zh_CN/man1/expiry.1*
 %lang(zh_CN) %{_mandir}/zh_CN/man1/gpasswd.1*
-%lang(zh_CN) %{_mandir}/zh_CN/man1/groups.1*
 %lang(zh_CN) %{_mandir}/zh_CN/man1/newgrp.1*
 %lang(zh_CN) %{_mandir}/zh_CN/man1/passwd.1*
 %lang(zh_CN) %{_mandir}/zh_CN/man1/sg.1*
@@ -667,10 +620,8 @@ fi
 %lang(zh_CN) %{_mandir}/zh_CN/man8/grpck.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/grpconv.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/grpunconv.8*
-%lang(zh_CN) %{_mandir}/zh_CN/man8/lastlog.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/logoutd.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/newusers.8*
-%lang(zh_CN) %{_mandir}/zh_CN/man8/nologin.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/pwck.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/pwconv.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/pwunconv.8*
