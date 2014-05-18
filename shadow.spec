@@ -1,5 +1,5 @@
 # TODO
-# - /etc/default/useradd is very outdated:
+# - /etc/login.defs contains options valid only when PAM is disabled:
 # gpasswd -M chef_server chef_server
 #configuration error - unknown item 'FAILLOG_ENAB' (notify administrator)
 #configuration error - unknown item 'LASTLOG_ENAB' (notify administrator)
@@ -61,6 +61,7 @@ Source21:	useradd.pamd
 Source22:	userdel.pamd
 Source23:	usermod.pamd
 Patch0:		%{name}-pld.patch
+# allow names with upper case letters or containing dot in the middle
 Patch1:		%{name}-goodname.patch
 URL:		http://pkg-shadow.alioth.debian.org/
 BuildRequires:	acl-devel
@@ -109,8 +110,8 @@ padrón UNIX de contraseña al formato shadow.
 - pwck - chequea la integridad de la contraseña y de los archivos
   shadow,
 
-Están también incluidas, en general, varias páginas de manual sobre estos
-utilitarios y contraseñas shadow.
+Están también incluidas, en general, varias páginas de manual sobre
+estos utilitarios y contraseñas shadow.
 
 %description -l pl.UTF-8
 Pakiet zawiera programy do obsługi mechanizmu ukrytych haseł (shadow
@@ -145,7 +146,7 @@ utilitários e senhas shadow em geral.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1 CHECK
+%patch1 -p1
 
 %build
 %configure \
@@ -228,7 +229,7 @@ fi
 %defattr(644,root,root,755)
 %doc ChangeLog NEWS TODO doc/{HOWTO,WISHLIST}
 %attr(750,root,root) %dir %{_sysconfdir}/default
-%attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/*
+%attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/useradd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chfn
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chgpasswd
