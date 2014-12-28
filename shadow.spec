@@ -69,7 +69,7 @@ BuildRequires:	attr-devel
 BuildRequires:	audit-libs-devel
 BuildRequires:	autoconf
 BuildRequires:	automake >= 1.0
-BuildRequires:	gettext-devel >= 0.12.1
+BuildRequires:	gettext-tools >= 0.12.1
 %{?with_selinux:BuildRequires:	libselinux-devel}
 BuildRequires:	libtool
 BuildRequires:	pam-devel
