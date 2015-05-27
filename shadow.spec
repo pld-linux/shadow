@@ -19,12 +19,12 @@
 #configuration error - unknown item 'CHFN_AUTH' (notify administrator)
 #configuration error - unknown item 'ENVIRON_FILE' (notify administrator)
 # - sync pam files from pwdutils
+# - ensure Conflicts with various packages (util-linux,sysvinit,coreutils) is up to date
 
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
 %bcond_with	shared		# build with shared libshadow (linking with selinux is broken)
-#
-#
+
 Summary:	Shadow password file utilities for Linux
 Summary(de.UTF-8):	Shadow-Paßwortdatei-Dienstprogramme für Linux
 Summary(es.UTF-8):	Utilitarios para el archivo de contraseñas Shadow
