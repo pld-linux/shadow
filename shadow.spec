@@ -61,6 +61,7 @@ Source23:	usermod.pamd
 Patch0:		%{name}-pld.patch
 # allow names with upper case letters or containing dot in the middle
 Patch1:		%{name}-goodname.patch
+Patch2:		su.patch
 URL:		https://github.com/shadow-maint/shadow
 BuildRequires:	acl-devel
 BuildRequires:	attr-devel
@@ -145,6 +146,7 @@ utilitários e senhas shadow em geral.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %configure \
