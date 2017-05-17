@@ -23,25 +23,29 @@
  static uid_t user_id;
  static gid_t user_gid;
  static const char *user_comment = "";
---- shadow-4.1.5.1/libmisc/find_new_gid.c~	2011-07-29 17:38:23.000000000 +0200
-+++ shadow-4.1.5.1/libmisc/find_new_gid.c	2012-12-14 14:03:45.355638812 +0100
-@@ -68,7 +68,7 @@
- 			return -1;
- 		}
- 	} else {
--		gid_min = (gid_t) getdef_ulong ("SYS_GID_MIN", 101UL);
-+		gid_min = (gid_t) getdef_ulong ("SYS_GID_MIN", 10UL);
- 		gid_max = (gid_t) getdef_ulong ("GID_MIN", 1000UL) - 1;
- 		gid_max = (gid_t) getdef_ulong ("SYS_GID_MAX", (unsigned long) gid_max);
- 		if (gid_max < gid_min) {
---- shadow-4.1.5.1/libmisc/find_new_uid.c~	2011-07-29 17:39:16.000000000 +0200
-+++ shadow-4.1.5.1/libmisc/find_new_uid.c	2012-12-14 14:03:29.645639367 +0100
-@@ -68,7 +68,7 @@
- 			return -1;
- 		}
- 	} else {
--		uid_min = (uid_t) getdef_ulong ("SYS_UID_MIN", 101UL);
-+		uid_min = (uid_t) getdef_ulong ("SYS_UID_MIN", 1UL);
- 		uid_max = (uid_t) getdef_ulong ("UID_MIN", 1000UL) - 1;
- 		uid_max = (uid_t) getdef_ulong ("SYS_UID_MAX", (unsigned long) uid_max);
- 		if (uid_max < uid_min) {
+--- shadow-4.5/libmisc/find_new_gid.c~	2017-01-29 22:37:22.000000000 +0200
++++ shadow-4.5/libmisc/find_new_gid.c	2017-05-17 23:13:32.785253060 +0300
+@@ -61,8 +61,8 @@
+ 		/* A requested ID is allowed to be below the autoselect range */
+ 		*preferred_min = (gid_t) 1;
+ 
+-		/* Get the minimum ID range from login.defs or default to 101 */
+-		*min_id = (gid_t) getdef_ulong ("SYS_GID_MIN", 101UL);
++		/* Get the minimum ID range from login.defs or default to 10 */
++		*min_id = (gid_t) getdef_ulong ("SYS_GID_MIN", 10UL);
+ 
+ 		/*
+ 		 * If SYS_GID_MAX is unspecified, we should assume it to be one
+--- shadow-4.5/libmisc/find_new_uid.c~	2017-01-29 22:37:22.000000000 +0200
++++ shadow-4.5/libmisc/find_new_uid.c	2017-05-17 23:10:38.366687971 +0300
+@@ -61,8 +61,8 @@
+ 		/* A requested ID is allowed to be below the autoselect range */
+ 		*preferred_min = (uid_t) 1;
+ 
+-		/* Get the minimum ID range from login.defs or default to 101 */
+-		*min_id = (uid_t) getdef_ulong ("SYS_UID_MIN", 101UL);
++		/* Get the minimum ID range from login.defs or default to 1 */
++		*min_id = (uid_t) getdef_ulong ("SYS_UID_MIN", 1UL);
+ 
+ 		/*
+ 		 * If SYS_UID_MAX is unspecified, we should assume it to be one

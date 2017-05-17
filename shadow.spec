@@ -33,15 +33,15 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.4
+Version:	4.5
 #BuildRequires:	useradd -g is broken, use pwdutils, or fix it:
 # http://zie.pg.gda.pl/mailman/pipermail/shadow/2006-September/000395.html
 Release:	0.1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
-Source0:	https://github.com/shadow-maint/shadow/releases/download/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	014062a24c2ba450f85d7bd1147a8528
+Source0:	https://github.com/shadow-maint/shadow/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	c350da50c2120de6bb29177699d89fe3
 Source2:	%{name}-login.defs
 Source3:	%{name}.useradd
 Source10:	chage.pamd
@@ -61,7 +61,6 @@ Source23:	usermod.pamd
 Patch0:		%{name}-pld.patch
 # allow names with upper case letters or containing dot in the middle
 Patch1:		%{name}-goodname.patch
-Patch2:		su.patch
 URL:		https://github.com/shadow-maint/shadow
 BuildRequires:	acl-devel
 BuildRequires:	attr-devel
@@ -146,10 +145,10 @@ utilitários e senhas shadow em geral.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %configure \
+	--disable-silent-rules \
 	--bindir=/bin \
 	--sbindir=/sbin \
 	%{?with_shared:--enable-shared --disable-static} \
