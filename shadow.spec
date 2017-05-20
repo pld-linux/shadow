@@ -19,6 +19,7 @@
 #configuration error - unknown item 'CHFN_AUTH' (notify administrator)
 #configuration error - unknown item 'ENVIRON_FILE' (notify administrator)
 # - sync pam files from pwdutils
+# - tcb support?
 # - ensure Conflicts with various packages (util-linux,sysvinit,coreutils) is up to date
 
 # Conditional build:
@@ -65,10 +66,11 @@ URL:		https://github.com/shadow-maint/shadow
 BuildRequires:	acl-devel
 BuildRequires:	attr-devel
 BuildRequires:	audit-libs-devel
-BuildRequires:	autoconf
-BuildRequires:	automake >= 1.0
+BuildRequires:	autoconf >= 2.64
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-tools >= 0.12.1
 %{?with_selinux:BuildRequires:	libselinux-devel}
+%{?with_selinux:BuildRequires:	libsemanage-devel}
 BuildRequires:	libtool
 BuildRequires:	pam-devel
 BuildRequires:	tar >= 1:1.22
@@ -147,24 +149,26 @@ utilitários e senhas shadow em geral.
 %patch1 -p1
 
 %build
+# NOTE:
+# - cracklib option refers to non-PAM passwd code
+# - skey referes to non-PAM pw_auth/passwd_check (login, su, chfn, chsh) code
 %configure \
-	--disable-silent-rules \
 	--bindir=/bin \
 	--sbindir=/sbin \
+	--enable-shadowgrp \
 	%{?with_shared:--enable-shared --disable-static} \
-	--without-libcrack \
-	--without-tcb \
-	--with-sha-crypt \
-	--with-nscd \
-	--with-audit \
+	--disable-silent-rules \
+	--enable-subordinate-ids \
 	--with-acl \
 	--with-attr \
+	--with-audit \
+	--with-group-name-max-length=32 \
 	--with-libpam \
-	--enable-nls \
-	--enable-shadowgrp \
+	--with-nscd \
+	--without-libcrack \
 	%{?with_selinux:--with-selinux} \
-	--enable-subordinate-ids \
-	--with-group-name-max-length=32
+	--with-sha-crypt \
+	--without-tcb
 
 %{__make}
 
