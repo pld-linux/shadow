@@ -34,7 +34,7 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.5
+Version:	4.6
 #BuildRequires:	useradd -g is broken, use pwdutils, or fix it:
 # http://zie.pg.gda.pl/mailman/pipermail/shadow/2006-September/000395.html
 Release:	0.1
@@ -42,7 +42,7 @@ Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	https://github.com/shadow-maint/shadow/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	c350da50c2120de6bb29177699d89fe3
+# Source0-md5:	b491fecbf1232632c32ff8f1437fd60e
 Source2:	%{name}-login.defs
 Source3:	%{name}.useradd
 Source10:	chage.pamd
