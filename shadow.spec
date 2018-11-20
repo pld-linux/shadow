@@ -143,6 +143,14 @@ arquivos-padrão UNIX de senha para o formato shadow.
 Várias páginas de manual estão também incluídas sobre estes
 utilitários e senhas shadow em geral.
 
+%package -n uidmap
+Summary:	Programs to help use subuids
+Group:		Applications/System
+
+%description -n uidmap
+These programs help unprivileged users to create uid and gid mappings
+in user namespaces.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -262,9 +270,7 @@ fi
 %attr(4755,root,root) %{_bindir}/passwd
 %attr(755,root,root) %{_bindir}/chage
 %attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/newgidmap
 %attr(755,root,root) %{_bindir}/newgrp
-%attr(755,root,root) %{_bindir}/newuidmap
 %attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_sbindir}/chgpasswd
 %attr(755,root,root) %{_sbindir}/chpasswd
@@ -290,9 +296,7 @@ fi
 %{_mandir}/man1/chsh.1*
 %{_mandir}/man1/expiry.1*
 %{_mandir}/man1/gpasswd.1*
-%{_mandir}/man1/newgidmap.1*
 %{_mandir}/man1/newgrp.1*
-%{_mandir}/man1/newuidmap.1*
 %{_mandir}/man1/passwd.1*
 %{_mandir}/man1/sg.1*
 %{_mandir}/man5/faillog.5*
@@ -301,8 +305,6 @@ fi
 %{_mandir}/man5/passwd.5*
 %{_mandir}/man5/shadow.5*
 %{_mandir}/man5/suauth.5*
-%{_mandir}/man5/subgid.5*
-%{_mandir}/man5/subuid.5*
 %{_mandir}/man8/chgpasswd.8*
 %{_mandir}/man8/chpasswd.8*
 %{_mandir}/man8/faillog.8*
@@ -389,9 +391,7 @@ fi
 %lang(fr) %{_mandir}/fr/man1/chsh.1*
 %lang(fr) %{_mandir}/fr/man1/expiry.1*
 %lang(fr) %{_mandir}/fr/man1/gpasswd.1*
-%lang(fr) %{_mandir}/fr/man1/newgidmap.1*
 %lang(fr) %{_mandir}/fr/man1/newgrp.1*
-%lang(fr) %{_mandir}/fr/man1/newuidmap.1*
 %lang(fr) %{_mandir}/fr/man1/passwd.1*
 %lang(fr) %{_mandir}/fr/man1/sg.1*
 %lang(fr) %{_mandir}/fr/man5/faillog.5*
@@ -400,8 +400,6 @@ fi
 %lang(fr) %{_mandir}/fr/man5/passwd.5*
 %lang(fr) %{_mandir}/fr/man5/shadow.5*
 %lang(fr) %{_mandir}/fr/man5/suauth.5*
-%lang(fr) %{_mandir}/fr/man5/subgid.5*
-%lang(fr) %{_mandir}/fr/man5/subuid.5*
 %lang(fr) %{_mandir}/fr/man8/chgpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/chpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/faillog.8*
@@ -646,3 +644,16 @@ fi
 %lang(zh_TW) %{_mandir}/zh_TW/man8/useradd.8*
 %lang(zh_TW) %{_mandir}/zh_TW/man8/userdel.8*
 %lang(zh_TW) %{_mandir}/zh_TW/man8/usermod.8*
+
+%files -n uidmap
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/newgidmap
+%attr(755,root,root) %{_bindir}/newuidmap
+%{_mandir}/man1/newgidmap.1*
+%{_mandir}/man1/newuidmap.1*
+%{_mandir}/man5/subgid.5*
+%{_mandir}/man5/subuid.5*
+%lang(fr) %{_mandir}/fr/man1/newgidmap.1*
+%lang(fr) %{_mandir}/fr/man1/newuidmap.1*
+%lang(fr) %{_mandir}/fr/man5/subgid.5*
+%lang(fr) %{_mandir}/fr/man5/subuid.5*
