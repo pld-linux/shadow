@@ -268,9 +268,9 @@ fi
 %attr(4755,root,root) %{_bindir}/expiry
 %attr(4755,root,root) %{_bindir}/gpasswd
 %attr(4755,root,root) %{_bindir}/passwd
-%attr(755,root,root) %{_bindir}/chage
+%attr(4755,root,root) %{_bindir}/chage
 %attr(755,root,root) %{_bindir}/faillog
-%attr(755,root,root) %{_bindir}/newgrp
+%attr(4755,root,root) %{_bindir}/newgrp
 %attr(755,root,root) %{_bindir}/sg
 %attr(755,root,root) %{_sbindir}/chgpasswd
 %attr(755,root,root) %{_sbindir}/chpasswd
@@ -647,8 +647,8 @@ fi
 
 %files -n uidmap
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/newgidmap
-%attr(755,root,root) %{_bindir}/newuidmap
+%attr(4755,root,root) %{_bindir}/newgidmap
+%attr(4755,root,root) %{_bindir}/newuidmap
 %{_mandir}/man1/newgidmap.1*
 %{_mandir}/man1/newuidmap.1*
 %{_mandir}/man5/subgid.5*
