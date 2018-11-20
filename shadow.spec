@@ -146,6 +146,7 @@ utilitários e senhas shadow em geral.
 %package -n uidmap
 Summary:	Programs to help use subuids
 Group:		Applications/System
+Requires:	setup >= 2.10.0
 
 %description -n uidmap
 These programs help unprivileged users to create uid and gid mappings
