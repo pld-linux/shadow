@@ -261,7 +261,6 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/chsh.allow
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/login.defs
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %ghost %{_sysconfdir}/shadow
-%dir /etc/skel
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
 %attr(4755,root,root) %{_bindir}/chfn
