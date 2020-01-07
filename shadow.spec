@@ -206,6 +206,17 @@ cp -p %{SOURCE21} $RPM_BUILD_ROOT/etc/pam.d/useradd
 cp -p %{SOURCE22} $RPM_BUILD_ROOT/etc/pam.d/userdel
 cp -p %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 
+
+# compatibility with old locations (and pwdutils)
+install -d $RPM_BUILD_ROOT%{_bindir}
+for f in chage chfn chsh expiry faillog gpasswd newgrp newgidmap passwd newuidmap sg; do
+  ln -s /bin/${f} $RPM_BUILD_ROOT%{_bindir}/${f}
+done
+install -d $RPM_BUILD_ROOT%{_sbindir}
+for f in chgpasswd chpasswd groupadd groupdel groupmems groupmod grpck grpconv grpunconv logoutd newusers pwck pwconv pwunconv useradd userdel usermod vigr vipw; do
+  ln -s /sbin/${f} $RPM_BUILD_ROOT%{_sbindir}/${f}
+done
+
 > $RPM_BUILD_ROOT%{_sysconfdir}/shadow
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
 > $RPM_BUILD_ROOT/etc/security/chsh.allow
@@ -215,7 +226,7 @@ cp -p %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man3/*.3*
 
 # packaged in SysVinit-tools
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/lastlog
+%{__rm} $RPM_BUILD_ROOT/bin/lastlog
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/lastlog.8*
 # packaged in coreutils
 %{__rm} $RPM_BUILD_ROOT/bin/groups
@@ -262,33 +273,61 @@ fi
 %attr(600,root,root) %config(noreplace) %verify(not md5 mtime size) %ghost %{_sysconfdir}/shadow
 %dir /etc/skel/tmp
 %{?with_shared:%attr(755,root,root) %{_libdir}/lib*.so.*.*}
+%attr(4755,root,root) /bin/chfn
 %attr(4755,root,root) %{_bindir}/chfn
+%attr(4755,root,root) /bin/chsh
 %attr(4755,root,root) %{_bindir}/chsh
+%attr(4755,root,root) /bin/expiry
 %attr(4755,root,root) %{_bindir}/expiry
+%attr(4755,root,root) /bin/gpasswd
 %attr(4755,root,root) %{_bindir}/gpasswd
+%attr(4755,root,root) /bin/passwd
 %attr(4755,root,root) %{_bindir}/passwd
+%attr(4755,root,root) /bin/chage
 %attr(4755,root,root) %{_bindir}/chage
+%attr(755,root,root) /bin/faillog
 %attr(755,root,root) %{_bindir}/faillog
+%attr(4755,root,root) /bin/newgrp
 %attr(4755,root,root) %{_bindir}/newgrp
+%attr(755,root,root) /bin/sg
 %attr(755,root,root) %{_bindir}/sg
+%attr(755,root,root) /sbin/chgpasswd
 %attr(755,root,root) %{_sbindir}/chgpasswd
+%attr(755,root,root) /sbin/chpasswd
 %attr(755,root,root) %{_sbindir}/chpasswd
+%attr(755,root,root) /sbin/groupadd
 %attr(755,root,root) %{_sbindir}/groupadd
+%attr(755,root,root) /sbin/groupdel
 %attr(755,root,root) %{_sbindir}/groupdel
+%attr(755,root,root) /sbin/groupmems
 %attr(755,root,root) %{_sbindir}/groupmems
+%attr(755,root,root) /sbin/groupmod
 %attr(755,root,root) %{_sbindir}/groupmod
+%attr(755,root,root) /sbin/grpck
 %attr(755,root,root) %{_sbindir}/grpck
+%attr(755,root,root) /sbin/grpconv
 %attr(755,root,root) %{_sbindir}/grpconv
+%attr(755,root,root) /sbin/grpunconv
 %attr(755,root,root) %{_sbindir}/grpunconv
+%attr(755,root,root) /sbin/logoutd
 %attr(755,root,root) %{_sbindir}/logoutd
+%attr(755,root,root) /sbin//newusers
 %attr(755,root,root) %{_sbindir}/newusers
+%attr(755,root,root) /sbin/pwck
 %attr(755,root,root) %{_sbindir}/pwck
+%attr(755,root,root) /sbin/pwconv
 %attr(755,root,root) %{_sbindir}/pwconv
+%attr(755,root,root) /sbin/pwunconv
 %attr(755,root,root) %{_sbindir}/pwunconv
+%attr(755,root,root) /sbin/useradd
 %attr(755,root,root) %{_sbindir}/useradd
+%attr(755,root,root) /sbin/userdel
 %attr(755,root,root) %{_sbindir}/userdel
+%attr(755,root,root) /sbin/usermod
 %attr(755,root,root) %{_sbindir}/usermod
+%attr(755,root,root) /sbin/vigr
 %attr(755,root,root) %{_sbindir}/vigr
+%attr(755,root,root) /sbin/vipw
 %attr(755,root,root) %{_sbindir}/vipw
 %{_mandir}/man1/chage.1*
 %{_mandir}/man1/chfn.1*
@@ -646,7 +685,9 @@ fi
 
 %files -n uidmap
 %defattr(644,root,root,755)
+%attr(4755,root,root) /bin/newgidmap
 %attr(4755,root,root) %{_bindir}/newgidmap
+%attr(4755,root,root) /bin/newuidmap
 %attr(4755,root,root) %{_bindir}/newuidmap
 %{_mandir}/man1/newgidmap.1*
 %{_mandir}/man1/newuidmap.1*
