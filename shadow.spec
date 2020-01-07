@@ -35,8 +35,6 @@ Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
 Version:	4.8
-#BuildRequires:	useradd -g is broken, use pwdutils, or fix it:
-# http://zie.pg.gda.pl/mailman/pipermail/shadow/2006-September/000395.html
 Release:	2
 Epoch:		1
 License:	BSD
