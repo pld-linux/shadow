@@ -1,23 +1,4 @@
 # TODO
-# - /etc/login.defs contains options valid only when PAM is disabled:
-# gpasswd -M chef_server chef_server
-#configuration error - unknown item 'FAILLOG_ENAB' (notify administrator)
-#configuration error - unknown item 'LASTLOG_ENAB' (notify administrator)
-#configuration error - unknown item 'MAIL_CHECK_ENAB' (notify administrator)
-#configuration error - unknown item 'OBSCURE_CHECKS_ENAB' (notify administrator)
-#configuration error - unknown item 'PORTTIME_CHECKS_ENAB' (notify administrator)
-#configuration error - unknown item 'QUOTAS_ENAB' (notify administrator)
-#configuration error - unknown item 'MOTD_FILE' (notify administrator)
-#configuration error - unknown item 'FTMP_FILE' (notify administrator)
-#configuration error - unknown item 'NOLOGINS_FILE' (notify administrator)
-#configuration error - unknown item 'ENV_HZ' (notify administrator)
-#configuration error - unknown item 'PASS_MIN_LEN' (notify administrator)
-#configuration error - unknown item 'SU_WHEEL_ONLY' (notify administrator)
-#configuration error - unknown item 'CRACKLIB_DICTPATH' (notify administrator)
-#configuration error - unknown item 'PASS_CHANGE_TRIES' (notify administrator)
-#configuration error - unknown item 'PASS_ALWAYS_WARN' (notify administrator)
-#configuration error - unknown item 'CHFN_AUTH' (notify administrator)
-#configuration error - unknown item 'ENVIRON_FILE' (notify administrator)
 # - tcb support?
 
 # Conditional build:
