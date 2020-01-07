@@ -18,9 +18,7 @@
 #configuration error - unknown item 'PASS_ALWAYS_WARN' (notify administrator)
 #configuration error - unknown item 'CHFN_AUTH' (notify administrator)
 #configuration error - unknown item 'ENVIRON_FILE' (notify administrator)
-# - sync pam files from pwdutils
 # - tcb support?
-# - ensure Conflicts with various packages (util-linux,sysvinit,coreutils) is up to date
 
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
