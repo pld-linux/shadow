@@ -37,7 +37,7 @@ Name:		shadow
 Version:	4.8
 #BuildRequires:	useradd -g is broken, use pwdutils, or fix it:
 # http://zie.pg.gda.pl/mailman/pipermail/shadow/2006-September/000395.html
-Release:	1
+Release:	2
 Epoch:		1
 License:	BSD
 Group:		Applications/System
