@@ -13,13 +13,13 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.8
-Release:	3
+Version:	4.8.1
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	https://github.com/shadow-maint/shadow/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	723ebb19b06e2f52d9ed7f0653483851
+# Source0-md5:	4b05eff8a427cf50e615bda324b5bc45
 Source2:	%{name}-login.defs
 Source3:	%{name}.useradd
 Source10:	chage.pamd
