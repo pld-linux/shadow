@@ -122,12 +122,17 @@ utilitários e senhas shadow em geral.
 
 %package -n uidmap
 Summary:	Programs to help use subuids
+Summary(pl.UTF-8):	Programy pomagające w stosowaniu poduidów
 Group:		Applications/System
 Requires:	setup >= 2.10.0
 
 %description -n uidmap
 These programs help unprivileged users to create uid and gid mappings
 in user namespaces.
+
+%description -n uidmap -l pl.UTF-8
+Programy z tego pakietu pomagają nieuprzywilejowanym użytkownikom
+tworzyć mapowania uidów i gidów w przestrzeniach użytkowników.
 
 %prep
 %setup -q
