@@ -56,9 +56,9 @@ Requires:	pam >= 0.99.7.1
 Provides:	passwd
 Provides:	shadow-utils
 Obsoletes:	passwd
-Obsoletes:	pwdutils
-Obsoletes:	shadow-extras
-Obsoletes:	shadow-utils
+Obsoletes:	pwdutils < 3.3
+Obsoletes:	shadow-extras < 1:4.2
+Obsoletes:	shadow-utils < 1:4
 Conflicts:	util-linux < 2.12-10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
