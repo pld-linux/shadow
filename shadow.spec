@@ -139,8 +139,6 @@ in user namespaces.
 # - cracklib option refers to non-PAM passwd code
 # - skey referes to non-PAM pw_auth/passwd_check (login, su, chfn, chsh) code
 %configure \
-	--bindir=%{_bindir} \
-	--sbindir=%{_sbindir} \
 	--enable-shadowgrp \
 	%{?with_shared:--enable-shared --disable-static} \
 	--disable-silent-rules \
