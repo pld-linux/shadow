@@ -208,6 +208,12 @@ cp -p %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 %{__rm} $RPM_BUILD_ROOT%{_sbindir}/nologin
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/nologin.8*
 
+# not packaged yet
+%{__rm} $RPM_BUILD_ROOT%{_includedir}/shadow/subid.h
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libsubid.a
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libsubid.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libsubid.so
+
 %find_lang %{name}
 
 %clean
