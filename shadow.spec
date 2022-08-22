@@ -155,6 +155,7 @@ tworzyć mapowania uidów i gidów w przestrzeniach użytkowników.
 	--with-group-name-max-length=32 \
 	--with-libpam \
 	--with-nscd \
+	--without-su \
 	--without-libcrack \
 	%{?with_selinux:--with-selinux} \
 	--with-sha-crypt \
@@ -191,8 +192,9 @@ cp -p %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 > $RPM_BUILD_ROOT/etc/security/chfn.allow
 > $RPM_BUILD_ROOT/etc/security/chsh.allow
 
-%{__rm} $RPM_BUILD_ROOT/{etc/pam.d,%{_bindir}}/{login,su}
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/{login,su}.1*
+%{__rm} $RPM_BUILD_ROOT/{etc/pam.d,%{_bindir}}/login
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/su.1*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/login.1*
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man3/*.3*
 
 # packaged in SysVinit-tools
