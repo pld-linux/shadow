@@ -56,12 +56,11 @@ diff -up shadow-4.8/libmisc/chkname.c.goodname shadow-4.8/libmisc/chkname.c
  }
  
  bool is_valid_user_name (const char *name)
-diff -up shadow-4.8/man/groupadd.8.xml.goodname shadow-4.8/man/groupadd.8.xml
---- shadow-4.8/man/groupadd.8.xml.goodname	2019-07-23 17:26:08.000000000 +0200
-+++ shadow-4.8/man/groupadd.8.xml	2020-01-13 09:44:41.968507996 +0100
-@@ -273,10 +273,12 @@
-    <refsect1 id='caveats'>
-      <title>CAVEATS</title>
+--- shadow-4.12.3/man/groupadd.8.xml~	2022-08-09 01:30:40.000000000 +0300
++++ shadow-4.12.3/man/groupadd.8.xml	2022-08-22 18:30:02.472610977 +0300
+@@ -64,10 +64,12 @@
+       files as needed.
+     </para>
       <para>
 -       Groupnames must start with a lower case letter or an underscore,
 -       followed by lower case letters, digits, underscores, or dashes.

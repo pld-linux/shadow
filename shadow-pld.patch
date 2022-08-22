@@ -1,19 +1,16 @@
---- shadow-4.0.6/src/useradd.c	2004-11-18 21:45:00.713398344 +0100
-+++ shadow-4.0.16/src/useradd.c	2006-06-08 01:17:05.580340031 +0300
-@@ -72,10 +72,10 @@
- /*
-  * These defaults are used if there is no defaults file.
+--- shadow-4.12.3/src/useradd.c~	2022-08-22 18:27:55.000000000 +0300
++++ shadow-4.12.3/src/useradd.c	2022-08-22 18:27:58.336079332 +0300
+@@ -81,8 +81,8 @@
   */
--static gid_t def_group = 100;
-+static gid_t def_group = 1000;
+ static gid_t def_group = 1000;
  static const char *def_gname = "other";
 -static const char *def_home = "/home";
--static const char *def_shell = "";
+-static const char *def_shell = "/bin/bash";
 +static const char *def_home = "/home/users";
 +static const char *def_shell = "/sbin/nologin";
  static const char *def_template = SKEL_DIR;
- static const char *def_create_mail_spool = "no";
- 
+ static const char *def_create_mail_spool = "yes";
+ static const char *def_log_init = "yes";
 @@ -89,7 +89,7 @@
  #define	VALID(s)	(strcspn (s, ":\n") == strlen (s))
  

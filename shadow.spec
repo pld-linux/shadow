@@ -13,13 +13,13 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.8.1
-Release:	2
+Version:	4.12.3
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	https://github.com/shadow-maint/shadow/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	4b05eff8a427cf50e615bda324b5bc45
+# Source0-md5:	710bcc89c39683609aacfef9f08bd854
 Source2:	%{name}-login.defs
 Source3:	%{name}.useradd
 Source10:	chage.pamd
@@ -148,6 +148,7 @@ tworzyć mapowania uidów i gidów w przestrzeniach użytkowników.
 	--enable-shadowgrp \
 	%{?with_shared:--enable-shared --disable-static} \
 	--disable-silent-rules \
+	--enable-man \
 	--enable-subordinate-ids \
 	--with-acl \
 	--with-attr \
