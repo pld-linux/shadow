@@ -687,4 +687,4 @@ fi
 %lang(fr) %{_mandir}/fr/man5/subgid.5*
 %lang(fr) %{_mandir}/fr/man5/subuid.5*
 %ghost %{_libdir}/libsubid.so.4
-%attr(755,root,root) %{_libdir}/libsubid.so.4.0.0
+%attr(755,root,root) %{_libdir}/libsubid.so.*.*.*
