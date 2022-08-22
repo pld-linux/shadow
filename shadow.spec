@@ -221,6 +221,9 @@ fi
 
 %{?with_shared:%postun -p /sbin/ldconfig}
 
+%post	-n uidmap -p /sbin/ldconfig
+%postun	-n uidmap -p /sbin/ldconfig
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc ChangeLog NEWS TODO doc/{HOWTO,WISHLIST}
@@ -667,6 +670,8 @@ fi
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_bindir}/newgidmap
 %attr(4755,root,root) %{_bindir}/newuidmap
+%attr(755,root,root) %{_bindir}/getsubids
+%{_mandir}/man1/getsubids.1*
 %{_mandir}/man1/newgidmap.1*
 %{_mandir}/man1/newuidmap.1*
 %{_mandir}/man5/subgid.5*
@@ -675,3 +680,5 @@ fi
 %lang(fr) %{_mandir}/fr/man1/newuidmap.1*
 %lang(fr) %{_mandir}/fr/man5/subgid.5*
 %lang(fr) %{_mandir}/fr/man5/subuid.5*
+%ghost %{_libdir}/libsubid.so.4
+%attr(755,root,root) %{_libdir}/libsubid.so.4.0.0
