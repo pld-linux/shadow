@@ -43,12 +43,14 @@ URL:		https://github.com/shadow-maint/shadow
 BuildRequires:	acl-devel
 BuildRequires:	attr-devel
 BuildRequires:	audit-libs-devel
-BuildRequires:	autoconf >= 2.64
-BuildRequires:	automake >= 1:1.11
+BuildRequires:	docbook-dtd45-xml
+BuildRequires:	docbook-style-xsl-nons
 BuildRequires:	gettext-tools >= 0.12.1
+BuildRequires:	itstool
 %{?with_selinux:BuildRequires:	libselinux-devel}
 %{?with_selinux:BuildRequires:	libsemanage-devel}
-BuildRequires:	libtool
+BuildRequires:	libxslt-progs
+BuildRequires:	linux-libc-headers >= 7:4.7
 BuildRequires:	pam-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
