@@ -14,7 +14,7 @@ Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
 Version:	4.12.3
-Release:        2
+Release:        3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
