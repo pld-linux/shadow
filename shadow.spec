@@ -13,13 +13,13 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.12.3
-Release:        3
+Version:	4.13
+Release:        1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	https://github.com/shadow-maint/shadow/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	710bcc89c39683609aacfef9f08bd854
+# Source0-md5:	b1ab01b5462ddcf43588374d57bec123
 Source2:	%{name}-login.defs
 Source3:	%{name}.useradd
 Source10:	chage.pamd
@@ -37,8 +37,6 @@ Source21:	useradd.pamd
 Source22:	userdel.pamd
 Source23:	usermod.pamd
 Patch0:		%{name}-pld.patch
-# allow names with upper case letters or containing dot in the middle
-Patch1:		%{name}-goodname.patch
 URL:		https://github.com/shadow-maint/shadow
 BuildRequires:	acl-devel
 BuildRequires:	attr-devel
@@ -139,8 +137,6 @@ tworzyć mapowania uidów i gidów w przestrzeniach użytkowników.
 %prep
 %setup -q
 %patch0 -p1
-# allows dots in user/group names
-%patch1 -p1
 
 %build
 # NOTE:
