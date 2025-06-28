@@ -1,5 +1,5 @@
 # TODO
-# - tcb support?
+# - tcb support? (BR: tcb.h, -ltcb)
 
 # Conditional build:
 %bcond_without	selinux		# build without SE-Linux support
@@ -42,14 +42,17 @@ BuildRequires:	acl-devel
 BuildRequires:	attr-devel
 BuildRequires:	audit-libs-devel
 BuildRequires:	docbook-dtd45-xml
-BuildRequires:	docbook-style-xsl-nons
-BuildRequires:	gettext-tools >= 0.12.1
+BuildRequires:	docbook-style-xsl-nons >= 1.70.1
+BuildRequires:	gettext-tools >= 0.19
 BuildRequires:	itstool
+BuildRequires:	libbsd-devel
+BuildRequires:	libeconf-devel
 %{?with_selinux:BuildRequires:	libselinux-devel}
 %{?with_selinux:BuildRequires:	libsemanage-devel}
 BuildRequires:	libxslt-progs
 BuildRequires:	linux-libc-headers >= 7:4.7
 BuildRequires:	pam-devel
+BuildRequires:	pkgconfig
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	pam >= 0.99.7.1
@@ -225,7 +228,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog NEWS doc/{HOWTO,WISHLIST}
+%doc ChangeLog NEWS doc/{HOWTO,README.limits}
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/useradd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chfn
