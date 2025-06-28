@@ -1,18 +1,18 @@
---- shadow-4.12.3/src/useradd.c~	2022-08-22 18:27:55.000000000 +0300
-+++ shadow-4.12.3/src/useradd.c	2022-08-22 18:27:58.336079332 +0300
-@@ -81,8 +81,8 @@
-  */
+--- shadow-4.18.0/src/useradd.c~	2025-06-24 22:28:01.000000000 +0200
++++ shadow-4.18.0/src/useradd.c	2025-06-28 13:54:04.917939997 +0200
+@@ -103,8 +103,8 @@ static const char Prog[] = "useradd";
  static gid_t def_group = 1000;
+ static const char *def_groups = "";
  static const char *def_gname = "other";
 -static const char *def_home = "/home";
 -static const char *def_shell = "/bin/bash";
 +static const char *def_home = "/home/users";
 +static const char *def_shell = "/sbin/nologin";
  static const char *def_template = SKEL_DIR;
+ static const char *def_usrtemplate = USRSKELDIR;
  static const char *def_create_mail_spool = "yes";
- static const char *def_log_init = "yes";
-@@ -89,7 +89,7 @@
- #define	VALID(s)	(strcspn (s, ":\n") == strlen (s))
+@@ -116,7 +116,7 @@ static const char *def_expire = "";
+ #define VALID(s)  (!strpbrk(s, ":\n"))
  
  static const char *user_name = "";
 -static const char *user_pass = "!";
@@ -20,29 +20,25 @@
  static uid_t user_id;
  static gid_t user_gid;
  static const char *user_comment = "";
---- shadow-4.5/libmisc/find_new_gid.c~	2017-01-29 22:37:22.000000000 +0200
-+++ shadow-4.5/libmisc/find_new_gid.c	2017-05-17 23:13:32.785253060 +0300
-@@ -61,8 +61,8 @@
- 		/* A requested ID is allowed to be below the autoselect range */
- 		*preferred_min = (gid_t) 1;
- 
--		/* Get the minimum ID range from login.defs or default to 101 */
--		*min_id = (gid_t) getdef_ulong ("SYS_GID_MIN", 101UL);
-+		/* Get the minimum ID range from login.defs or default to 10 */
-+		*min_id = (gid_t) getdef_ulong ("SYS_GID_MIN", 10UL);
- 
- 		/*
- 		 * If SYS_GID_MAX is unspecified, we should assume it to be one
---- shadow-4.5/libmisc/find_new_uid.c~	2017-01-29 22:37:22.000000000 +0200
-+++ shadow-4.5/libmisc/find_new_uid.c	2017-05-17 23:10:38.366687971 +0300
-@@ -61,8 +61,8 @@
- 		/* A requested ID is allowed to be below the autoselect range */
+--- shadow-4.18.0/lib/find_new_uid.c~	2025-06-24 22:28:01.000000000 +0200
++++ shadow-4.18.0/lib/find_new_uid.c	2025-06-28 13:55:01.552392578 +0200
+@@ -42,7 +42,7 @@ static int get_ranges (bool sys_user, ui
  		*preferred_min = (uid_t) 1;
  
--		/* Get the minimum ID range from login.defs or default to 101 */
--		*min_id = (uid_t) getdef_ulong ("SYS_UID_MIN", 101UL);
-+		/* Get the minimum ID range from login.defs or default to 1 */
-+		*min_id = (uid_t) getdef_ulong ("SYS_UID_MIN", 1UL);
+ 		/* Get the minimum ID range from login.defs or default to 101 */
+-		*min_id = getdef_ulong ("SYS_UID_MIN", 101UL);
++		*min_id = getdef_ulong ("SYS_UID_MIN", 1UL);
  
  		/*
  		 * If SYS_UID_MAX is unspecified, we should assume it to be one
+--- shadow-4.18.0/lib/find_new_gid.c~	2025-06-24 22:28:01.000000000 +0200
++++ shadow-4.18.0/lib/find_new_gid.c	2025-06-28 13:55:19.757492390 +0200
+@@ -42,7 +42,7 @@ static int get_ranges (bool sys_group, g
+ 		*preferred_min = (gid_t) 1;
+ 
+ 		/* Get the minimum ID range from login.defs or default to 101 */
+-		*min_id = getdef_ulong ("SYS_GID_MIN", 101UL);
++		*min_id = getdef_ulong ("SYS_GID_MIN", 10UL);
+ 
+ 		/*
+ 		 * If SYS_GID_MAX is unspecified, we should assume it to be one

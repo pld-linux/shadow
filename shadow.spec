@@ -13,13 +13,13 @@ Summary(pl.UTF-8):	Narzędzia do obsługi mechanizmu ukrytych haseł
 Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
-Version:	4.13
-Release:        3
+Version:	4.18.0
+Release:	1
 Epoch:		1
 License:	BSD
 Group:		Applications/System
 Source0:	https://github.com/shadow-maint/shadow/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	b1ab01b5462ddcf43588374d57bec123
+# Source0-md5:	30ef46f54363db1d624587be68794ef2
 Source2:	%{name}-login.defs
 Source3:	%{name}.useradd
 Source10:	chage.pamd
@@ -193,15 +193,10 @@ cp -p %{SOURCE23} $RPM_BUILD_ROOT/etc/pam.d/usermod
 
 %{__rm} $RPM_BUILD_ROOT/{etc/pam.d,%{_bindir}}/login
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/su.1*
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man5/suauth.5*
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/login.1*
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man3/*.3*
 
-# packaged in SysVinit-tools
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/lastlog
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man8/lastlog.8*
-# packaged in coreutils
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/groups
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man1/groups.1*
 # packaged in util-linux
 %{__rm} $RPM_BUILD_ROOT%{_sbindir}/nologin
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/{,*/}man*/nologin.8*
@@ -230,7 +225,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog NEWS TODO doc/{HOWTO,WISHLIST}
+%doc ChangeLog NEWS doc/{HOWTO,WISHLIST}
 %attr(640,root,root) %config %verify(not md5 mtime size) %{_sysconfdir}/default/useradd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chage
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/chfn
@@ -294,7 +289,6 @@ fi
 %{_mandir}/man5/login.defs.5*
 %{_mandir}/man5/passwd.5*
 %{_mandir}/man5/shadow.5*
-%{_mandir}/man5/suauth.5*
 %{_mandir}/man8/chgpasswd.8*
 %{_mandir}/man8/chpasswd.8*
 %{_mandir}/man8/faillog.8*
@@ -351,7 +345,6 @@ fi
 %lang(de) %{_mandir}/de/man5/login.defs.5*
 %lang(de) %{_mandir}/de/man5/passwd.5*
 %lang(de) %{_mandir}/de/man5/shadow.5*
-%lang(de) %{_mandir}/de/man5/suauth.5*
 %lang(de) %{_mandir}/de/man8/chgpasswd.8*
 %lang(de) %{_mandir}/de/man8/chpasswd.8*
 %lang(de) %{_mandir}/de/man8/faillog.8*
@@ -389,7 +382,6 @@ fi
 %lang(fr) %{_mandir}/fr/man5/login.defs.5*
 %lang(fr) %{_mandir}/fr/man5/passwd.5*
 %lang(fr) %{_mandir}/fr/man5/shadow.5*
-%lang(fr) %{_mandir}/fr/man5/suauth.5*
 %lang(fr) %{_mandir}/fr/man8/chgpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/chpasswd.8*
 %lang(fr) %{_mandir}/fr/man8/faillog.8*
@@ -434,7 +426,6 @@ fi
 %lang(it) %{_mandir}/it/man5/login.defs.5*
 %lang(it) %{_mandir}/it/man5/passwd.5*
 %lang(it) %{_mandir}/it/man5/shadow.5*
-%lang(it) %{_mandir}/it/man5/suauth.5*
 %lang(it) %{_mandir}/it/man8/chgpasswd.8*
 %lang(it) %{_mandir}/it/man8/chpasswd.8*
 %lang(it) %{_mandir}/it/man8/faillog.8*
@@ -468,7 +459,6 @@ fi
 %lang(ja) %{_mandir}/ja/man5/login.defs.5*
 %lang(ja) %{_mandir}/ja/man5/passwd.5*
 %lang(ja) %{_mandir}/ja/man5/shadow.5*
-%lang(ja) %{_mandir}/ja/man5/suauth.5*
 %lang(ja) %{_mandir}/ja/man8/chpasswd.8*
 %lang(ja) %{_mandir}/ja/man8/faillog.8*
 %lang(ja) %{_mandir}/ja/man8/groupadd.8*
@@ -532,7 +522,6 @@ fi
 %lang(ru) %{_mandir}/ru/man5/login.defs.5*
 %lang(ru) %{_mandir}/ru/man5/passwd.5*
 %lang(ru) %{_mandir}/ru/man5/shadow.5*
-%lang(ru) %{_mandir}/ru/man5/suauth.5*
 %lang(ru) %{_mandir}/ru/man8/chgpasswd.8*
 %lang(ru) %{_mandir}/ru/man8/chpasswd.8*
 %lang(ru) %{_mandir}/ru/man8/faillog.8*
@@ -563,7 +552,6 @@ fi
 %lang(sv) %{_mandir}/sv/man5/faillog.5*
 %lang(sv) %{_mandir}/sv/man5/gshadow.5*
 %lang(sv) %{_mandir}/sv/man5/passwd.5*
-%lang(sv) %{_mandir}/sv/man5/suauth.5*
 %lang(sv) %{_mandir}/sv/man8/faillog.8*
 %lang(sv) %{_mandir}/sv/man8/groupadd.8*
 %lang(sv) %{_mandir}/sv/man8/groupdel.8*
@@ -601,7 +589,6 @@ fi
 %lang(uk) %{_mandir}/uk/man5/login.defs.5*
 %lang(uk) %{_mandir}/uk/man5/passwd.5*
 %lang(uk) %{_mandir}/uk/man5/shadow.5*
-%lang(uk) %{_mandir}/uk/man5/suauth.5*
 %lang(uk) %{_mandir}/uk/man8/chgpasswd.8*
 %lang(uk) %{_mandir}/uk/man8/chpasswd.8*
 %lang(uk) %{_mandir}/uk/man8/faillog.8*
@@ -636,7 +623,6 @@ fi
 %lang(zh_CN) %{_mandir}/zh_CN/man5/login.defs.5*
 %lang(zh_CN) %{_mandir}/zh_CN/man5/passwd.5*
 %lang(zh_CN) %{_mandir}/zh_CN/man5/shadow.5*
-%lang(zh_CN) %{_mandir}/zh_CN/man5/suauth.5*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/chgpasswd.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/chpasswd.8*
 %lang(zh_CN) %{_mandir}/zh_CN/man8/faillog.8*
@@ -684,5 +670,5 @@ fi
 %lang(fr) %{_mandir}/fr/man1/newuidmap.1*
 %lang(fr) %{_mandir}/fr/man5/subgid.5*
 %lang(fr) %{_mandir}/fr/man5/subuid.5*
-%ghost %{_libdir}/libsubid.so.4
+%ghost %{_libdir}/libsubid.so.5
 %attr(755,root,root) %{_libdir}/libsubid.so.*.*.*
