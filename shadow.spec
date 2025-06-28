@@ -14,7 +14,7 @@ Summary(pt_BR.UTF-8):	Utilitários para o arquivo de senhas Shadow
 Summary(tr.UTF-8):	Gölge parola dosyası araçları
 Name:		shadow
 Version:	4.13
-Release:        2
+Release:        3
 Epoch:		1
 License:	BSD
 Group:		Applications/System
@@ -136,7 +136,7 @@ tworzyć mapowania uidów i gidów w przestrzeniach użytkowników.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 # NOTE:
