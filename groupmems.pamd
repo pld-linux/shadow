@@ -1,6 +1,0 @@
-#%PAM-1.0
-auth		sufficient	pam_rootok.so
-auth		required	pam_listfile.so item=user sense=allow file=/etc/security/chfn.allow onerr=fail
-auth		include		system-auth
-account		include		system-auth
-password	include		system-auth
